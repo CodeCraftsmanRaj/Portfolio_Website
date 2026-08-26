@@ -1,0 +1,114 @@
+/* Mac Mode Overrides - Global Dock Navigation */
+
+.mode-mac .window-container {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mode-mac .window-header {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.mode-mac .topbar {
+  background-color: rgba(252, 249, 244, 0.85);
+}
+
+.mode-mac .btn-primary {
+  border-radius: 4px;
+}
+
+.mode-mac .btn-outline {
+  border-radius: 4px;
+}
+
+/* Mac Vertical Icon Dock Navigation (Matches developer_os_portfolio_global_dock_navigation) */
+.mode-mac .sidebar-litho {
+  width: 76px;
+  background-color: var(--surface-container-high);
+  border-right: 1px solid var(--outline-variant);
+  align-items: center;
+  padding: 16px 0;
+}
+
+.mode-mac .sidebar-profile {
+  padding: 0;
+  border-bottom: none;
+  margin-bottom: 12px;
+}
+
+.mode-mac .sidebar-user-info,
+.mode-mac .sidebar-action-btn,
+.mode-mac .sidebar-footer {
+  display: none;
+}
+
+.mode-mac .sidebar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--surface);
+  border: 1px solid var(--outline-variant);
+  font-size: 14px;
+}
+
+.mode-mac .sidebar-nav-list {
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.mode-mac .sidebar-nav-item {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  padding: 0;
+  justify-content: center;
+  border-left: none;
+  color: var(--on-surface-variant);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.mode-mac .sidebar-nav-item span:not(.material-symbols-outlined) {
+  display: none;
+}
+
+.mode-mac .sidebar-nav-item:hover {
+  background-color: var(--surface-container-highest);
+  color: var(--on-surface);
+  transform: scale(1.05);
+}
+
+.mode-mac .sidebar-nav-item.active {
+  background-color: var(--secondary);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(166, 57, 43, 0.35);
+}
+
+.mode-mac .sidebar-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background-color: var(--secondary);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.mode-mac .terminal-dock {
+  left: 76px;
+}
+
+@media (max-width: 860px) {
+  .mode-mac .sidebar-litho {
+    display: none;
+  }
+  .mode-mac .terminal-dock {
+    left: 0;
+  }
+}

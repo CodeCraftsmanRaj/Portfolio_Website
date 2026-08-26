@@ -1,0 +1,117 @@
+import React from 'react'
+import { OsMode, PageView, personalData } from '../data/portfolioData'
+import { WindowCard } from '../components/WindowCard'
+
+interface AboutPageProps {
+  mode: OsMode
+  onViewChange: (view: PageView) => void
+}
+
+export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
+  return (
+    <div style={{ maxWidth: '1120px', margin: '0 auto' }}>
+      {/* Page Header */}
+      <div className="about-page-header">
+        <h1>SYSTEM_INFO.TXT</h1>
+        <p>Metadata / Architect Profile</p>
+      </div>
+
+      <WindowCard mode={mode} activeView="about" title="/sys/users/admin/bio.txt">
+        <div className="about-grid-layout">
+          {/* Left Column: Editorial Bio */}
+          <div className="about-editorial-col">
+            <div className="about-portrait-card">
+              <img
+                src="/stitch-dock.png"
+                alt="Shivsharan Sanjawad Archival Portrait"
+              />
+            </div>
+
+            <p>
+              <span className="about-drop-cap">{personalData.bioDropCap}</span>
+              {personalData.bioLead}
+            </p>
+
+            <p>{personalData.bioParagraph2}</p>
+
+            <p>{personalData.bioParagraph3}</p>
+
+            {/* Signature block */}
+            <div className="about-signature-block">
+              <span>Authenticated by:</span>
+              <h4>{personalData.shortName}</h4>
+            </div>
+          </div>
+
+          {/* Right Column: System Status & Specifications */}
+          <div className="about-specs-col">
+            {/* System Status Widget */}
+            <div>
+              <h3 className="about-widget-title">
+                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>sensors</span>
+                <span>System Status</span>
+              </h3>
+              <div className="about-status-list">
+                <div className="about-status-row">
+                  <span className="muted-text">Availability</span>
+                  <span className="crimson-text" style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span className="pulse-active" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--secondary)', display: 'inline-block' }}></span>
+                    {personalData.availability}
+                  </span>
+                </div>
+                <div className="about-status-row">
+                  <span className="muted-text">Current Focus</span>
+                  <span style={{ fontWeight: 500 }}>{personalData.currentFocus}</span>
+                </div>
+                <div className="about-status-row">
+                  <span className="muted-text">Location</span>
+                  <span>{personalData.location}</span>
+                </div>
+                <div className="about-status-row">
+                  <span className="muted-text">Timezone</span>
+                  <span>{personalData.timezone}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Specifications Widget */}
+            <div>
+              <h3 className="about-widget-title">
+                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>memory</span>
+                <span>Specifications</span>
+              </h3>
+              <div className="about-specs-list">
+                <div>
+                  <span className="label">Primary Stack</span>
+                  <p>{personalData.primaryStack.join(', ')}</p>
+                </div>
+                <div>
+                  <span className="label">Core Disciplines</span>
+                  <ul className="about-disciplines-list">
+                    {personalData.coreDisciplines.map((d) => (
+                      <li key={d}>- {d}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <span className="label">Uptime (Experience)</span>
+                  <p>{personalData.uptime}</p>
+                </div>
+
+                <button
+                  type="button"
+                  className="btn-primary"
+                  style={{ width: '100%', marginTop: '12px' }}
+                  onClick={() => onViewChange('contact')}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 16 }}>mail</span>
+                  <span>Get In Touch</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </WindowCard>
+    </div>
+  )
+}

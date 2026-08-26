@@ -1,0 +1,129 @@
+/* Linux Mode Overrides (GNOME / Ubuntu Desktop Style) */
+
+.mode-linux .topbar {
+  height: 36px;
+  background-color: var(--surface-container-high);
+  border-bottom: 1px solid var(--outline-variant);
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.mode-linux .workspace-wrapper {
+  margin-top: 36px;
+  height: calc(100vh - 36px);
+}
+
+.mode-linux .main-canvas {
+  background-image: radial-gradient(var(--outline-variant) 1px, transparent 1px);
+  background-size: 20px 20px;
+  padding-left: 100px;
+}
+
+/* GNOME Style Left Dock */
+.mode-linux .sidebar-litho {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64px;
+  height: auto;
+  max-height: 85vh;
+  background-color: rgba(252, 249, 244, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--outline-variant);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  padding: 12px 8px;
+  align-items: center;
+  z-index: 50;
+}
+
+.mode-linux .sidebar-profile {
+  padding: 0;
+  border-bottom: none;
+  margin-bottom: 10px;
+}
+
+.mode-linux .sidebar-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background-color: var(--primary);
+  color: var(--surface);
+  font-size: 15px;
+  border: none;
+}
+
+.mode-linux .sidebar-user-info,
+.mode-linux .sidebar-action-btn,
+.mode-linux .sidebar-footer {
+  display: none;
+}
+
+.mode-linux .sidebar-nav-list {
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.mode-linux .sidebar-nav-item {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  padding: 0;
+  justify-content: center;
+  border-left: none;
+  color: var(--on-surface-variant);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.mode-linux .sidebar-nav-item span:not(.material-symbols-outlined) {
+  display: none;
+}
+
+.mode-linux .sidebar-nav-item:hover {
+  background-color: var(--surface-container-highest);
+  color: var(--on-surface);
+}
+
+.mode-linux .sidebar-nav-item.active {
+  background-color: var(--secondary);
+  color: #ffffff;
+}
+
+.mode-linux .sidebar-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  background-color: var(--secondary);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.mode-linux .terminal-dock {
+  left: 0;
+  margin: 0 40px 16px 100px;
+  border: 1px solid var(--outline-variant);
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 860px) {
+  .mode-linux .sidebar-litho {
+    display: none;
+  }
+  .mode-linux .main-canvas {
+    padding-left: 16px;
+  }
+  .mode-linux .terminal-dock {
+    margin: 0;
+    border-radius: 0;
+  }
+}
