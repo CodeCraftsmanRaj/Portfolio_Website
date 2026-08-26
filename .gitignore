@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.env
+stitch_adaptive_multi_os_workspace/
