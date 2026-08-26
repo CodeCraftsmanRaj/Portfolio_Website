@@ -1,11 +1,13 @@
-import React from 'react'
-import { OsMode, PageView, personalData } from '../data/portfolioData'
-import { WindowCard } from '../components/WindowCard'
+import React from 'react';
+import { OsMode, PageView, personalData } from '../data/portfolioData';
+import { WindowCard } from '../components/WindowCard';
+import { useTypewriter } from '../hooks/useTypewriter';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface HomePageProps {
-  mode: OsMode
-  onViewChange: (view: PageView) => void
-  onToggleTerminal: () => void
+  mode: OsMode;
+  onViewChange: (view: PageView) => void;
+  onToggleTerminal: () => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -13,24 +15,46 @@ export const HomePage: React.FC<HomePageProps> = ({
   onViewChange,
   onToggleTerminal,
 }) => {
+  const containerRef = useScrollReveal();
+
+  // Mac boot lines typewriter
+  const macBootLines = [
+    '> RUNNING SYSTEM CHECK...',
+    '> STATUS: ONLINE [ALL CORES GREEN]',
+    `> ROLE: ${personalData.role}`,
+    '> INIT PORTFOLIO SEQUENCE... READY',
+  ];
+  const { lines: typedMacLines } = useTypewriter(macBootLines, {
+    osMode: 'MAC',
+    speed: 25,
+  });
+
   // LINUX MODE HERO
   if (mode === 'LINUX') {
     return (
       <WindowCard mode={mode} activeView="home" title="~/portfolio/home.md">
-        <div style={{ padding: '36px 40px' }}>
+        <div ref={containerRef} style={{ padding: '36px 40px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
             <div style={{ gridColumn: 'span 8', paddingRight: '24px', borderRight: '1px solid var(--outline-variant)' }}>
-              <h1 className="hero-main-heading" style={{ borderBottom: '2px solid var(--primary)', paddingBottom: '16px' }}>
+              <h1
+                data-reveal="left"
+                className="hero-main-heading is-revealed"
+                style={{ borderBottom: '2px solid var(--primary)', paddingBottom: '16px' }}
+              >
                 {personalData.linuxHeadline}
               </h1>
-              <p style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', lineHeight: 1.7, color: 'var(--on-surface-variant)', marginBottom: '32px' }}>
+              <p
+                data-reveal
+                style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', lineHeight: 1.7, color: 'var(--on-surface-variant)', marginBottom: '32px' }}
+              >
                 {personalData.linuxSubHeadline}
               </p>
 
               {/* Bento Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '24px' }}>
                 <div
-                  className="os-double-border"
+                  data-reveal
+                  className="os-double-border hover-lift"
                   style={{
                     gridColumn: 'span 2',
                     padding: '20px',
@@ -52,7 +76,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </div>
                 </div>
 
-                <div className="hairline-border" style={{ padding: '16px', background: 'var(--surface-container-low)' }}>
+                <div data-reveal className="hairline-border hover-lift" style={{ padding: '16px', background: 'var(--surface-container-low)' }}>
                   <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '16px', marginBottom: '8px' }}>System Stats</h4>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--on-surface-variant)', lineHeight: 1.7 }}>
                     <div>Uptime: 99.999%</div>
@@ -62,7 +86,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 <div
-                  className="hairline-border"
+                  data-reveal
+                  className="hairline-border hover-lift btn-press"
                   style={{
                     padding: '16px',
                     background: 'var(--surface-container-low)',
@@ -81,7 +106,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Linux Right Column */}
             <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
+              <div data-reveal>
                 <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--on-surface-variant)', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px', marginBottom: '12px' }}>
                   Status
                 </h4>
@@ -91,7 +116,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              <div>
+              <div data-reveal>
                 <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--on-surface-variant)', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px', marginBottom: '12px' }}>
                   Technologies
                 </h4>
@@ -103,10 +128,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </ul>
               </div>
 
-              <div style={{ marginTop: 'auto' }}>
+              <div data-reveal style={{ marginTop: 'auto' }}>
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="btn-primary btn-press"
                   style={{ width: '100%' }}
                   onClick={() => onViewChange('projects')}
                 >
@@ -117,17 +142,17 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </WindowCard>
-    )
+    );
   }
 
   // WINDOWS MODE HERO
   if (mode === 'WIN') {
     return (
       <WindowCard mode={mode} activeView="home" title="C:\Users\Root\Home.exe">
-        <div style={{ padding: '36px 40px' }}>
+        <div ref={containerRef} style={{ padding: '36px 40px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
             <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ borderBottom: '4px solid var(--primary)', paddingBottom: '16px' }}>
+              <div data-reveal="left" style={{ borderBottom: '4px solid var(--primary)', paddingBottom: '16px' }}>
                 <h1 className="hero-main-heading" style={{ marginBottom: '8px' }}>
                   SYSTEM ARCHITECT <br />&amp; LEAD DEVELOPER
                 </h1>
@@ -137,7 +162,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div className="hairline-border" style={{ padding: '16px', background: 'var(--surface)' }}>
+                <div data-reveal className="hairline-border hover-lift" style={{ padding: '16px', background: 'var(--surface)' }}>
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 600, marginBottom: '10px' }} className="crimson-text">
                     Core Competencies
                   </h3>
@@ -149,7 +174,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </ul>
                 </div>
 
-                <div className="hairline-border" style={{ padding: '16px', background: 'var(--surface)' }}>
+                <div data-reveal className="hairline-border hover-lift" style={{ padding: '16px', background: 'var(--surface)' }}>
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 600, marginBottom: '10px' }} className="crimson-text">
                     Recent Deployments
                   </h3>
@@ -159,7 +184,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              <div className="hero-schematic-frame" style={{ maxWidth: '100%' }}>
+              <div data-reveal className="hero-schematic-frame hover-lift" style={{ maxWidth: '100%' }}>
                 <img
                   src="/stitch-developer-os.png"
                   alt="System Architecture Interface Schematic"
@@ -174,7 +199,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Windows Right Column: Stats & Logs */}
             <div style={{ gridColumn: 'span 4', borderLeft: '1px solid var(--outline-variant)', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ background: 'var(--surface-variant)', padding: '16px', border: '1px solid var(--outline-variant)' }}>
+              <div data-reveal style={{ background: 'var(--surface-variant)', padding: '16px', border: '1px solid var(--outline-variant)' }}>
                 <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '6px', marginBottom: '10px' }}>
                   System Status
                 </h4>
@@ -194,7 +219,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              <div>
+              <div data-reveal>
                 <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 600, borderBottom: '2px solid var(--primary)', paddingBottom: '8px', marginBottom: '14px' }}>
                   Latest Logs
                 </h4>
@@ -210,17 +235,17 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div data-reveal style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="btn-primary btn-press"
                   onClick={() => onViewChange('projects')}
                 >
                   Execute Portfolio
                 </button>
                 <button
                   type="button"
-                  className="btn-outline"
+                  className="btn-outline btn-press"
                   onClick={onToggleTerminal}
                 >
                   Open Command Prompt
@@ -230,15 +255,15 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </WindowCard>
-    )
+    );
   }
 
   // DEFAULT / MAC MODE HERO
   return (
     <WindowCard mode={mode} activeView="home" title="~/profile/init.exe">
-      <div className="hero-window-content">
+      <div ref={containerRef} className="hero-window-content">
         {/* Left: Schematic Frame */}
-        <div className="hero-schematic-frame">
+        <div data-reveal="scale" className="hero-schematic-frame hover-lift">
           <img
             src="/stitch-developer-os.png"
             alt="Developer OS Interface Schematic"
@@ -251,24 +276,30 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* Right: Boot Sequence & Actions */}
         <div className="hero-system-copy">
-          <div className="hero-prompt-line">&gt; ROOT@DEVELOPER_OS</div>
-          <h1 className="hero-main-heading">
+          <div data-reveal className="hero-prompt-line">&gt; ROOT@DEVELOPER_OS</div>
+          <h1 data-reveal className="hero-main-heading">
             SHIVSHARAN<br />SANJAWAD
           </h1>
 
-          <div className="hero-status-box">
-            <p>&gt; RUNNING SYSTEM CHECK...</p>
-            <p>&gt; STATUS: <span className="badge-online">ONLINE</span></p>
-            <p>&gt; ROLE: {personalData.role}</p>
-            <p>
-              &gt; INIT PORTFOLIO SEQUENCE... <span className="blinking-cursor"></span>
-            </p>
+          <div data-reveal className="hero-status-box hover-lift">
+            {typedMacLines.map((line, idx) => (
+              <p key={idx}>
+                {line.includes('ONLINE') ? (
+                  <>
+                    &gt; STATUS: <span className="badge-online">ONLINE</span> [ALL CORES GREEN]
+                  </>
+                ) : (
+                  line
+                )}
+              </p>
+            ))}
+            <span className="blinking-cursor"></span>
           </div>
 
-          <div className="hero-actions">
+          <div data-reveal className="hero-actions">
             <button
               type="button"
-              className="btn-primary"
+              className="btn-primary btn-press"
               onClick={() => onViewChange('projects')}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 16 }}>play_arrow</span>
@@ -276,7 +307,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </button>
             <button
               type="button"
-              className="btn-outline"
+              className="btn-outline btn-press"
               onClick={onToggleTerminal}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 16 }}>terminal</span>
@@ -286,5 +317,5 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
     </WindowCard>
-  )
-}
+  );
+};

@@ -1,12 +1,14 @@
-import React from 'react'
-import { navItems, personalData, OsMode, PageView } from '../data/portfolioData'
+import React, { useState } from 'react';
+import { navItems, personalData, OsMode, PageView } from '../data/portfolioData';
+import { useDockMagnification } from '../hooks/useDockMagnification';
+import { useRevealEffect } from '../hooks/useRevealEffect';
 
 interface SidebarProps {
-  mode: OsMode
-  activeView: PageView
-  onViewChange: (view: PageView) => void
-  mobileOpen: boolean
-  onCloseMobile: () => void
+  mode: OsMode;
+  activeView: PageView;
+  onViewChange: (view: PageView) => void;
+  mobileOpen: boolean;
+  onCloseMobile: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -16,15 +18,36 @@ export const Sidebar: React.FC<SidebarProps> = ({
   mobileOpen,
   onCloseMobile,
 }) => {
+  const [bouncingId, setBouncingId] = useState<string | null>(null);
+
+  // Hook for Mac Dock Magnification
+  const dockNavRef = useDockMagnification({
+    enabled: mode === 'MAC',
+    maxScale: 1.32,
+    distance: 65,
+  });
+
+  // Hook for Windows Fluent Reveal Effect
+  const revealRef = useRevealEffect<HTMLElement>({
+    enabled: mode === 'WIN',
+  });
+
   const handleItemClick = (view: PageView) => {
-    onViewChange(view)
-    if (mobileOpen) {
-      onCloseMobile()
+    if (mode === 'MAC') {
+      setBouncingId(view);
+      setTimeout(() => setBouncingId(null), 650);
     }
-  }
+    onViewChange(view);
+    if (mobileOpen) {
+      onCloseMobile();
+    }
+  };
 
   return (
-    <aside className={`sidebar-litho ${mobileOpen ? 'drawer-open' : ''}`}>
+    <aside
+      ref={mode === 'WIN' ? revealRef : undefined}
+      className={`sidebar-litho ${mode === 'MAC' ? 'sidebar-mac-dock' : ''} ${mode === 'WIN' ? 'reveal-container' : ''} ${mobileOpen ? 'drawer-open' : ''}`}
+    >
       {/* Profile Header */}
       <div className="sidebar-profile">
         <div className="sidebar-avatar-row">
@@ -39,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           type="button"
-          className="sidebar-action-btn"
+          className="sidebar-action-btn btn-press"
           onClick={() => handleItemClick('contact')}
         >
           <span>New Instance</span>
@@ -48,14 +71,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Navigation items */}
-      <nav className="sidebar-nav-list">
+      <nav
+        ref={mode === 'MAC' ? dockNavRef : undefined}
+        className="sidebar-nav-list"
+      >
         {navItems.map((item) => {
-          const isActive = activeView === item.id
+          const isActive = activeView === item.id;
+          const isBouncing = bouncingId === item.id;
           return (
             <button
               key={item.id}
               type="button"
-              className={`sidebar-nav-item ${isActive ? 'active' : ''}`}
+              data-label={item.sidebarLabel}
+              className={`sidebar-nav-item ${isActive ? 'active' : ''} ${isBouncing ? 'dock-bouncing' : ''}`}
               onClick={() => handleItemClick(item.id)}
               title={item.sidebarLabel}
             >
@@ -66,7 +94,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </span>
               <span>{item.sidebarLabel}</span>
             </button>
-          )
+          );
         })}
       </nav>
 
@@ -74,6 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="sidebar-footer">
         <button
           type="button"
+          data-label="Trash"
           className="sidebar-footer-item"
           onClick={() => handleItemClick('home')}
         >
@@ -82,6 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
         <button
           type="button"
+          data-label="Settings"
           className="sidebar-footer-item"
           onClick={() => handleItemClick('skills')}
         >
@@ -90,5 +120,5 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
     </aside>
-  )
-}
+  );
+};

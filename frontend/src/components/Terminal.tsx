@@ -173,11 +173,9 @@ export const Terminal: React.FC<TerminalProps> = ({
     setInputVal('')
   }
 
-  if (!isOpen) return null
-
   return (
     <div
-      className={`terminal-dock ${isMinimized ? 'collapsed' : ''} ${isMaximized ? 'fullscreen' : ''}`}
+      className={`terminal-dock ${!isOpen ? 'closed' : ''} ${isMinimized ? 'collapsed' : ''} ${isMaximized ? 'fullscreen' : ''}`}
       style={isMinimized ? { height: '36px' } : undefined}
     >
       {/* Terminal Header & Tabs */}

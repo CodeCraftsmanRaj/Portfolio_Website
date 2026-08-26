@@ -1,17 +1,20 @@
-import React from 'react'
-import { OsMode, PageView, personalData } from '../data/portfolioData'
-import { WindowCard } from '../components/WindowCard'
+import React from 'react';
+import { OsMode, PageView, personalData } from '../data/portfolioData';
+import { WindowCard } from '../components/WindowCard';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface AboutPageProps {
-  mode: OsMode
-  onViewChange: (view: PageView) => void
+  mode: OsMode;
+  onViewChange: (view: PageView) => void;
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
+  const containerRef = useScrollReveal();
+
   return (
-    <div style={{ maxWidth: '1120px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1120px', margin: '0 auto' }}>
       {/* Page Header */}
-      <div className="about-page-header">
+      <div data-reveal className="about-page-header">
         <h1>SYSTEM_INFO.TXT</h1>
         <p>Metadata / Architect Profile</p>
       </div>
@@ -20,24 +23,24 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
         <div className="about-grid-layout">
           {/* Left Column: Editorial Bio */}
           <div className="about-editorial-col">
-            <div className="about-portrait-card">
+            <div data-reveal="scale" className="about-portrait-card hover-lift">
               <img
                 src="/stitch-dock.png"
                 alt="Shivsharan Sanjawad Archival Portrait"
               />
             </div>
 
-            <p>
+            <p data-reveal>
               <span className="about-drop-cap">{personalData.bioDropCap}</span>
               {personalData.bioLead}
             </p>
 
-            <p>{personalData.bioParagraph2}</p>
+            <p data-reveal>{personalData.bioParagraph2}</p>
 
-            <p>{personalData.bioParagraph3}</p>
+            <p data-reveal>{personalData.bioParagraph3}</p>
 
             {/* Signature block */}
-            <div className="about-signature-block">
+            <div data-reveal className="about-signature-block">
               <span>Authenticated by:</span>
               <h4>{personalData.shortName}</h4>
             </div>
@@ -46,12 +49,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
           {/* Right Column: System Status & Specifications */}
           <div className="about-specs-col">
             {/* System Status Widget */}
-            <div>
+            <div data-reveal>
               <h3 className="about-widget-title">
                 <span className="material-symbols-outlined" style={{ fontSize: 16 }}>sensors</span>
                 <span>System Status</span>
               </h3>
-              <div className="about-status-list">
+              <div className="about-status-list hover-lift">
                 <div className="about-status-row">
                   <span className="muted-text">Availability</span>
                   <span className="crimson-text" style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -75,12 +78,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
             </div>
 
             {/* Specifications Widget */}
-            <div>
+            <div data-reveal>
               <h3 className="about-widget-title">
                 <span className="material-symbols-outlined" style={{ fontSize: 16 }}>memory</span>
                 <span>Specifications</span>
               </h3>
-              <div className="about-specs-list">
+              <div className="about-specs-list hover-lift">
                 <div>
                   <span className="label">Primary Stack</span>
                   <p>{personalData.primaryStack.join(', ')}</p>
@@ -100,7 +103,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
 
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="btn-primary btn-press"
                   style={{ width: '100%', marginTop: '12px' }}
                   onClick={() => onViewChange('contact')}
                 >
@@ -113,5 +116,5 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
         </div>
       </WindowCard>
     </div>
-  )
-}
+  );
+};

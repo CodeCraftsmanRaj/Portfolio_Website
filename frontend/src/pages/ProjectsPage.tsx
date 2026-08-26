@@ -1,34 +1,36 @@
-import React, { useState } from 'react'
-import { OsMode, projectsList } from '../data/portfolioData'
-import { WindowCard } from '../components/WindowCard'
+import React, { useState } from 'react';
+import { OsMode, projectsList } from '../data/portfolioData';
+import { WindowCard } from '../components/WindowCard';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface ProjectsPageProps {
-  mode: OsMode
+  mode: OsMode;
 }
 
 export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState('');
+  const containerRef = useScrollReveal({ staggerDelayMs: 80 });
 
   const filteredProjects = projectsList.filter((p) => {
-    const q = searchQuery.toLowerCase()
+    const q = searchQuery.toLowerCase();
     return (
       p.title.toLowerCase().includes(q) ||
       p.filename.toLowerCase().includes(q) ||
       p.description.toLowerCase().includes(q) ||
       p.tags.some((t) => t.toLowerCase().includes(q))
-    )
-  })
+    );
+  });
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1200px', margin: '0 auto' }}>
       {/* Page Header */}
-      <div className="projects-page-header">
+      <div data-reveal className="projects-page-header">
         <div className="projects-header-info">
           <h1>Projects</h1>
           <p>/root/workspace/repositories — Displaying {filteredProjects.length} entries.</p>
         </div>
 
-        <div className="projects-search-bar">
+        <div className="projects-search-bar hover-lift">
           <span className="material-symbols-outlined muted-text" style={{ fontSize: 18 }}>search</span>
           <input
             type="text"
@@ -48,7 +50,8 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                 return (
                   <div
                     key={project.id}
-                    className="project-card featured-card group"
+                    data-reveal
+                    className="project-card featured-card group hover-lift"
                   >
                     <div className="project-card-header">
                       <div className="filename">
@@ -79,7 +82,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                       </div>
                     </div>
                   </div>
-                )
+                );
               }
 
               // 2. Code preview card (col-span 8)
@@ -87,7 +90,8 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                 return (
                   <div
                     key={project.id}
-                    className="project-card code-card group"
+                    data-reveal
+                    className="project-card code-card group hover-lift"
                   >
                     <div className="project-code-snippet">
                       <div className="filename" style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -116,7 +120,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                       </div>
                     </div>
                   </div>
-                )
+                );
               }
 
               // 3. Render Screen preview card (col-span 4)
@@ -124,7 +128,8 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                 return (
                   <div
                     key={project.id}
-                    className="project-card preview-card group"
+                    data-reveal
+                    className="project-card preview-card group hover-lift"
                   >
                     <div className="project-card-header">
                       <div className="filename">
@@ -154,14 +159,15 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                       </div>
                     </div>
                   </div>
-                )
+                );
               }
 
               // 4. Standard card (col-span 4)
               return (
                 <div
                   key={project.id}
-                  className="project-card standard-card group"
+                  data-reveal
+                  className="project-card standard-card group hover-lift"
                 >
                   <div className="project-card-header">
                     <div className="filename">
@@ -187,11 +193,11 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
                     </div>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
       </WindowCard>
     </div>
-  )
-}
+  );
+};

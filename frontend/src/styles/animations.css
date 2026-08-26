@@ -1,0 +1,299 @@
+/* ==========================================================================
+   OS-SPECIFIC ANIMATIONS & MOTION SYSTEM
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Keyframes
+   -------------------------------------------------------------------------- */
+
+/* macOS App Launch Dock Bounce */
+@keyframes mac-dock-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    transform: translateY(-16px) scale(1.1);
+  }
+  40% {
+    transform: translateY(0) scale(0.95);
+  }
+  60% {
+    transform: translateY(-8px) scale(1.04);
+  }
+  80% {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+/* macOS Spring Window Launch */
+@keyframes mac-window-open {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(20px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.01) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Windows Fluent Drill-In */
+@keyframes win-drill-in {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Linux GNOME Scale & Fade Workspace Switch */
+@keyframes gnome-workspace-switch {
+  0% {
+    opacity: 0;
+    transform: scale(0.93);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Windows 11 Boot Spinner */
+@keyframes win-spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* General Pulse & Blinking */
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes blink-cursor {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Scanline / Shimmer */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll & Stagger Reveal Classes
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal="left"] {
+  transform: translateX(-24px);
+}
+[data-reveal="left"].is-revealed {
+  transform: translateX(0);
+}
+
+[data-reveal="right"] {
+  transform: translateX(24px);
+}
+[data-reveal="right"].is-revealed {
+  transform: translateX(0);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.92);
+}
+[data-reveal="scale"].is-revealed {
+  transform: scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   Mac Dock Interactive Magnification & Bouncing
+   -------------------------------------------------------------------------- */
+.sidebar-mac-dock .sidebar-nav-item {
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.15s ease,
+              color 0.15s ease !important;
+  transform-origin: center center;
+  position: relative;
+}
+
+.sidebar-mac-dock .sidebar-nav-item.dock-bouncing {
+  animation: mac-dock-bounce 0.65s cubic-bezier(0.28, 0.84, 0.42, 1);
+}
+
+/* Mac Dock Tooltip */
+.sidebar-mac-dock .sidebar-nav-item::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  background: var(--surface-overlay, #1c1c19);
+  color: var(--on-surface-dark, #fcf9f4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.sidebar-mac-dock .sidebar-nav-item:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* --------------------------------------------------------------------------
+   Windows Fluent Design Reveal Effect
+   -------------------------------------------------------------------------- */
+.reveal-container {
+  position: relative;
+}
+
+.reveal-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 100px at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(166, 57, 43, 0.08),
+    transparent 70%
+  );
+  transition: opacity 0.2s ease;
+  z-index: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Linux GNOME Activities Overview & Desktop Effects
+   -------------------------------------------------------------------------- */
+.activities-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 28, 25, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: gnome-workspace-switch 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  width: 90%;
+}
+
+.activities-window-preview {
+  background: var(--surface-litho);
+  border: 1px solid var(--outline-litho);
+  border-radius: 6px;
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.activities-window-preview:hover {
+  transform: scale(1.04);
+  border-color: var(--primary-litho);
+}
+
+/* --------------------------------------------------------------------------
+   OS Switch Morphing
+   -------------------------------------------------------------------------- */
+.os-transitioning {
+  opacity: 0.65;
+  transition: opacity 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Micro-Interactions & Card Lifts
+   -------------------------------------------------------------------------- */
+.hover-lift {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease !important;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(28, 28, 25, 0.08);
+}
+
+/* Press Feedback */
+.btn-press:active {
+  transform: scale(0.97);
+  transition: transform 0.05s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

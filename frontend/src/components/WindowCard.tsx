@@ -1,12 +1,12 @@
-import React from 'react'
-import { OsMode, PageView, navItems } from '../data/portfolioData'
+import React from 'react';
+import { OsMode, PageView, navItems } from '../data/portfolioData';
 
 interface WindowCardProps {
-  mode: OsMode
-  activeView: PageView
-  title?: string
-  children: React.ReactNode
-  onClose?: () => void
+  mode: OsMode;
+  activeView: PageView;
+  title?: string;
+  children: React.ReactNode;
+  onClose?: () => void;
 }
 
 export const WindowCard: React.FC<WindowCardProps> = ({
@@ -16,11 +16,11 @@ export const WindowCard: React.FC<WindowCardProps> = ({
   children,
   onClose,
 }) => {
-  const currentNav = navItems.find((n) => n.id === activeView) || navItems[0]
-  const displayPath = title || currentNav.path[mode.toLowerCase() as 'mac' | 'win' | 'linux']
+  const currentNav = navItems.find((n) => n.id === activeView) || navItems[0];
+  const displayPath = title || currentNav.path[mode.toLowerCase() as 'mac' | 'win' | 'linux'];
 
   return (
-    <section className="window-container os-double-border">
+    <section className="window-container os-double-border hover-lift">
       {/* OS Mode-Specific Title Bar */}
       {mode === 'MAC' && (
         <div className="window-header">
@@ -47,13 +47,13 @@ export const WindowCard: React.FC<WindowCardProps> = ({
             <span style={{ fontWeight: 700 }}>{displayPath}</span>
           </div>
           <div className="win-window-controls">
-            <button type="button" className="win-btn" title="Minimize">
+            <button type="button" className="win-btn btn-press" title="Minimize">
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>remove</span>
             </button>
-            <button type="button" className="win-btn" title="Maximize">
+            <button type="button" className="win-btn btn-press" title="Maximize">
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>crop_square</span>
             </button>
-            <button type="button" className="win-btn close" title="Close" onClick={onClose}>
+            <button type="button" className="win-btn close btn-press" title="Close" onClick={onClose}>
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>close</span>
             </button>
           </div>
@@ -69,13 +69,13 @@ export const WindowCard: React.FC<WindowCardProps> = ({
             <span style={{ fontWeight: 500 }}>{displayPath}</span>
           </div>
           <div className="linux-window-controls">
-            <button type="button" className="linux-dot-btn" title="Minimize">
+            <button type="button" className="linux-dot-btn btn-press" title="Minimize">
               <span className="material-symbols-outlined" style={{ fontSize: 10, color: 'var(--surface)' }}>remove</span>
             </button>
-            <button type="button" className="linux-dot-btn" title="Maximize">
+            <button type="button" className="linux-dot-btn btn-press" title="Maximize">
               <span className="material-symbols-outlined" style={{ fontSize: 10, color: 'var(--surface)' }}>crop_square</span>
             </button>
-            <button type="button" className="linux-dot-btn close" title="Close" onClick={onClose}>
+            <button type="button" className="linux-dot-btn close btn-press" title="Close" onClick={onClose}>
               <span className="material-symbols-outlined" style={{ fontSize: 10, color: '#ffffff' }}>close</span>
             </button>
           </div>
@@ -87,5 +87,5 @@ export const WindowCard: React.FC<WindowCardProps> = ({
         {children}
       </div>
     </section>
-  )
-}
+  );
+};

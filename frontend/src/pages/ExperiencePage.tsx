@@ -1,20 +1,23 @@
-import React from 'react'
-import { OsMode, experienceList } from '../data/portfolioData'
-import { WindowCard } from '../components/WindowCard'
+import React from 'react';
+import { OsMode, experienceList } from '../data/portfolioData';
+import { WindowCard } from '../components/WindowCard';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface ExperiencePageProps {
-  mode: OsMode
+  mode: OsMode;
 }
 
 export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
+  const containerRef = useScrollReveal({ staggerDelayMs: 100 });
+
   const handleExportPdf = () => {
-    window.print()
-  }
+    window.print();
+  };
 
   return (
-    <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1080px', margin: '0 auto' }}>
       {/* Page Header */}
-      <div className="experience-page-header">
+      <div data-reveal className="experience-page-header">
         <h1>/var/log/experience</h1>
         <p>System log entry initialized. Parsing career timeline...</p>
       </div>
@@ -24,14 +27,14 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
           {/* Vertical Timeline */}
           <div className="timeline-wrapper">
             {experienceList.map((item) => (
-              <div key={item.id} className="timeline-entry">
+              <div key={item.id} data-reveal className="timeline-entry">
                 {/* Timeline Dot Indicator */}
                 <div className={`timeline-dot ${item.isActive ? 'active' : ''}`}>
                   <div className="timeline-dot-inner"></div>
                 </div>
 
                 {/* Timeline Content Card */}
-                <div className={`timeline-card ${item.isActive ? 'active' : ''}`}>
+                <div className={`timeline-card hover-lift ${item.isActive ? 'active' : ''}`}>
                   <div className="timeline-card-header">
                     <div>
                       <h3>{item.role}</h3>
@@ -51,11 +54,11 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
           </div>
 
           {/* Timeline Footer End */}
-          <div className="timeline-footer-end">
+          <div data-reveal className="timeline-footer-end">
             <p>-- End of Log --</p>
             <button
               type="button"
-              className="btn-primary"
+              className="btn-primary btn-press"
               onClick={handleExportPdf}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 16 }}>download</span>
@@ -65,5 +68,5 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
         </div>
       </WindowCard>
     </div>
-  )
-}
+  );
+};

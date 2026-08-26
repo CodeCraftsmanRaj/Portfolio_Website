@@ -1,16 +1,19 @@
-import React from 'react'
-import { OsMode, coreLanguages, frameworkGroups, buildTools } from '../data/portfolioData'
-import { WindowCard } from '../components/WindowCard'
+import React from 'react';
+import { OsMode, coreLanguages, frameworkGroups, buildTools } from '../data/portfolioData';
+import { WindowCard } from '../components/WindowCard';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface SkillsPageProps {
-  mode: OsMode
+  mode: OsMode;
 }
 
 export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
+  const containerRef = useScrollReveal();
+
   return (
-    <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1180px', margin: '0 auto' }}>
       {/* Header Section */}
-      <div className="skills-page-header">
+      <div data-reveal className="skills-page-header">
         <h1>System Dependencies</h1>
         <p>
           A comprehensive overview of the installed packages, frameworks, and core languages operating within this environment. Data is organized by dependency layer.
@@ -22,14 +25,14 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
           <div className="skills-layout-grid">
             {/* Core Binaries Progress Bars */}
             <div>
-              <h2 className="skills-section-title">
+              <h2 data-reveal className="skills-section-title">
                 <span className="material-symbols-outlined crimson-text">code</span>
                 <span>Core Binaries</span>
               </h2>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {coreLanguages.map((skill) => (
-                  <div key={skill.name} className="skill-progress-item">
+                  <div key={skill.name} data-reveal className="skill-progress-item hover-lift">
                     <div className="skill-progress-header">
                       <span className="name">{skill.name}</span>
                       <span className="version">{skill.version}</span>
@@ -46,7 +49,8 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
 
               {/* Extra OS Environment Info */}
               <div
-                className="hairline-border"
+                data-reveal
+                className="hairline-border hover-lift"
                 style={{
                   marginTop: '28px',
                   padding: '16px',
@@ -67,7 +71,7 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
 
             {/* Frameworks Bento 2x2 Grid */}
             <div>
-              <h2 className="skills-section-title">
+              <h2 data-reveal className="skills-section-title">
                 <span className="material-symbols-outlined crimson-text">layers</span>
                 <span>Framework Dependencies</span>
               </h2>
@@ -76,7 +80,8 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
                 {frameworkGroups.map((group) => (
                   <div
                     key={group.title}
-                    className="os-double-border framework-card"
+                    data-reveal
+                    className="os-double-border framework-card hover-lift"
                   >
                     <div className="framework-card-header">
                       <h3>{group.title}</h3>
@@ -101,13 +106,13 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
 
               {/* Build & Deployment Tools */}
               <div className="build-tools-section">
-                <h2 className="skills-section-title">
+                <h2 data-reveal className="skills-section-title">
                   <span className="material-symbols-outlined crimson-text">build</span>
                   <span>Build &amp; Deployment Tools</span>
                 </h2>
                 <div className="build-tools-grid">
                   {buildTools.map((tool) => (
-                    <div key={tool} className="tool-chip">
+                    <div key={tool} data-reveal className="tool-chip hover-lift">
                       <span className="material-symbols-outlined crimson-text" style={{ fontSize: 16 }}>
                         check_circle
                       </span>
@@ -121,5 +126,5 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
         </div>
       </WindowCard>
     </div>
-  )
-}
+  );
+};
