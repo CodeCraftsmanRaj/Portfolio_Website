@@ -40,12 +40,70 @@
   --terminal-bg: #1e1b17;
   --terminal-light-bg: #f2eee7;
   --terminal-text: #fcf9f4;
+  --terminal-header: #292521;
+  --terminal-muted: #a8a29e;
+  --terminal-error: #ff7c68;
   --green: #4ade80;
   --linux-orange: #e95420;
   
   /* Typography */
   --font-serif: "Source Serif 4", Georgia, serif;
   --font-mono: "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+.theme-blue {
+  --surface: #ebf3fc;
+  --surface-dim: #d5e3f3;
+  --surface-bright: #ffffff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f9fe;
+  --surface-container: #e5eef9;
+  --surface-container-high: #dce9f7;
+  --surface-container-highest: #cfe0f2;
+  --surface-variant: #dce9f7;
+  --on-surface: #1c2434;
+  --on-surface-variant: #637381;
+  --primary: #3a86ff;
+  --primary-container: #1f6fe5;
+  --secondary: #2563c7;
+  --secondary-deep: #174b9d;
+  --outline: #7b9bc0;
+  --outline-variant: #b8cde4;
+  --line: #b8cde4;
+  --terminal-light-bg: #edf5fd;
+  --terminal-bg: #10233f;
+  --terminal-text: #edf5fd;
+  --terminal-header: #17345b;
+  --terminal-muted: #9fb8d5;
+  --terminal-error: #ff9f9f;
+  --linux-orange: #3a86ff;
+}
+
+.theme-netflix {
+  --surface: #f7f7f7;
+  --surface-dim: #d8d8d8;
+  --surface-bright: #ffffff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f0f0f0;
+  --surface-container: #e5e5e5;
+  --surface-container-high: #dedede;
+  --surface-container-highest: #d0d0d0;
+  --surface-variant: #dedede;
+  --on-surface: #171717;
+  --on-surface-variant: #5f6368;
+  --primary: #171717;
+  --primary-container: #252525;
+  --secondary: #e50914;
+  --secondary-deep: #b20710;
+  --outline: #737373;
+  --outline-variant: #c9c9c9;
+  --line: #c9c9c9;
+  --linux-orange: #e50914;
+  --terminal-bg: #141414;
+  --terminal-text: #f7f7f7;
+  --terminal-header: #242424;
+  --terminal-muted: #a3a3a3;
+  --terminal-error: #ff5360;
 }
 
 *, *::before, *::after {
@@ -68,6 +126,26 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.theme-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--on-surface-variant);
+}
+
+.theme-swatch {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--outline-variant);
+}
+
+.theme-swatch.active {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--on-surface);
 }
 
 ::selection {

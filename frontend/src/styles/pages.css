@@ -207,6 +207,7 @@
   object-fit: cover;
   filter: grayscale(0.85) contrast(1.15) sepia(0.15);
   display: block;
+  object-position: top center;
 }
 
 .hero-schematic-caption {
@@ -353,6 +354,7 @@
   filter: grayscale(1) contrast(1.25);
   mix-blend-mode: multiply;
   display: block;
+  object-position: top center;
 }
 
 .about-signature-block {
@@ -1238,6 +1240,74 @@
 }
 
 @media (max-width: 768px) {
+  [data-reveal],
+  [data-reveal].is-revealed,
+  [data-reveal="left"],
+  [data-reveal="right"],
+  [data-reveal="scale"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .window-container {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .window-container > .window-header {
+    padding: 0 10px;
+  }
+
+  .window-title {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .window-title span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .window-container > div[style*="padding"] {
+    padding: 24px 16px !important;
+  }
+
+  .window-container [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .window-container [style*="grid-column"] {
+    grid-column: auto !important;
+    padding-right: 0 !important;
+    border-right: none !important;
+  }
+
+  .window-container [style*="border-left"] {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+
+  .profile-detail-grid,
+  .leadership-lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-editorial-col,
+  .about-specs-col {
+    padding: 24px 18px;
+  }
+
+  .projects-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .projects-search-bar {
+    width: 100%;
+  }
+
   .profile-detail-grid,
   .leadership-lower-grid {
     grid-template-columns: 1fr;
@@ -1247,6 +1317,15 @@
     flex-direction: column;
     padding: 24px 16px;
     gap: 24px;
+    min-height: 0;
+  }
+
+  .hero-schematic-frame img {
+    height: 180px;
+  }
+
+  .window-container.is-maximized {
+    inset: 48px 8px 8px;
   }
   .resume-page-header {
     align-items: flex-start;

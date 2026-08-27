@@ -5,7 +5,7 @@
 }
 
 .mode-win .topbar {
-  background-color: rgba(252, 249, 244, 0.95);
+  background-color: color-mix(in srgb, var(--surface) 95%, transparent);
   border-bottom: 1px solid var(--outline-variant);
 }
 
@@ -39,8 +39,10 @@
 .mode-win .sidebar-profile {
   padding: 0;
   border-bottom: none;
-  margin-bottom: 20px;
+  margin: 0 10px 0 0;
 }
+
+.mode-win .sidebar-avatar-row { margin-bottom: 0; }
 
 .mode-win .sidebar-user-info,
 .mode-win .sidebar-action-btn,
@@ -71,7 +73,7 @@
   padding: 0;
   justify-content: center;
   border-left: none;
-  color: #a8a29e;
+  color: var(--terminal-muted);
   position: relative;
   transition: all 0.2s ease;
 }
@@ -117,10 +119,24 @@
 
 @media (max-width: 860px) {
   .mode-win .sidebar-litho {
-    display: none;
+    display: flex;
+    left: 6px;
+    right: 6px;
+    width: auto;
+    height: 62px;
+    padding: 6px 8px;
+    justify-content: center;
+    overflow: hidden;
   }
   .mode-win .terminal-dock {
     left: 0;
-    bottom: 0;
+    bottom: 62px;
   }
+
+  .mode-win .sidebar-nav-item {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mode-win .sidebar-profile { margin-right: 6px; }
 }

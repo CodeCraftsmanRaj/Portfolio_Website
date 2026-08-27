@@ -22,7 +22,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
 
     setStatus('sending');
     try {
-      const response = await fetch('/api/contact', {
+      const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+      const response = await fetch(`${apiBaseUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message }),

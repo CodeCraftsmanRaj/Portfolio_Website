@@ -1,4 +1,11 @@
 export type OsMode = 'LINUX' | 'WIN' | 'MAC'
+export type ThemeName = 'blue' | 'netflix' | 'paper'
+
+export const themes: Array<{ id: ThemeName; label: string; swatch: string }> = [
+  { id: 'blue', label: 'Calm Blue', swatch: '#3A86FF' },
+  { id: 'netflix', label: 'Cinema', swatch: '#E50914' },
+  { id: 'paper', label: 'Warm Paper', swatch: '#A6392B' },
+]
 
 export type PageView = 
   | 'home'

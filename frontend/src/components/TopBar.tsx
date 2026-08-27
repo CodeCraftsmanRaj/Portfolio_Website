@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { OsMode, PageView, navItems } from '../data/portfolioData';
+import { OsMode, PageView, navItems, ThemeName, themes } from '../data/portfolioData';
 import { OsSwitcher } from './OsSwitcher';
 
 interface TopBarProps {
@@ -11,6 +11,8 @@ interface TopBarProps {
   onToggleTerminal: () => void;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
+  theme: ThemeName;
+  onThemeChange: (theme: ThemeName) => void;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -22,6 +24,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   onToggleTerminal,
   mobileMenuOpen,
   onToggleMobileMenu,
+  theme,
+  onThemeChange,
 }) => {
   const [timeString, setTimeString] = useState('');
   const [activitiesOpen, setActivitiesOpen] = useState(false);
@@ -45,6 +49,23 @@ export const TopBar: React.FC<TopBarProps> = ({
     onViewChange(view);
     setActivitiesOpen(false);
   };
+
+  const themePicker = (
+    <div className="theme-picker" aria-label="Color theme">
+      <span className="material-symbols-outlined" title="Color theme" style={{ fontSize: 16 }}>palette</span>
+      {themes.map((option) => (
+        <button
+          key={option.id}
+          type="button"
+          className={`theme-swatch ${theme === option.id ? 'active' : ''}`}
+          style={{ backgroundColor: option.swatch }}
+          title={option.label}
+          aria-label={`Use ${option.label} theme`}
+          onClick={() => onThemeChange(option.id)}
+        />
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -128,10 +149,11 @@ export const TopBar: React.FC<TopBarProps> = ({
           </div>
 
           <div className="topbar-right" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
+            {themePicker}
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>network_wifi</span>
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>volume_up</span>
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>battery_5_bar</span>
-            <span style={{ marginLeft: 6, fontWeight: 500 }}>{timeString}</span>
+            <span className="topbar-date" style={{ marginLeft: 6, fontWeight: 500 }}>{timeString}</span>
             <button
               type="button"
               className="topbar-icon-btn btn-press"
@@ -202,6 +224,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           </div>
 
           <div className="topbar-right">
+            {themePicker}
             <OsSwitcher mode={mode} onModeChange={onModeChange} />
             <button
               type="button"
@@ -283,6 +306,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           </div>
 
           <div className="topbar-right">
+            {themePicker}
             <OsSwitcher mode={mode} onModeChange={onModeChange} />
             <button
               type="button"

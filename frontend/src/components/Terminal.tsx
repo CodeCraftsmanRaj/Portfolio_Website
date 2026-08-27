@@ -26,8 +26,33 @@ export const Terminal: React.FC<TerminalProps> = ({
   const [inputVal, setInputVal] = useState('')
   const [isMaximized, setIsMaximized] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
+  const [terminalHeight, setTerminalHeight] = useState(220)
+  const [isResizing, setIsResizing] = useState(false)
   const [history, setHistory] = useState<CommandHistoryItem[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!isResizing) return
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const maxHeight = Math.max(180, window.innerHeight - 72)
+      const nextHeight = Math.min(maxHeight, Math.max(120, window.innerHeight - event.clientY))
+      setTerminalHeight(nextHeight)
+    }
+    const stopResizing = () => setIsResizing(false)
+
+    document.addEventListener('pointermove', handlePointerMove)
+    document.addEventListener('pointerup', stopResizing)
+    document.body.style.cursor = 'ns-resize'
+    document.body.style.userSelect = 'none'
+
+    return () => {
+      document.removeEventListener('pointermove', handlePointerMove)
+      document.removeEventListener('pointerup', stopResizing)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+    }
+  }, [isResizing])
 
   // Contextual initial lines based on active page & OS
   useEffect(() => {
@@ -182,8 +207,16 @@ export const Terminal: React.FC<TerminalProps> = ({
   return (
     <div
       className={`terminal-dock ${!isOpen ? 'closed' : ''} ${isMinimized ? 'collapsed' : ''} ${isMaximized ? 'fullscreen' : ''}`}
-      style={isMinimized ? { height: '36px' } : undefined}
+      style={isMinimized ? { height: '36px' } : isMaximized ? undefined : { height: `${terminalHeight}px` }}
     >
+      <div
+        className="terminal-resize-handle"
+        role="separator"
+        aria-label="Resize terminal"
+        onPointerDown={() => {
+          if (!isMaximized && !isMinimized) setIsResizing(true)
+        }}
+      />
       {/* Terminal Header & Tabs */}
       <div className="terminal-header">
         <div className="terminal-tabs">

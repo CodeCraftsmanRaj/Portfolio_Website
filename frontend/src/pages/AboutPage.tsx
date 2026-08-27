@@ -25,7 +25,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
           <div className="about-editorial-col">
             <div data-reveal="scale" className="about-portrait-card hover-lift">
               <img
-                src="/stitch-dock.png"
+                src="/Raj_Image_500.JPG"
                 alt="Raj Mathuria archival portrait"
               />
             </div>

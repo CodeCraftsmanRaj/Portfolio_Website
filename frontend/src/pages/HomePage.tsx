@@ -186,8 +186,8 @@ export const HomePage: React.FC<HomePageProps> = ({
 
               <div data-reveal className="hero-schematic-frame hover-lift" style={{ maxWidth: '100%' }}>
                 <img
-                  src="/stitch-developer-os.png"
-                  alt="System Architecture Interface Schematic"
+                  src="/Raj_Image_500.JPG"
+                  alt="Raj Mathuria profile portrait"
                   style={{ height: '220px' }}
                 />
                 <div className="hero-schematic-caption">
@@ -265,8 +265,8 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Left: Schematic Frame */}
         <div data-reveal="scale" className="hero-schematic-frame hover-lift">
           <img
-            src="/stitch-developer-os.png"
-            alt="Developer OS Interface Schematic"
+            src="/Raj_Image_500.JPG"
+            alt="Raj Mathuria profile portrait"
           />
           <div className="hero-schematic-caption">
             <span>DEVELOPER OS INTERFACE // SCHEMATIC</span>

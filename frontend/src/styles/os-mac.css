@@ -11,7 +11,7 @@
 }
 
 .mode-mac .topbar {
-  background-color: rgba(252, 249, 244, 0.85);
+  background-color: color-mix(in srgb, var(--surface) 90%, transparent);
 }
 
 .mode-mac .btn-primary {
@@ -30,7 +30,7 @@
   transform: translateX(-50%);
   width: auto;
   height: 76px;
-  background-color: rgba(235, 232, 227, 0.92);
+  background-color: color-mix(in srgb, var(--surface-container-high) 92%, transparent);
   border: 1px solid var(--outline-variant);
   border-radius: 18px;
   align-items: center;
@@ -43,8 +43,10 @@
 .mode-mac .sidebar-profile {
   padding: 0;
   border-bottom: none;
-  margin-bottom: 12px;
+  margin: 0 10px 0 0;
 }
+
+.mode-mac .sidebar-avatar-row { margin-bottom: 0; }
 
 .mode-mac .sidebar-user-info,
 .mode-mac .sidebar-action-btn,
@@ -120,15 +122,21 @@
 
 @media (max-width: 860px) {
   .mode-mac .sidebar-litho {
-    display: none;
+    display: flex;
+    left: 6px;
+    right: 6px;
+    bottom: 208px;
+    width: auto;
+    height: 62px;
+    padding: 6px 8px;
+    justify-content: center;
+    overflow: hidden;
+    transform: none;
   }
   .mode-mac .terminal-dock {
     left: 0;
   }
 
-  .mode-mac .sidebar-litho {
-    bottom: 216px;
-    max-width: calc(100vw - 20px);
-    overflow-x: auto;
-  }
+  .mode-mac .sidebar-nav-list { gap: 3px; }
+  .mode-mac .sidebar-nav-item { width: 38px; height: 42px; }
 }

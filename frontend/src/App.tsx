@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { OsMode, PageView } from './data/portfolioData';
+import { OsMode, PageView, ThemeName } from './data/portfolioData';
 import { TopBar } from './components/TopBar';
 import { Sidebar } from './components/Sidebar';
 import { Terminal } from './components/Terminal';
@@ -21,6 +21,22 @@ export function App() {
   const [terminalOpen, setTerminalOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMorphing, setIsMorphing] = useState(false);
+  const [theme, setTheme] = useState<ThemeName>(() => {
+    try {
+      return (localStorage.getItem('portfolio-theme') as ThemeName) || 'blue';
+    } catch {
+      return 'blue';
+    }
+  });
+
+  const handleThemeChange = (nextTheme: ThemeName) => {
+    setTheme(nextTheme);
+    try {
+      localStorage.setItem('portfolio-theme', nextTheme);
+    } catch {
+      // Theme still applies for this session when storage is unavailable.
+    }
+  };
 
   // Boot sequence check (only show once per session)
   const [showBootScreen, setShowBootScreen] = useState(() => {
@@ -70,7 +86,7 @@ export function App() {
         <BootScreen mode={mode} onComplete={handleBootComplete} />
       )}
 
-      <div className={`os-shell mode-${mode.toLowerCase()} ${terminalOpen ? 'terminal-open' : 'terminal-closed'} ${isMorphing ? 'os-transitioning' : ''}`}>
+      <div className={`os-shell mode-${mode.toLowerCase()} theme-${theme} ${terminalOpen ? 'terminal-open' : 'terminal-closed'} ${isMorphing ? 'os-transitioning' : ''}`}>
         {/* OS Top Navigation Bar */}
         <TopBar
           mode={mode}
@@ -81,6 +97,8 @@ export function App() {
           onToggleTerminal={() => setTerminalOpen(!terminalOpen)}
           mobileMenuOpen={mobileMenuOpen}
           onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
+          theme={theme}
+          onThemeChange={handleThemeChange}
         />
 
         {/* Main Workspace Layout */}
