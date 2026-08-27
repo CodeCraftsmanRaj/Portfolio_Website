@@ -68,7 +68,9 @@ export const Terminal: React.FC<TerminalProps> = ({
     } else if (activeView === 'leadership') {
       initialText = `DevOS v2.0.4 - System initialized.\nroot@devos:~$ tail -f /var/log/leadership.log\n[INFO] Loading mentorship records... OK\n[INFO] Compiling speaking engagements... OK`
     } else if (activeView === 'contact') {
-      initialText = `[system@devos ~]$ Initializing contact module... Ready for input.\nashish@network:~$ ping -c 3 shivsharan.dev\n64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.042 ms\n64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.038 ms\nConnection established.`
+      initialText = `[system@devos ~]$ Initializing contact module... Ready for input.\nraj@network:~$ ping -c 3 raj-mathuria.dev\n64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.042 ms\n64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.038 ms\nConnection established.`
+    } else if (activeView === 'resume') {
+      initialText = `user@devos:~/documents$ open Raj_resume.pdf\nLoading verified career dossier...\n[OK] Resume PDF mounted in workspace.`
     }
 
     setHistory([{ type: 'raw', text: initialText }])
@@ -110,6 +112,7 @@ export const Terminal: React.FC<TerminalProps> = ({
           `  experience / exp   - View career timeline\n` +
           `  leadership / man   - View manual page ldext\n` +
           `  contact / ping     - Open network ping coordinates\n` +
+          `  resume / cv        - Open the verified resume PDF\n` +
           `  home / desktop     - Return to home workspace\n` +
           `  neofetch           - Run system hardware report\n` +
           `  whoami             - Show current user session\n` +
@@ -134,11 +137,14 @@ export const Terminal: React.FC<TerminalProps> = ({
     } else if (cmd === 'contact' || cmd === 'ping' || cmd === 'mail') {
       newHistory.push({ type: 'success', text: 'Navigating to [Network / Ping Coordinates]...' })
       onViewChange('contact')
+    } else if (cmd === 'resume' || cmd === 'cv') {
+      newHistory.push({ type: 'success', text: 'Navigating to [Resume / Raj_resume.pdf]...' })
+      onViewChange('resume')
     } else if (cmd === 'home' || cmd === 'desktop') {
       newHistory.push({ type: 'success', text: 'Navigating to [Home Desktop]...' })
       onViewChange('home')
     } else if (cmd === 'whoami') {
-      newHistory.push({ type: 'output', text: 'root (Shivsharan Sanjawad) - UID: 0, GID: 0, System: DevOS Press v2.0.4' })
+      newHistory.push({ type: 'output', text: 'raj (Raj Mathuria) - AI/ML Researcher, System: DevOS Press v2.0.4' })
     } else if (cmd === 'date') {
       newHistory.push({ type: 'output', text: new Date().toString() })
     } else if (cmd === 'neofetch') {

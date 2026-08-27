@@ -151,6 +151,19 @@
   box-shadow: 0 0 0 1px rgba(28, 28, 25, 0.05);
   position: relative;
   width: 100%;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.window-container.is-maximized {
+  position: fixed;
+  inset: 60px 24px 24px;
+  z-index: 120;
+  overflow: auto;
+  box-shadow: 0 20px 60px rgba(28, 28, 25, 0.24);
+}
+
+.window-container.is-minimized {
+  min-height: 36px;
 }
 
 .window-header {
@@ -182,24 +195,25 @@
   gap: 8px;
 }
 
-.mac-traffic-dots i {
+.mac-traffic-dots button {
   display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  padding: 0;
 }
 
-.mac-traffic-dots i.dot-red {
+.mac-traffic-dots button.dot-red {
   background-color: #ff5f57;
   border: 1px solid #e0443e;
 }
 
-.mac-traffic-dots i.dot-yellow {
+.mac-traffic-dots button.dot-yellow {
   background-color: #febc2e;
   border: 1px solid #d89e24;
 }
 
-.mac-traffic-dots i.dot-green {
+.mac-traffic-dots button.dot-green {
   background-color: #28c840;
   border: 1px solid #1aab29;
 }
@@ -255,6 +269,18 @@
 
 .linux-dot-btn:hover {
   opacity: 0.85;
+}
+
+.window-closed-state {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px dashed var(--outline);
+  color: var(--on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 12px;
 }
 
 /* Form Underline Inputs */

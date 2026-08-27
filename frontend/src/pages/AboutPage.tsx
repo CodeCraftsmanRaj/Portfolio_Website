@@ -1,5 +1,5 @@
 import React from 'react';
-import { OsMode, PageView, personalData } from '../data/portfolioData';
+import { OsMode, PageView, personalData, education, publications } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
@@ -16,7 +16,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
       {/* Page Header */}
       <div data-reveal className="about-page-header">
         <h1>SYSTEM_INFO.TXT</h1>
-        <p>Metadata / Architect Profile</p>
+        <p>Metadata / AI-ML Engineer &amp; Researcher</p>
       </div>
 
       <WindowCard mode={mode} activeView="about" title="/sys/users/admin/bio.txt">
@@ -26,7 +26,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
             <div data-reveal="scale" className="about-portrait-card hover-lift">
               <img
                 src="/stitch-dock.png"
-                alt="Shivsharan Sanjawad Archival Portrait"
+                alt="Raj Mathuria archival portrait"
               />
             </div>
 
@@ -115,6 +115,30 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
           </div>
         </div>
       </WindowCard>
+
+      <div className="profile-detail-grid">
+        <section className="profile-detail-section">
+          <h2>Education</h2>
+          {education.map((item) => (
+            <article key={item.institution}>
+              <h3>{item.institution}</h3>
+              <p>{item.degree}</p>
+              <span>{item.detail} / {item.period} / {item.result}</span>
+            </article>
+          ))}
+        </section>
+        <section className="profile-detail-section">
+          <h2>Publications</h2>
+          {publications.map((item) => (
+            <article key={item.venue}>
+              <div className="publication-status">{item.status}</div>
+              <h3>{item.venue}</h3>
+              <p>{item.title}</p>
+              <span>{item.detail}</span>
+            </article>
+          ))}
+        </section>
+      </div>
     </div>
   );
 };

@@ -16,18 +16,35 @@ export const WindowCard: React.FC<WindowCardProps> = ({
   children,
   onClose,
 }) => {
+  const [isMinimized, setIsMinimized] = React.useState(false);
+  const [isMaximized, setIsMaximized] = React.useState(false);
+  const [isClosed, setIsClosed] = React.useState(false);
   const currentNav = navItems.find((n) => n.id === activeView) || navItems[0];
   const displayPath = title || currentNav.path[mode.toLowerCase() as 'mac' | 'win' | 'linux'];
+  const closeWindow = () => {
+    setIsClosed(true);
+    onClose?.();
+  };
+
+  if (isClosed) {
+    return (
+      <section className="window-closed-state">
+        <span className="material-symbols-outlined">close</span>
+        <span>{displayPath} closed</span>
+        <button type="button" className="btn-outline btn-press" onClick={() => setIsClosed(false)}>Reopen window</button>
+      </section>
+    );
+  }
 
   return (
-    <section className="window-container os-double-border hover-lift">
+    <section className={`window-container os-double-border hover-lift ${isMinimized ? 'is-minimized' : ''} ${isMaximized ? 'is-maximized' : ''}`}>
       {/* OS Mode-Specific Title Bar */}
       {mode === 'MAC' && (
         <div className="window-header">
           <div className="mac-traffic-dots">
-            <i className="dot-red" onClick={onClose} title="Close"></i>
-            <i className="dot-yellow" title="Minimize"></i>
-            <i className="dot-green" title="Zoom"></i>
+            <button type="button" className="dot-red" onClick={closeWindow} title="Close"></button>
+            <button type="button" className="dot-yellow" onClick={() => setIsMinimized(!isMinimized)} title="Minimize"></button>
+            <button type="button" className="dot-green" onClick={() => { setIsMaximized(!isMaximized); setIsMinimized(false); }} title="Zoom"></button>
           </div>
           <div className="window-title">
             <span>{displayPath}</span>
@@ -47,13 +64,13 @@ export const WindowCard: React.FC<WindowCardProps> = ({
             <span style={{ fontWeight: 700 }}>{displayPath}</span>
           </div>
           <div className="win-window-controls">
-            <button type="button" className="win-btn btn-press" title="Minimize">
+            <button type="button" className="win-btn btn-press" title="Minimize" onClick={() => setIsMinimized(!isMinimized)}>
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>remove</span>
             </button>
-            <button type="button" className="win-btn btn-press" title="Maximize">
+            <button type="button" className="win-btn btn-press" title="Maximize" onClick={() => { setIsMaximized(!isMaximized); setIsMinimized(false); }}>
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>crop_square</span>
             </button>
-            <button type="button" className="win-btn close btn-press" title="Close" onClick={onClose}>
+            <button type="button" className="win-btn close btn-press" title="Close" onClick={closeWindow}>
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>close</span>
             </button>
           </div>
@@ -69,13 +86,13 @@ export const WindowCard: React.FC<WindowCardProps> = ({
             <span style={{ fontWeight: 500 }}>{displayPath}</span>
           </div>
           <div className="linux-window-controls">
-            <button type="button" className="linux-dot-btn btn-press" title="Minimize">
+            <button type="button" className="linux-dot-btn btn-press" title="Minimize" onClick={() => setIsMinimized(!isMinimized)}>
               <span className="material-symbols-outlined" style={{ fontSize: 10, color: 'var(--surface)' }}>remove</span>
             </button>
-            <button type="button" className="linux-dot-btn btn-press" title="Maximize">
+            <button type="button" className="linux-dot-btn btn-press" title="Maximize" onClick={() => { setIsMaximized(!isMaximized); setIsMinimized(false); }}>
               <span className="material-symbols-outlined" style={{ fontSize: 10, color: 'var(--surface)' }}>crop_square</span>
             </button>
-            <button type="button" className="linux-dot-btn close btn-press" title="Close" onClick={onClose}>
+            <button type="button" className="linux-dot-btn close btn-press" title="Close" onClick={closeWindow}>
               <span className="material-symbols-outlined" style={{ fontSize: 10, color: '#ffffff' }}>close</span>
             </button>
           </div>
@@ -83,9 +100,7 @@ export const WindowCard: React.FC<WindowCardProps> = ({
       )}
 
       {/* Main Content Body */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {children}
-      </div>
+      {!isMinimized && <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>{children}</div>}
     </section>
   );
 };

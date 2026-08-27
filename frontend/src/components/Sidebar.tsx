@@ -25,6 +25,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     enabled: mode === 'MAC',
     maxScale: 1.32,
     distance: 65,
+    axis: 'x',
   });
 
   // Hook for Windows Fluent Reveal Effect
@@ -52,7 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="sidebar-profile">
         <div className="sidebar-avatar-row">
           <div className="sidebar-avatar" title="Root Administrator">
-            <span>SS</span>
+            <span>RM</span>
           </div>
           <div className="sidebar-user-info">
             <h2>{personalData.rootUser}</h2>

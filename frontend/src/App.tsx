@@ -12,6 +12,7 @@ import { ProjectsPage } from './pages/ProjectsPage';
 import { ExperiencePage } from './pages/ExperiencePage';
 import { LeadershipPage } from './pages/LeadershipPage';
 import { ContactPage } from './pages/ContactPage';
+import { ResumePage } from './pages/ResumePage';
 
 export function App() {
   // Default OS mode set to LINUX
@@ -69,7 +70,7 @@ export function App() {
         <BootScreen mode={mode} onComplete={handleBootComplete} />
       )}
 
-      <div className={`os-shell mode-${mode.toLowerCase()} ${isMorphing ? 'os-transitioning' : ''}`}>
+      <div className={`os-shell mode-${mode.toLowerCase()} ${terminalOpen ? 'terminal-open' : 'terminal-closed'} ${isMorphing ? 'os-transitioning' : ''}`}>
         {/* OS Top Navigation Bar */}
         <TopBar
           mode={mode}
@@ -139,6 +140,10 @@ export function App() {
                 <ContactPage
                   mode={mode}
                 />
+              )}
+
+              {activeView === 'resume' && (
+                <ResumePage mode={mode} />
               )}
             </PageTransition>
           </main>

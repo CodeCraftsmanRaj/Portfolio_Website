@@ -17,13 +17,13 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ mode, viewKey, c
         opacity: 1,
         scale: 1,
         filter: 'blur(0px)',
-        transition: { duration: 0.24, ease: [0.0, 0.0, 0.2, 1] },
+        transition: { duration: 0.24, ease: [0.0, 0.0, 0.2, 1] as const },
       },
       exit: {
         opacity: 0,
         scale: 0.94,
         filter: 'blur(1px)',
-        transition: { duration: 0.18, ease: [0.4, 0.0, 1, 1] },
+        transition: { duration: 0.18, ease: [0.4, 0.0, 1, 1] as const },
       },
     },
     WIN: {
@@ -32,13 +32,13 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ mode, viewKey, c
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: { duration: 0.28, ease: [0.1, 0.9, 0.2, 1] },
+        transition: { duration: 0.28, ease: [0.1, 0.9, 0.2, 1] as const },
       },
       exit: {
         opacity: 0,
         y: -12,
         scale: 0.99,
-        transition: { duration: 0.16, ease: [0.7, 0.0, 1, 0.5] },
+        transition: { duration: 0.16, ease: [0.7, 0.0, 1, 0.5] as const },
       },
     },
     MAC: {
@@ -47,13 +47,13 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ mode, viewKey, c
         opacity: 1,
         scale: 1,
         y: 0,
-        transition: { type: 'spring', stiffness: 280, damping: 24, mass: 0.9 },
+        transition: { type: 'spring' as const, stiffness: 280, damping: 24, mass: 0.9 },
       },
       exit: {
         opacity: 0,
         scale: 0.85,
         y: 12,
-        transition: { duration: 0.2, ease: [0.32, 0, 0.67, 0] },
+        transition: { duration: 0.2, ease: [0.32, 0, 0.67, 0] as const },
       },
     },
   };

@@ -4,11 +4,12 @@ interface UseDockMagnificationOptions {
   maxScale?: number;
   distance?: number;
   enabled?: boolean;
+  axis?: 'x' | 'y';
 }
 
 export function useDockMagnification(options: UseDockMagnificationOptions = {}) {
   const dockRef = useRef<HTMLDivElement>(null);
-  const { maxScale = 1.35, distance = 70, enabled = true } = options;
+  const { maxScale = 1.35, distance = 70, enabled = true, axis = 'y' } = options;
 
   useEffect(() => {
     if (!enabled) return;
@@ -18,11 +19,11 @@ export function useDockMagnification(options: UseDockMagnificationOptions = {}) 
     const items = dock.querySelectorAll<HTMLElement>('.sidebar-nav-item');
 
     const handleMouseMove = (e: MouseEvent) => {
-      const mousePos = e.clientY; // vertical dock in our layout
+      const mousePos = axis === 'x' ? e.clientX : e.clientY;
 
       items.forEach((item) => {
         const rect = item.getBoundingClientRect();
-        const itemCenter = rect.top + rect.height / 2;
+        const itemCenter = axis === 'x' ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
         const dist = Math.abs(mousePos - itemCenter);
 
         if (dist < distance) {
@@ -56,7 +57,7 @@ export function useDockMagnification(options: UseDockMagnificationOptions = {}) 
         item.style.zIndex = '1';
       });
     };
-  }, [enabled, maxScale, distance]);
+  }, [enabled, maxScale, distance, axis]);
 
   return dockRef;
 }

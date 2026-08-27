@@ -1,4 +1,4 @@
-# Shivsharan Sanjawad Developer OS
+# Raj Mathuria Developer OS
 
 Stitch Adaptive Multi-OS Workspace-inspired developer portfolio built with React, TSX, Vite, and a FastAPI contact endpoint. The Stitch screen exports used by the frontend live in `frontend/public`.
 
@@ -12,7 +12,7 @@ npm run dev
 
 Open `http://localhost:5173`.
 
-The frontend includes Mac, Windows, and Linux presentation modes, dock navigation, a command terminal, profile, skills, projects, and contact views.
+The frontend includes Mac, Windows, and Linux presentation modes, OS-specific dock navigation and transitions, a fixed command terminal, profile, skills, projects, experience, publications, resume, and contact views.
 
 ## Contact API
 

@@ -8,6 +8,7 @@ export type PageView =
   | 'experience'
   | 'leadership'
   | 'contact'
+  | 'resume'
 
 export interface NavItem {
   id: PageView
@@ -39,7 +40,7 @@ export const navItems: NavItem[] = [
     sidebarLabel: 'Journal',
     icon: 'article',
     path: {
-      mac: '~/shivsharan/about.md',
+      mac: '~/raj-mathuria/about.md',
       win: 'C:\\Users\\Root\\sys\\bio.txt',
       linux: '/sys/users/admin/bio.txt',
     },
@@ -50,7 +51,7 @@ export const navItems: NavItem[] = [
     sidebarLabel: 'Hardware',
     icon: 'memory',
     path: {
-      mac: '~/shivsharan/skills.config',
+      mac: '~/raj-mathuria/skills.config',
       win: 'C:\\ProgramFiles\\Dependencies\\System.dll',
       linux: '~/skills/dependencies.lock',
     },
@@ -99,35 +100,47 @@ export const navItems: NavItem[] = [
       linux: '/dev/net/ping',
     },
   },
+  {
+    id: 'resume',
+    label: 'Resume',
+    sidebarLabel: 'Resume',
+    icon: 'description',
+    path: {
+      mac: '~/raj-mathuria/resume.pdf',
+      win: 'C:\\Users\\Root\\Documents\\Resume.pdf',
+      linux: '~/documents/resume.pdf',
+    },
+  },
 ]
 
 export const personalData = {
-  name: 'Shivsharan Sanjawad',
-  shortName: 'Shivsharan_Sanjawad',
-  rootUser: 'Root',
-  version: 'v2.0.4',
-  releaseTag: 'V0.4.2-STABLE',
-  role: 'Senior Systems Architect & Full Stack Developer',
-  headline: 'SYSTEM ARCHITECT & LEAD DEVELOPER',
-  subHeadline: 'Building robust digital infrastructure for the modern web.',
-  linuxHeadline: 'Architecting Reliable Systems.',
-  linuxSubHeadline: 'A senior systems engineer specializing in low-level architecture, concurrent processing, and highly available infrastructure. Blending classic computer science principles with modern deployment methodologies.',
-  location: 'Pune / Mumbai, India',
+  name: 'Raj Kalpesh Mathuria',
+  shortName: 'Raj_Mathuria',
+  rootUser: 'Raj',
+  version: 'B.Tech / B.S. Data Science',
+  releaseTag: 'AI-ML-RESEARCHER',
+  role: 'AI/ML Engineer & Researcher',
+  headline: 'AI/ML ENGINEER & RESEARCHER',
+  subHeadline: 'Building research-driven AI systems across deep learning, computer vision, GenAI, and scientific machine learning.',
+  linuxHeadline: 'Researcher. Builder. Problem-solver.',
+  linuxSubHeadline: 'AI/ML Engineer and undergraduate researcher with 1.5+ years of experience building and deploying deep learning, computer vision, Generative AI, and scalable ML systems. I research difficult problems, build the systems myself, and push them toward real-world deployment.',
+  location: 'Mumbai, Maharashtra, India',
   timezone: 'IST / UTC+5:30',
-  uptime: '4+ Years Engineering',
+  uptime: '1.5+ Years Professional & Research Experience',
   availability: 'ONLINE',
-  currentFocus: 'High-Throughput Distributed Systems & UI Tooling',
+  currentFocus: 'Research-driven AI/ML systems and real-world deployment',
   bioDropCap: 'A',
-  bioLead: 'rchitecting digital spaces requires more than a passing familiarity with frameworks; it demands an appreciation for the medium itself. I approach software development as a structural discipline akin to brutalist architecture—prioritizing raw functionality, transparent logic, and enduring stability over ephemeral trends.',
-  bioParagraph2: 'For years, I have operated at the intersection of systems engineering and user interface design. My work revolves around building robust, highly-performant operational tools that treat data with the gravitas of historical archives. I believe interfaces should not obscure complexity behind glossy abstractions, but rather render complexity navigable through rigorous typographic hierarchy and uncompromising spatial rhythm.',
-  bioParagraph3: 'Currently iterating on DevOS Press, an exploration into how we can reclaim the tactile, scholarly atmosphere of high-end vintage publishing within modern computing environments.',
-  primaryStack: ['React', 'TypeScript', 'Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'Docker'],
+  bioLead: 'I am Raj Mathuria, an AI/ML Engineer and Researcher building intelligent systems that bridge research and real-world applications. My work spans deep learning, computer vision, Generative AI, scientific machine learning, and scalable ML systems.',
+  bioParagraph2: 'I have conducted research at ISRO\'s Space Applications Centre on satellite-ground data fusion and deep-learning-based air-quality forecasting, alongside research published across Elsevier, Springer, and IEEE venues, including a NASA-ISRO collaboration.',
+  bioParagraph3: 'Alongside research, I have worked at Barclays and Systems Plus on production backend and AI systems, and led a nationally winning Smart India Hackathon project among 87,000 teams.',
+  primaryStack: ['Python', 'PyTorch', 'TensorFlow', 'Computer Vision', 'RAG', 'Spring Boot', 'Azure'],
   coreDisciplines: [
-    'Design Systems Engineering',
-    'High-Density UI Layouts',
-    'Technical Typography & OS Emulation',
-    'Concurrent & Distributed Backends',
-    'State Architecture & API Governance',
+    'Deep Learning & Computer Vision',
+    'Spatio-temporal Modeling',
+    'RAG & Generative AI',
+    'Distributed Training & Optimization',
+    'Production ML Systems',
+    'Research-to-deployment engineering',
   ],
 }
 
@@ -139,10 +152,10 @@ export interface SkillProgress {
 }
 
 export const coreLanguages: SkillProgress[] = [
-  { name: 'JavaScript / TypeScript', version: 'ESNext / TS 5.x', percentage: 95, category: 'core' },
-  { name: 'Python', version: 'v3.12', percentage: 90, category: 'core' },
-  { name: 'Go / Rust', version: 'v1.22 / 2024', percentage: 78, category: 'core' },
-  { name: 'SQL / NoSQL (Postgres, Redis)', version: 'latest', percentage: 88, category: 'core' },
+  { name: 'Python', version: 'ML / APIs / Research', percentage: 95, category: 'core' },
+  { name: 'C++ / C / Java', version: 'Systems / Spring Boot', percentage: 82, category: 'core' },
+  { name: 'SQL', version: 'MySQL / Data', percentage: 78, category: 'core' },
+  { name: 'HTML / CSS / JavaScript', version: 'UI / Electron', percentage: 72, category: 'core' },
 ]
 
 export interface FrameworkGroup {
@@ -154,38 +167,41 @@ export interface FrameworkGroup {
 
 export const frameworkGroups: FrameworkGroup[] = [
   {
-    title: 'React Ecosystem',
+    title: 'ML & AI',
     icon: 'hub',
-    subtitle: 'Next.js, Redux, Zustand, React Query, Vite',
-    tags: ['PRODUCTION READY', 'SSR/SSG'],
+    subtitle: 'PyTorch, TensorFlow, Keras, Scikit-learn, Computer Vision, NLP, LLMs',
+    tags: ['DEEP LEARNING', 'COMPUTER VISION'],
   },
   {
-    title: 'Backend & APIs',
+    title: 'Generative AI',
     icon: 'dns',
-    subtitle: 'FastAPI, Node.js/Express, Python asyncio, REST / GraphQL',
-    tags: ['SCALABLE', 'ASYNC/MICROSERVICES'],
+    subtitle: 'Azure OpenAI, LangChain, RAG, Azure AI Search, XAI, OCR, enterprise automation',
+    tags: ['RAG', 'AZURE'],
   },
   {
-    title: 'Modern UI & Design Systems',
+    title: 'Scientific ML & Data',
     icon: 'brush',
-    subtitle: 'Tailwind CSS, Radix UI, Material Design, CSS Grid/Flexbox',
-    tags: ['DESIGN SYSTEMS', 'A11Y'],
+    subtitle: 'Spatio-temporal modeling, remote sensing, satellite data, data fusion, forecasting',
+    tags: ['SATELLITE DATA', 'TIME SERIES'],
   },
   {
-    title: 'Data & Cloud Infrastructure',
+    title: 'Systems & Deployment',
     icon: 'cloud_sync',
-    subtitle: 'PostgreSQL, Docker, Kubernetes, Linux CLI, CI/CD Actions',
-    tags: ['CONTAINERIZED', 'DISTRIBUTED'],
+    subtitle: 'Distributed training, DDP, OpenCV, Hugging Face, Docker, MLflow, Azure',
+    tags: ['DISTRIBUTED TRAINING', 'PRODUCTION ML'],
   },
 ]
 
 export const buildTools = [
+  'PyTorch Distributed Data Parallel',
+  'Azure OpenAI & LangChain',
+  'OpenCV & Hugging Face',
+  'Docker & Azure deployment',
+  'Flask & Spring Boot APIs',
+  'MySQL, xarray & vector search',
+  'MLflow, Jupyter & FFmpeg',
+  'OCR, H.264 & digital forensics',
   'Git / GitHub Workflow',
-  'Docker & Container Orchestration',
-  'GitHub Actions / GitLab CI',
-  'Linux Kernel Tooling & Bash',
-  'Vite & Webpack Toolchains',
-  'Postman & OpenAPI Specifications',
 ]
 
 export interface ProjectItem {
@@ -203,36 +219,34 @@ export interface ProjectItem {
 
 export const projectsList: ProjectItem[] = [
   {
-    id: 'dist-engine',
-    filename: 'core_engine_v3.rs',
-    title: 'Distributed Processing Engine',
-    lastModified: '2d ago',
-    description: 'A highly concurrent, fault-tolerant processing engine designed for real-time data streaming. Built with Rust and Tokio to guarantee memory safety and zero-cost abstractions under heavy load. Implements a custom consensus algorithm based on Raft.',
-    tags: ['Rust', 'Tokio', 'gRPC', 'Raft'],
+    id: 'sih-deepfake',
+    filename: 'deepfake_detection.py',
+    title: 'Smart India Hackathon Winner',
+    lastModified: 'Jan 2025',
+    description: 'Led a six-person team building a real-time deepfake detection system with computer vision and AI/ML. Refined CNN training with DDP, reaching 98% accuracy and winning first place nationally among 87,000 teams.',
+    tags: ['Python', 'CNN', 'DDP', 'Computer Vision'],
     isFeatured: true,
   },
   {
-    id: 'compiler',
-    filename: 'lexer.c',
-    title: 'C-Lite Compiler Frontend',
-    description: 'An educational compiler frontend for a subset of C. Includes a hand-written recursive descent parser, Abstract Syntax Tree generation, and type validation engine.',
-    tags: ['C', 'Flex', 'Compilers'],
+    id: 'radarcast-net',
+    filename: 'radarcast_net.py',
+    title: 'RadarCast-Net',
+    description: 'Built deep-learning precipitation nowcasting with optical flow, Kalman filtering, and CNN-LSTM architectures, achieving 90.82% prediction accuracy and 9.18% error.',
+    tags: ['CNN-LSTM', 'Python', 'Forecasting'],
   },
   {
-    id: 'neural-vis',
-    filename: 'neural_vis.py',
-    title: 'Neural Net Activation Visualizer',
-    description: 'Real-time 3D visualization of deep neural layer activations and gradient flow using custom OpenGL shaders and GPU-accelerated computing pipelines.',
-    tags: ['Python', 'OpenGL', 'NumPy'],
-    hasRenderPreview: true,
+    id: 'kisanverse',
+    filename: 'kisanverse_rag.py',
+    title: 'KisanVerse',
+    description: 'AI-driven agricultural platform for crop planning and market access, combining ResNet50 soil classification at 94.34%, plant disease detection at 99.44%, RAG, and voice interaction.',
+    tags: ['ResNet50', 'RAG', 'CNN', 'Voice AI'],
   },
   {
-    id: 'mesh-sim',
-    filename: 'thesis_sim.go',
-    title: 'Mesh Network Simulator',
-    description: 'A discrete-event simulator for evaluating routing protocols in highly mobile ad-hoc networks. Capable of simulating 10,000+ nodes in faster-than-realtime with automated telemetry gathering.',
-    tags: ['Go', 'SimPy', 'Ad-Hoc Networks'],
-    codeSnippet: `// Initialization\nfunc init() {\n  setupMeshNodes(10000)\n  loadConfig("routing.yaml")\n}\n\n// Main Simulation Loop\nfunc main() {\n  runDiscreteEventSim()\n}`,
+    id: 'ntro-forensics',
+    filename: 'forensic_viewer.py',
+    title: 'Cross-platform Forensic Viewer',
+    description: 'Decoded two proprietary Hikvision filesystem structures, then built a Flask pipeline for three disk formats with real-time H.264 to MP4 conversion and cached streaming.',
+    tags: ['Flask', 'Electron', 'Forensics'],
     isFeatured: true,
   },
 ]
@@ -249,36 +263,48 @@ export interface ExperienceItem {
 export const experienceList: ExperienceItem[] = [
   {
     id: 'role-1',
-    role: 'Senior Systems Architect & Full Stack Lead',
-    company: '@TechNova_Systems',
-    period: '2023 - Present',
+    role: 'Technology Summer Intern',
+    company: '@Barclays',
+    period: 'Jun 2026 - Aug 2026',
     isActive: true,
     achievements: [
-      'Architected distributed microservices infrastructure, reducing deployment latency by 40% and cutting cloud infrastructure overhead.',
-      'Led migration of legacy monolith to containerized environments using Kubernetes, Docker, and Automated CI/CD pipelines.',
-      'Implemented zero-trust security protocols, JWT token rotation, and robust RBAC across all internal development clusters.',
+      'Modernized backend workflows with configurable orchestration, reducing maintenance overhead by 40%.',
+      'Replaced hard-coded customer journey logic with a configurable orchestration framework.',
+      'Delivered two production REST APIs and an internal full-stack log analyzer supporting more than ten debugging operations.',
+      'Merged two APIs into production, received engineering recognition, and earned a full-time return offer.',
     ],
   },
   {
     id: 'role-2',
-    role: 'Full Stack Engineer II',
-    company: '@DataForge_Inc',
-    period: '2021 - 2023',
+    role: 'GenAI Developer Intern',
+    company: '@Systems_Plus',
+    period: 'Feb 2026 - Apr 2026',
     achievements: [
-      'Optimized PostgreSQL database queries and indexing strategies, improving read speeds for heavy analytical dashboards by 60%.',
-      'Developed high-throughput RESTful & WebSocket APIs in Python (FastAPI) and Go for real-time telemetry processing.',
-      'Built reusable Design System component library in React & TypeScript adopted by 4 distinct product squads.',
+      'Architected scalable AI systems for recruitment and document intelligence across four or more business domains.',
+      'Constructed three or more enterprise AI systems using Azure OpenAI, LangChain, RAG, vector search, OCR, and Python.',
+      'Deployed five or more production-ready AI solutions, improving process efficiency by 35% and reducing manual effort by 60-80%.',
     ],
   },
   {
     id: 'role-3',
-    role: 'Software Developer',
-    company: '@WebWorks_Studio',
-    period: '2019 - 2021',
+    role: 'Tech Research Lead',
+    company: '@ISRO_SAC',
+    period: 'Dec 2024 - Jul 2025',
     achievements: [
-      'Engineered responsive, accessible front-end interfaces using React, TypeScript, and modern CSS architectures.',
-      'Constructed automated end-to-end and unit testing pipelines, driving test coverage from 45% to over 85%.',
-      'Collaborated with product designers to ship 12+ client applications with zero post-release P0 regressions.',
+      'Innovated STeFFuRNeT, an Attention-GRU model for satellite-ground air-quality forecasting with R2 = 0.990.',
+      'Engineered a spatio-temporal fusion pipeline with cyclic encoding for accurate 24-72 hour forecast windows.',
+      'Achieved MAE = 0.769 micrograms/m3 for NO2 prediction.',
+    ],
+  },
+  {
+    id: 'role-4',
+    role: 'Research Intern',
+    company: '@NTRO_Intelligence_HQ',
+    period: 'Aug 2025 - Nov 2025',
+    achievements: [
+      'Worked on digital-forensics tooling, filesystem analysis, indexed video metadata, and forensic timeline reconstruction.',
+      'Built video-processing infrastructure with Flask, H.264 to MP4 conversion, cached streaming, and multiple disk-image formats.',
+      'Packaged a high-level forensic viewer for Windows, Linux, and macOS using Electron.',
     ],
   },
 ]
@@ -293,22 +319,24 @@ export interface LeadershipRole {
 
 export const leadershipRoles: LeadershipRole[] = [
   {
-    role: 'Lead Systems Engineer & Chapter Lead',
-    organization: 'DevOS Corp | 2023 - Present',
-    description: 'Spearheaded architectural redesign of core routing engines. Mentored developers across cross-functional teams, implementing strict CI/CD pipelines and rigorous code review protocols.',
+    role: 'Team Lead & GenAI Developer',
+    organization: 'Smart India Hackathon | Winner | 2024 - 2025',
+    period: 'Sep 2024 - Jan 2025',
+    description: 'Led a six-person team that won first place nationally among 87,000 teams with a real-time deepfake detection system.',
     bullets: [
-      'Mentored 6 junior and mid-level developers into lead positions.',
-      'Reduced deployment failure rates by 40% across engineering quarters.',
-      'Standardized code review checklists and automated linting governance across 20+ microservices.',
+      'Achieved 98% deepfake detection accuracy with computer vision and AI/ML.',
+      'Used distributed data parallel training to cut model training time by 50%.',
+      'Improved runtime efficiency by 30%.',
     ],
   },
   {
-    role: 'Open Source Maintainer & Core Contributor',
-    organization: 'LibCore Project | 2021 - 2023',
-    description: 'Served as an active open-source maintainer, reviewing over 500+ pull requests, authoring RFC architectural proposals, and triaging community issue backlogs.',
+    role: 'Team Lead, AI/ML & Backend Developer',
+    organization: 'RadarCast-Net | ISRO-BAH Hackathon | 2024',
+    period: 'Jun 2024 - Aug 2024',
+    description: 'Developed a deep-learning precipitation nowcasting system using optical flow, Kalman filtering, and CNN-LSTM models.',
     bullets: [
-      'Authored developer guides and comprehensive API reference documentation.',
-      'Organized global hackathons and community triage days.',
+      'Achieved 90.82% prediction accuracy and 9.18% error.',
+      'Designed a Python visualization interface for real-time radar forecasting.',
     ],
   },
 ]
@@ -322,20 +350,19 @@ export interface ExtracurricularCard {
 
 export const extracurricularCards: ExtracurricularCard[] = [
   {
-    title: 'Tech Conference Speaker',
-    icon: 'mic',
-    description: 'Regular keynote speaker at developer meetups, DevCon, and Open Source Summits.',
-    highlight: '[LATEST] "Architecting High-Throughput Low-Latency Microservices" - TechCon 2024',
+    title: 'Karate',
+    icon: 'sports_martial_arts',
+    description: 'Competitive and organized karate participation.',
   },
   {
-    title: 'Local Hackathon Organizer',
-    icon: 'event',
-    description: 'Co-founded regional collegiate and open hackathons, securing industry sponsorships and hosting 300+ developers annually.',
+    title: 'Cricket',
+    icon: 'sports_cricket',
+    description: 'Institute and team-based cricket participation.',
   },
   {
-    title: 'Technical Author & Newsletter',
-    icon: 'edit_note',
-    description: 'Author of the "Systems Thinking" developer newsletter, dissecting distributed patterns, OS fundamentals, and UI engineering for 6,000+ subscribers.',
+    title: 'Football & Surfing',
+    icon: 'sports_soccer',
+    description: 'Team sport participation and an active outdoor pursuit beyond the screen.',
   },
 ]
 
@@ -343,25 +370,80 @@ export const socialLinks = [
   {
     label: 'Github Repository',
     protocol: 'git clone',
-    target: 'contact://github/shivsharan',
-    url: 'https://github.com',
+    target: 'contact://github/CodeCraftsmanRaj',
+    url: 'https://github.com/CodeCraftsmanRaj',
   },
   {
     label: 'Professional Network',
     protocol: 'ssh -p 22',
-    target: 'linkedin@shivsharan',
-    url: 'https://linkedin.com',
+    target: 'linkedin@raj-mathuria-98a710283',
+    url: 'https://www.linkedin.com/in/raj-mathuria-98a710283/',
   },
   {
     label: 'Micro-broadcasts',
     protocol: 'curl',
-    target: 'https://twitter.com/shivsharan',
-    url: 'https://twitter.com',
+    target: 'mailto:rajmathuria79@gmail.com',
+    url: 'mailto:rajmathuria79@gmail.com',
   },
   {
     label: 'Encrypted Mailbox',
     protocol: 'gpg --recv',
-    target: 'shivsharan@developer.os',
-    url: 'mailto:contact@shivsharan.dev',
+    target: '+91 8104882231',
+    url: 'tel:+918104882231',
   },
+]
+
+export const education = [
+  {
+    institution: 'Sardar Patel Institute of Technology (SPIT), Mumbai',
+    degree: 'B.Tech in Computer Engineering',
+    detail: 'Minor in Banking Technology',
+    period: 'Aug 2023 - Aug 2027',
+    result: 'CGPA 8.09 / Minor CGPA 9.00',
+  },
+  {
+    institution: 'Indian Institute of Technology Madras',
+    degree: 'Bachelor of Science in Data Science and Applications',
+    detail: 'Parallel undergraduate degree',
+    period: 'Nov 2023 - Jan 2027',
+    result: 'CGPA 8.67 / Project CGPA 10.00',
+  },
+]
+
+export const publications = [
+  {
+    venue: 'Elsevier / Atmospheric Pollution Research',
+    title: 'Deep Learning for Urban Air Quality: Downscaling Satellite Nitrogen Dioxide with Ground Observations over Delhi, India',
+    detail: 'NASA Goddard Space Flight Center + ISRO collaboration',
+    status: 'Published',
+  },
+  {
+    venue: 'IEEE FMLDS 2026 / Kobe, Japan',
+    title: 'An Explainable AI-Based Intrusion Detection System for Cybersecurity Using Transformer Encoders and LightGBM Ensemble',
+    detail: 'Explainable AI, cybersecurity, Transformer encoders, and LightGBM',
+    status: 'Accepted',
+  },
+  {
+    venue: 'Springer Journal',
+    title: 'Publication details to be confirmed',
+    detail: 'Title, journal, authors, status, and DOI intentionally pending confirmation',
+    status: 'Placeholder',
+  },
+]
+
+export const achievements = [
+  'Smart India Hackathon winner: 1st place nationally among 87,000 teams',
+  'Google Developer Student Club Code Red Hackathon winner',
+  'ISRO / NRSC BAH Hackathon finalist with RadarCast-Net',
+  'KisanVerse recognized in Meta + The Nudge India Top 10',
+  'Full-time return offer from Barclays',
+  'Full-time offer from Systems Plus',
+  'Selected education and academic activities supported by multiple external organisations',
+]
+
+export const beyondTheCode = [
+  { title: 'Karate', icon: 'sports_martial_arts', description: 'Competitive and organized karate participation.' },
+  { title: 'Cricket', icon: 'sports_cricket', description: 'Institute and team-based cricket participation.' },
+  { title: 'Football', icon: 'sports_soccer', description: 'Team sport and competitive football involvement.' },
+  { title: 'Surfing', icon: 'surfing', description: 'An active outdoor pursuit beyond the screen.' },
 ]

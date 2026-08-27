@@ -115,6 +115,10 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
+.mode-linux .main-canvas {
+  padding-bottom: 260px;
+}
+
 @media (max-width: 860px) {
   .mode-linux .sidebar-litho {
     display: none;

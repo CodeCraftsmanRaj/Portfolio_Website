@@ -1,5 +1,5 @@
 import React from 'react';
-import { OsMode, leadershipRoles, extracurricularCards } from '../data/portfolioData';
+import { OsMode, leadershipRoles, extracurricularCards, achievements, beyondTheCode } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
@@ -68,6 +68,30 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ mode }) => {
               </div>
             </section>
           </div>
+
+          <section className="leadership-lower-grid">
+            <div className="achievement-list">
+              <h2 data-reveal className="man-column-title">Achievements</h2>
+              {achievements.map((achievement) => (
+                <div key={achievement} data-reveal className="achievement-item">
+                  <span className="crimson-text">&gt;</span>
+                  <span>{achievement}</span>
+                </div>
+              ))}
+            </div>
+            <div>
+              <h2 data-reveal className="man-column-title">Beyond the Code</h2>
+              <div className="sports-grid">
+                {beyondTheCode.map((activity) => (
+                  <article key={activity.title} data-reveal className="extra-card hover-lift">
+                    <span className="material-symbols-outlined crimson-text">{activity.icon}</span>
+                    <h3>{activity.title}</h3>
+                    <p>{activity.description}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </WindowCard>
     </div>

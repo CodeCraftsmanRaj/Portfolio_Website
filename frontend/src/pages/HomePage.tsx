@@ -63,25 +63,25 @@ export const HomePage: React.FC<HomePageProps> = ({
                   onClick={() => onViewChange('projects')}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '20px', fontWeight: 600 }}>Core Distributed System</h3>
+                    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '20px', fontWeight: 600 }}>Smart India Hackathon Winner</h3>
                     <span className="material-symbols-outlined crimson-text">arrow_outward</span>
                   </div>
                   <p style={{ fontFamily: 'var(--font-serif)', fontSize: '14px', color: 'var(--on-surface-variant)', marginBottom: '14px' }}>
-                    Rust-based consensus protocol implementation handling 10k+ TPS with zero-cost abstractions.
+                    A real-time deepfake detection system that reached 98% accuracy and won first place nationally among 87,000 teams.
                   </p>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <span className="tag-badge active-tag">Rust</span>
-                    <span className="tag-badge">Raft</span>
-                    <span className="tag-badge">Tokio</span>
+                    <span className="tag-badge active-tag">Python</span>
+                    <span className="tag-badge">CNN</span>
+                    <span className="tag-badge">DDP</span>
                   </div>
                 </div>
 
                 <div data-reveal className="hairline-border hover-lift" style={{ padding: '16px', background: 'var(--surface-container-low)' }}>
                   <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '16px', marginBottom: '8px' }}>System Stats</h4>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--on-surface-variant)', lineHeight: 1.7 }}>
-                    <div>Uptime: 99.999%</div>
-                    <div>Commits: 14,203</div>
-                    <div>Clusters: 12 Nodes</div>
+                    <div>Experience: 1.5+ years</div>
+                    <div>Research: ISRO SAC</div>
+                    <div>Focus: AI/ML systems</div>
                   </div>
                 </div>
 
@@ -121,10 +121,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                   Technologies
                 </h4>
                 <ul style={{ listStyle: 'none', fontFamily: 'var(--font-mono)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Linux Kernel & Containers</li>
-                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Rust / TypeScript / Python</li>
-                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Kubernetes & Microservices</li>
-                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> PostgreSQL & Redis</li>
+                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Deep Learning & Computer Vision</li>
+                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Generative AI, LLMs & RAG</li>
+                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Scientific ML & Satellite Data</li>
+                  <li><span className="crimson-text" style={{ marginRight: 6 }}>&gt;</span> Production APIs & Azure</li>
                 </ul>
               </div>
 
@@ -154,7 +154,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div data-reveal="left" style={{ borderBottom: '4px solid var(--primary)', paddingBottom: '16px' }}>
                 <h1 className="hero-main-heading" style={{ marginBottom: '8px' }}>
-                  SYSTEM ARCHITECT <br />&amp; LEAD DEVELOPER
+                  AI/ML ENGINEER <br />&amp; RESEARCHER
                 </h1>
                 <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '20px', color: 'var(--on-surface-variant)' }}>
                   {personalData.subHeadline}
@@ -179,7 +179,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     Recent Deployments
                   </h3>
                   <p style={{ fontFamily: 'var(--font-serif)', fontSize: '14px', color: 'var(--on-surface-variant)' }}>
-                    Successfully launched v2.0 of the enterprise data visualization suite, reducing load times by 40%.
+                    Built 5+ production AI solutions at Systems Plus, reducing manual effort by 60-80%.
                   </p>
                 </div>
               </div>
@@ -206,15 +206,15 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', lineHeight: 1.8 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span>Uptime:</span>
-                    <b>99.99%</b>
+                    <b>1.5+ years</b>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>Projects:</span>
-                    <b>42 Active</b>
+                    <span>Production AI:</span>
+                    <b>5+ systems</b>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>Coffee:</span>
-                    <b className="crimson-text">Critical</b>
+                    <span>Research:</span>
+                    <b className="crimson-text">ISRO / NASA</b>
                   </div>
                 </div>
               </div>
@@ -226,11 +226,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
                   <div style={{ borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px' }}>
                     <span className="crimson-text" style={{ display: 'block', fontSize: '11px' }}>2026-08-20</span>
-                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '14px' }}>Refactored distributed authentication pipeline.</span>
+                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '14px' }}>Built production AI systems with Azure OpenAI and RAG.</span>
                   </div>
                   <div style={{ borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px' }}>
                     <span className="crimson-text" style={{ display: 'block', fontSize: '11px' }}>2026-08-14</span>
-                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '14px' }}>Published new technical breakdown on consensus algorithms.</span>
+                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '14px' }}>Led satellite-ground data fusion research at ISRO.</span>
                   </div>
                 </div>
               </div>
@@ -276,9 +276,9 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* Right: Boot Sequence & Actions */}
         <div className="hero-system-copy">
-          <div data-reveal className="hero-prompt-line">&gt; ROOT@DEVELOPER_OS</div>
+          <div data-reveal className="hero-prompt-line">&gt; RAJ@AI_RESEARCH_LAB</div>
           <h1 data-reveal className="hero-main-heading">
-            SHIVSHARAN<br />SANJAWAD
+            RAJ<br />MATHURIA
           </h1>
 
           <div data-reveal className="hero-status-box hover-lift">

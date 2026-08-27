@@ -22,13 +22,22 @@
   border-radius: 4px;
 }
 
-/* Mac Vertical Icon Dock Navigation (Matches developer_os_portfolio_global_dock_navigation) */
+/* Mac centered bottom dock */
 .mode-mac .sidebar-litho {
-  width: 76px;
-  background-color: var(--surface-container-high);
-  border-right: 1px solid var(--outline-variant);
+  position: fixed;
+  left: 50%;
+  bottom: 236px;
+  transform: translateX(-50%);
+  width: auto;
+  height: 76px;
+  background-color: rgba(235, 232, 227, 0.92);
+  border: 1px solid var(--outline-variant);
+  border-radius: 18px;
   align-items: center;
-  padding: 16px 0;
+  padding: 8px 14px;
+  flex-direction: row;
+  backdrop-filter: blur(18px);
+  z-index: 95;
 }
 
 .mode-mac .sidebar-profile {
@@ -55,8 +64,10 @@
 
 .mode-mac .sidebar-nav-list {
   align-items: center;
-  gap: 12px;
-  width: 100%;
+  gap: 8px;
+  width: auto;
+  flex-direction: row;
+  flex: none;
 }
 
 .mode-mac .sidebar-nav-item {
@@ -90,18 +101,21 @@
 .mode-mac .sidebar-nav-item.active::before {
   content: '';
   position: absolute;
-  left: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 20px;
+  left: 50%;
+  top: -8px;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 4px;
   background-color: var(--secondary);
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-radius: 3px;
 }
 
 .mode-mac .terminal-dock {
-  left: 76px;
+  left: 0;
+}
+
+.mode-mac.terminal-closed .sidebar-litho {
+  bottom: 16px;
 }
 
 @media (max-width: 860px) {
@@ -110,5 +124,11 @@
   }
   .mode-mac .terminal-dock {
     left: 0;
+  }
+
+  .mode-mac .sidebar-litho {
+    bottom: 216px;
+    max-width: calc(100vw - 20px);
+    overflow-x: auto;
   }
 }
