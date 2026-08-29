@@ -16,14 +16,8 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1080px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* Page Header */}
-      <div data-reveal className="experience-page-header">
-        <h1>/var/log/experience</h1>
-        <p>System log entry initialized. Parsing career timeline...</p>
-      </div>
-
       <WindowCard mode={mode} activeView="experience" title="/var/log/experience">
-        <div style={{ padding: '40px 32px' }}>
+        <div style={{ padding: '36px 36px 48px' }}>
           {/* Vertical Timeline */}
           <div className="timeline-wrapper">
             {experienceList.map((item) => (

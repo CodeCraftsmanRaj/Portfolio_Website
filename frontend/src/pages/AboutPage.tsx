@@ -13,12 +13,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* Page Header */}
-      <div data-reveal className="about-page-header">
-        <h1>SYSTEM_INFO.TXT</h1>
-        <p>Metadata / AI-ML Engineer &amp; Researcher</p>
-      </div>
-
       <WindowCard mode={mode} activeView="about" title="/sys/users/admin/bio.txt">
         <div className="about-grid-layout">
           {/* Left Column: Editorial Bio */}

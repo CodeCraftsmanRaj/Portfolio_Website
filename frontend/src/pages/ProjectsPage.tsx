@@ -23,26 +23,27 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* Page Header */}
-      <div data-reveal className="projects-page-header">
-        <div className="projects-header-info">
-          <h1>Projects</h1>
-          <p>/root/workspace/repositories — Displaying {filteredProjects.length} entries.</p>
-        </div>
-
-        <div className="projects-search-bar hover-lift">
-          <span className="material-symbols-outlined muted-text" style={{ fontSize: 18 }}>search</span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Grep projects (e.g. 'rust', 'c', 'python')..."
-          />
-        </div>
-      </div>
-
       <WindowCard mode={mode} activeView="projects" title="/root/workspace/repositories">
-        <div style={{ padding: '36px 40px' }}>
+        <div style={{ padding: '32px 36px 48px' }}>
+          {/* Projects Internal Search & Filter Bar */}
+          <div data-reveal style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '28px', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '16px' }}>
+            <div>
+              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '20px', fontWeight: 600 }}>Featured Repositories</h2>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
+                Displaying {filteredProjects.length} engineered systems &amp; research packages
+              </p>
+            </div>
+
+            <div className="projects-search-bar hover-lift">
+              <span className="material-symbols-outlined muted-text" style={{ fontSize: 18 }}>search</span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Filter projects (e.g. 'python', 'vision', 'llm')..."
+              />
+            </div>
+          </div>
           <div className="projects-bento-grid">
             {filteredProjects.map((project) => {
               // 1. Featured card (col-span 8)

@@ -12,14 +12,6 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* Header Section */}
-      <div data-reveal className="skills-page-header">
-        <h1>System Dependencies</h1>
-        <p>
-          A comprehensive overview of the installed packages, frameworks, and core languages operating within this environment. Data is organized by dependency layer.
-        </p>
-      </div>
-
       <WindowCard mode={mode} activeView="skills" title="~/skills/dependencies.lock">
         <div style={{ padding: '36px 40px' }}>
           <div className="skills-layout-grid">

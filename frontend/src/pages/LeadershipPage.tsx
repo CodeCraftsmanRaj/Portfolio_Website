@@ -12,15 +12,8 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* Man Page Header */}
-      <div data-reveal className="man-page-header">
-        <h1>Manual Page: `ldext`</h1>
-        <p>NAME: ldext — list leadership and extracurricular activities</p>
-        <p>SYNOPSIS: ldext [OPTION]... [FILE]...</p>
-      </div>
-
       <WindowCard mode={mode} activeView="leadership" title="man ldext(1)">
-        <div style={{ padding: '36px 40px' }}>
+        <div style={{ padding: '36px 40px 48px' }}>
           <div className="man-layout-grid">
             {/* Leadership Column */}
             <section>
