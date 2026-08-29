@@ -6,4 +6,6 @@
 @import './os-mac.css';
 @import './os-windows.css';
 @import './os-linux.css';
+@import './os-android.css';
+@import './os-ios.css';
 @import './animations.css';

@@ -11,7 +11,7 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ mode }) => {
   const containerRef = useScrollReveal({ staggerDelayMs: 90 });
 
   return (
-    <div ref={containerRef} style={{ maxWidth: '1120px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* Man Page Header */}
       <div data-reveal className="man-page-header">
         <h1>Manual Page: `ldext`</h1>

@@ -1,0 +1,197 @@
+/* Android Mode Overrides (Material 3 / Android 14+ UI) */
+
+.mode-android {
+  --m3-surface: var(--surface);
+  --m3-surface-container: var(--surface-container-high);
+  --m3-surface-container-low: var(--surface-container-low);
+  --m3-primary: var(--primary);
+  --m3-secondary: var(--secondary);
+  --m3-indicator: color-mix(in srgb, var(--secondary) 18%, var(--surface-container-highest));
+  --m3-radius: 20px;
+}
+
+/* Material 3 Top App Bar */
+.mode-android .topbar {
+  height: 56px;
+  background-color: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--outline-variant);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mode-android .workspace-wrapper {
+  margin-top: 56px;
+  height: calc(100vh - 56px);
+}
+
+.mode-android .topbar-brand {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mode-android .android-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--surface-container-highest);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+/* Material 3 Bottom Navigation Bar */
+.mode-android .sidebar-litho {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  width: 100%;
+  height: 72px;
+  max-height: 72px;
+  background-color: color-mix(in srgb, var(--surface) 95%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--outline-variant);
+  border-right: none;
+  border-left: none;
+  border-bottom: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px 12px env(safe-area-inset-bottom, 6px);
+  z-index: 105;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.mode-android .sidebar-profile,
+.mode-android .sidebar-user-info,
+.mode-android .sidebar-action-btn,
+.mode-android .sidebar-footer {
+  display: none;
+}
+
+.mode-android .sidebar-nav-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.mode-android .sidebar-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  gap: 3px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  width: auto;
+  min-width: 48px;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.mode-android .sidebar-nav-item span.material-symbols-outlined {
+  font-size: 20px;
+  padding: 4px 14px;
+  border-radius: 14px;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.mode-android .sidebar-nav-item span:not(.material-symbols-outlined) {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.mode-android .sidebar-nav-item.active span.material-symbols-outlined {
+  background-color: var(--m3-indicator);
+  color: var(--secondary);
+}
+
+.mode-android .sidebar-nav-item.active span:not(.material-symbols-outlined) {
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+/* Material 3 Window Cards */
+.mode-android .window-container {
+  border-radius: var(--m3-radius);
+  border: 1px solid var(--outline-variant);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.mode-android .window-header {
+  padding: 12px 18px;
+  background-color: var(--surface-container-high);
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+/* Material 3 Bottom Sheet Terminal */
+.mode-android .terminal-dock {
+  position: fixed;
+  bottom: 72px;
+  left: 0;
+  right: 0;
+  height: 240px;
+  border-radius: 24px 24px 0 0;
+  border: 1px solid var(--outline-variant);
+  border-bottom: none;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.mode-android .terminal-dock.collapsed {
+  height: 36px;
+}
+
+.mode-android .terminal-header {
+  border-radius: 24px 24px 0 0;
+}
+
+.mode-android .terminal-bottom-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background-color: var(--outline);
+  border-radius: 2px;
+  margin: 6px auto 2px;
+}
+
+@media (min-width: 861px) {
+  .mode-android .sidebar-litho {
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 540px;
+    border-radius: 32px;
+    bottom: 20px;
+    border: 1px solid var(--outline-variant);
+  }
+
+  .mode-android .terminal-dock {
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 720px;
+    border-radius: 20px;
+    border: 1px solid var(--outline-variant);
+  }
+}

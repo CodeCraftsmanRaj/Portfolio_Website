@@ -22,7 +22,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
   });
 
   return (
-    <div ref={containerRef} style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* Page Header */}
       <div data-reveal className="projects-page-header">
         <div className="projects-header-info">

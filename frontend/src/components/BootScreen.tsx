@@ -49,9 +49,9 @@ export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
     }
   }, [mode, onComplete]);
 
-  // Windows / Mac Progress bar & Spinner timing
+  // Windows / Mac / Android / iOS Progress bar & Spinner timing
   useEffect(() => {
-    if (mode === 'WIN' || mode === 'MAC') {
+    if (mode === 'WIN' || mode === 'MAC' || mode === 'ANDROID' || mode === 'IOS') {
       const interval = setInterval(() => {
         setProgress((prev) => {
           if (prev >= 100) {
@@ -59,7 +59,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
             setTimeout(onComplete, 300);
             return 100;
           }
-          return prev + (mode === 'MAC' ? 8 : 12);
+          return prev + (mode === 'MAC' || mode === 'IOS' ? 10 : 12);
         });
       }, 100);
       return () => clearInterval(interval);
@@ -157,8 +157,8 @@ export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
         </div>
       )}
 
-      {/* macOS Boot Screen */}
-      {mode === 'MAC' && (
+      {/* macOS / iOS Boot Screen */}
+      {(mode === 'MAC' || mode === 'IOS') && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '36px' }}>
           {/* Minimalist Apple-style Monogram */}
           <div style={{ fontSize: '48px', color: '#fcf9f4', opacity: 0.9 }}>
@@ -184,6 +184,37 @@ export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
                 transition: 'width 0.15s linear',
               }}
             />
+          </div>
+          {mode === 'IOS' && (
+            <div style={{ fontSize: '11px', color: '#7c766e', letterSpacing: '0.06em' }}>
+              iOS 18 Developer Edition
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Android Boot Screen */}
+      {mode === 'ANDROID' && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px' }}>
+          <div style={{ fontSize: '46px', color: '#4ade80' }}>
+            🤖
+          </div>
+
+          {/* Android Circular Pulsing Dots */}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#4ade80', opacity: progress > 25 ? 1 : 0.3 }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#4ade80', opacity: progress > 50 ? 1 : 0.3 }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#4ade80', opacity: progress > 75 ? 1 : 0.3 }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#4ade80', opacity: progress >= 100 ? 1 : 0.3 }} />
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em', color: '#fcf9f4' }}>
+              DevOS for Android
+            </div>
+            <div style={{ fontSize: '10px', color: '#7c766e', marginTop: '6px', fontFamily: 'var(--font-mono)' }}>
+              Initializing ART runtime... {progress}%
+            </div>
           </div>
         </div>
       )}

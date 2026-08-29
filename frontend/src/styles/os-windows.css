@@ -1,48 +1,61 @@
-/* Windows Mode Overrides */
+/* Windows 11 Fluent Mode Overrides */
 
 .mode-win {
-  --surface-radius: 0px;
+  --surface-radius: 4px;
 }
 
 .mode-win .topbar {
   background-color: color-mix(in srgb, var(--surface) 95%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--outline-variant);
+  height: 48px;
 }
 
 .mode-win .topbar-brand {
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
-/* Windows bottom taskbar */
+/* Windows Fluent Taskbar */
 .mode-win .sidebar-litho {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 72px;
-  background-color: var(--primary);
-  color: var(--surface);
+  height: 64px;
+  background-color: color-mix(in srgb, var(--surface-container-highest) 95%, transparent);
+  color: var(--on-surface);
   border-top: 1px solid var(--outline-variant);
   border-right: none;
+  border-left: none;
+  border-bottom: none;
   align-items: center;
-  padding: 8px 24px;
+  padding: 6px 24px;
   flex-direction: row;
   justify-content: center;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   z-index: 95;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .mode-win .sidebar-profile {
   padding: 0;
   border-bottom: none;
-  margin: 0 10px 0 0;
+  margin: 0 12px 0 0;
+  display: flex;
+  align-items: center;
 }
 
-.mode-win .sidebar-avatar-row { margin-bottom: 0; }
+.mode-win .sidebar-avatar-row { 
+  margin-bottom: 0; 
+  display: flex;
+  align-items: center;
+}
 
 .mode-win .sidebar-user-info,
 .mode-win .sidebar-action-btn,
@@ -53,29 +66,42 @@
 .mode-win .sidebar-avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid var(--outline-variant);
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--surface);
+  border: 1px solid var(--outline-variant);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.mode-win .sidebar-avatar:hover {
+  transform: scale(1.06);
 }
 
 .mode-win .sidebar-nav-list {
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   width: auto;
   flex-direction: row;
   flex: none;
 }
 
 .mode-win .sidebar-nav-item {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
   padding: 0;
+  display: flex;
+  align-items: center;
   justify-content: center;
   border-left: none;
-  color: var(--terminal-muted);
+  color: var(--on-surface-variant);
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.15s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
 .mode-win .sidebar-nav-item span:not(.material-symbols-outlined) {
@@ -83,60 +109,59 @@
 }
 
 .mode-win .sidebar-nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  transform: scale(1.05);
+  background-color: var(--surface-container-high);
+  color: var(--on-surface);
+  transform: translateY(-2px);
 }
 
 .mode-win .sidebar-nav-item.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background-color: var(--surface-container-highest);
+  color: var(--secondary);
 }
 
-.mode-win .sidebar-nav-item.active::before {
+.mode-win .sidebar-nav-item.active::after {
   content: '';
   position: absolute;
   left: 50%;
-  top: -8px;
+  bottom: 3px;
   transform: translateX(-50%);
-  width: 24px;
-  height: 4px;
+  width: 16px;
+  height: 3px;
   background-color: var(--secondary);
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-radius: 2px;
 }
 
+/* Windows Terminal Dock */
 .mode-win .terminal-dock {
   left: 0;
-  bottom: 72px;
-  background-color: #1e1b17;
-  border-top: 2px solid var(--outline);
+  right: 0;
+  bottom: 64px;
+  background-color: var(--terminal-bg);
+  border-top: 1px solid var(--outline-variant);
 }
 
-.mode-win.terminal-closed .terminal-dock {
-  bottom: 72px;
+.mode-win .terminal-dock.closed {
+  transform: translateY(calc(100% + 70px));
+  pointer-events: none;
 }
 
 @media (max-width: 860px) {
   .mode-win .sidebar-litho {
-    display: flex;
-    left: 6px;
-    right: 6px;
-    width: auto;
-    height: 62px;
-    padding: 6px 8px;
-    justify-content: center;
-    overflow: hidden;
+    height: 58px;
+    padding: 4px 8px;
+    overflow-x: auto;
   }
+
   .mode-win .terminal-dock {
-    left: 0;
-    bottom: 62px;
+    bottom: 58px;
   }
 
   .mode-win .sidebar-nav-item {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
 
-  .mode-win .sidebar-profile { margin-right: 6px; }
+  .mode-win .sidebar-profile { 
+    margin-right: 6px; 
+  }
 }

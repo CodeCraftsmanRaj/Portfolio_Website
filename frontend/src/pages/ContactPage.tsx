@@ -46,7 +46,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
   };
 
   return (
-    <div ref={containerRef} style={{ maxWidth: '1100px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1100px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
       <WindowCard mode={mode} activeView="contact" title="~/network/ping.socket">
         <div style={{ padding: '36px 32px' }}>
           <div className="contact-layout-grid">

@@ -1,0 +1,199 @@
+/* iOS Mode Overrides (Apple iOS 17/18 Human Interface Guidelines) */
+
+.mode-ios {
+  --ios-surface: var(--surface);
+  --ios-blur-bg: color-mix(in srgb, var(--surface) 82%, transparent);
+  --ios-tint: var(--secondary);
+  --ios-card-radius: 18px;
+  --ios-hairline: 0.5px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+/* iOS Dynamic Island & Translucent Navigation Bar */
+.mode-ios .topbar {
+  height: 52px;
+  background-color: var(--ios-blur-bg);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-bottom: 0.5px solid var(--outline-variant);
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mode-ios .workspace-wrapper {
+  margin-top: 52px;
+  height: calc(100vh - 52px);
+}
+
+.mode-ios .topbar-brand {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.mode-ios .ios-dynamic-island {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* iOS Bottom Tab Bar (Frosted Glass) */
+.mode-ios .sidebar-litho {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  width: 100%;
+  height: 68px;
+  max-height: 68px;
+  background-color: var(--ios-blur-bg);
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  border-top: 0.5px solid var(--outline-variant);
+  border-right: none;
+  border-left: none;
+  border-bottom: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4px 10px env(safe-area-inset-bottom, 4px);
+  z-index: 105;
+}
+
+.mode-ios .sidebar-profile,
+.mode-ios .sidebar-user-info,
+.mode-ios .sidebar-action-btn,
+.mode-ios .sidebar-footer {
+  display: none;
+}
+
+.mode-ios .sidebar-nav-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  gap: 2px;
+}
+
+.mode-ios .sidebar-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  gap: 2px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  width: auto;
+  min-width: 44px;
+  color: var(--on-surface-variant);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.mode-ios .sidebar-nav-item:active {
+  transform: scale(0.92);
+}
+
+.mode-ios .sidebar-nav-item span.material-symbols-outlined {
+  font-size: 22px;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mode-ios .sidebar-nav-item span:not(.material-symbols-outlined) {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.mode-ios .sidebar-nav-item.active {
+  color: var(--ios-tint);
+}
+
+.mode-ios .sidebar-nav-item.active span:not(.material-symbols-outlined) {
+  font-weight: 600;
+}
+
+/* iOS Cards (Continuous smooth corners) */
+.mode-ios .window-container {
+  border-radius: var(--ios-card-radius);
+  border: 0.5px solid var(--outline-variant);
+  background-color: var(--surface);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.mode-ios .window-header {
+  padding: 10px 16px;
+  background-color: color-mix(in srgb, var(--surface-container-high) 60%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--outline-variant);
+}
+
+/* iOS Sheet Terminal */
+.mode-ios .terminal-dock {
+  position: fixed;
+  bottom: 68px;
+  left: 0;
+  right: 0;
+  height: 230px;
+  border-radius: 20px 20px 0 0;
+  border: 0.5px solid var(--outline-variant);
+  border-bottom: none;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+  z-index: 100;
+}
+
+.mode-ios .terminal-dock.collapsed {
+  height: 36px;
+}
+
+.mode-ios .terminal-header {
+  border-radius: 20px 20px 0 0;
+  background-color: var(--terminal-header);
+}
+
+.mode-ios .terminal-bottom-sheet-handle {
+  width: 40px;
+  height: 5px;
+  background-color: var(--outline-variant);
+  border-radius: 3px;
+  margin: 6px auto 2px;
+}
+
+@media (min-width: 861px) {
+  .mode-ios .sidebar-litho {
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 520px;
+    border-radius: 28px;
+    bottom: 20px;
+    border: 0.5px solid var(--outline-variant);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .mode-ios .terminal-dock {
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 700px;
+    border-radius: 18px;
+    border: 0.5px solid var(--outline-variant);
+  }
+}

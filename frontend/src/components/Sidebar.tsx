@@ -45,10 +45,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <aside
-      ref={mode === 'WIN' ? revealRef : undefined}
-      className={`sidebar-litho ${mode === 'MAC' ? 'sidebar-mac-dock' : ''} ${mode === 'WIN' ? 'reveal-container' : ''} ${mobileOpen ? 'drawer-open' : ''}`}
-    >
+    <>
+      {mobileOpen && (
+        <div 
+          className="mobile-drawer-backdrop"
+          onClick={onCloseMobile}
+          aria-hidden="true"
+        />
+      )}
+      <aside
+        ref={mode === 'WIN' ? revealRef : undefined}
+        className={`sidebar-litho ${mode === 'MAC' ? 'sidebar-mac-dock' : ''} ${mode === 'WIN' ? 'reveal-container' : ''} ${mobileOpen ? 'drawer-open' : ''}`}
+      >
       {/* Profile Header */}
       <div className="sidebar-profile">
         <div className="sidebar-avatar-row">
@@ -121,5 +129,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
     </aside>
+  </>
   );
 };

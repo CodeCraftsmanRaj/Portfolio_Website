@@ -95,9 +95,12 @@
 /* WORKSPACE */
 .workspace-wrapper {
   display: flex;
-  flex: 1;
+  flex: 0 0 auto;
+  width: 100%;
   margin-top: 48px;
-  height: calc(100vh - 48px);
+  /* Track terminal height and taskbar height so the workspace itself shrinks */
+  height: calc(100vh - 48px - var(--terminal-h, 0px) - var(--taskbar-h, 0px));
+  max-height: calc(100vh - 48px - var(--terminal-h, 0px) - var(--taskbar-h, 0px));
   overflow: hidden;
   position: relative;
 }
@@ -242,12 +245,15 @@
 /* MAIN CONTENT CANVAS */
 .main-canvas {
   flex: 1;
+  min-height: 0;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 32px 40px 260px;
+  padding: 24px 32px;
   position: relative;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* TERMINAL PANEL */
@@ -266,7 +272,8 @@
   transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               left 0.3s ease,
-              right 0.3s ease;
+              right 0.3s ease,
+              bottom 0.3s ease;
 }
 
 .terminal-dock.collapsed {
@@ -279,6 +286,7 @@
 
 .terminal-dock.closed {
   transform: translateY(100%);
+  pointer-events: none;
 }
 
 .terminal-header {
@@ -460,6 +468,15 @@
     display: flex;
   }
   
+  .mobile-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 105;
+  }
+  
   .sidebar-litho {
     display: none;
   }
@@ -471,12 +488,13 @@
     left: 0;
     bottom: 0;
     width: 260px;
-    box-shadow: 8px 0 32px rgba(0,0,0,0.15);
+    box-shadow: 8px 0 32px rgba(0,0,0,0.25);
+    z-index: 110;
   }
   
   .main-canvas {
     width: 100%;
-    padding: 16px 10px 240px;
+    padding: 16px 10px 20px;
   }
   
   .terminal-dock {

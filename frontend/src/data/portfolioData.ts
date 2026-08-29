@@ -1,4 +1,4 @@
-export type OsMode = 'LINUX' | 'WIN' | 'MAC'
+export type OsMode = 'LINUX' | 'WIN' | 'MAC' | 'ANDROID' | 'IOS'
 export type ThemeName = 'blue' | 'netflix' | 'paper'
 
 export const themes: Array<{ id: ThemeName; label: string; swatch: string }> = [
@@ -26,6 +26,8 @@ export interface NavItem {
     mac: string
     win: string
     linux: string
+    android?: string
+    ios?: string
   }
 }
 
@@ -39,6 +41,8 @@ export const navItems: NavItem[] = [
       mac: '~/profile/init.exe',
       win: 'C:\\Users\\Root\\Home.exe',
       linux: '~/portfolio/home.md',
+      android: 'app://devos.raj/home',
+      ios: 'portfolio://view/home',
     },
   },
   {
@@ -50,6 +54,8 @@ export const navItems: NavItem[] = [
       mac: '~/raj-mathuria/about.md',
       win: 'C:\\Users\\Root\\sys\\bio.txt',
       linux: '/sys/users/admin/bio.txt',
+      android: 'app://devos.raj/about_bio',
+      ios: 'portfolio://view/profile',
     },
   },
   {
@@ -61,6 +67,8 @@ export const navItems: NavItem[] = [
       mac: '~/raj-mathuria/skills.config',
       win: 'C:\\ProgramFiles\\Dependencies\\System.dll',
       linux: '~/skills/dependencies.lock',
+      android: 'app://devos.raj/skills_config',
+      ios: 'portfolio://view/skills',
     },
   },
   {
@@ -72,6 +80,8 @@ export const navItems: NavItem[] = [
       mac: '~/workspace/repositories',
       win: 'D:\\Workspace\\Repositories',
       linux: '/root/workspace/repositories',
+      android: 'app://devos.raj/projects_repo',
+      ios: 'portfolio://view/projects',
     },
   },
   {
@@ -83,6 +93,8 @@ export const navItems: NavItem[] = [
       mac: '~/logs/career.log',
       win: 'C:\\System32\\var\\log\\experience.log',
       linux: '/var/log/experience',
+      android: 'app://devos.raj/experience_timeline',
+      ios: 'portfolio://view/experience',
     },
   },
   {
@@ -94,6 +106,8 @@ export const navItems: NavItem[] = [
       mac: '~/man/man1/ldext.1',
       win: 'C:\\Docs\\Manuals\\ldext.man',
       linux: 'man ldext',
+      android: 'app://devos.raj/leadership_manual',
+      ios: 'portfolio://view/leadership',
     },
   },
   {
@@ -105,6 +119,8 @@ export const navItems: NavItem[] = [
       mac: '~/network/ping.socket',
       win: 'C:\\Net\\Socket\\Connect.exe',
       linux: '/dev/net/ping',
+      android: 'app://devos.raj/contact_intent',
+      ios: 'portfolio://view/contact',
     },
   },
   {
@@ -116,6 +132,8 @@ export const navItems: NavItem[] = [
       mac: '~/raj-mathuria/resume.pdf',
       win: 'C:\\Users\\Root\\Documents\\Resume.pdf',
       linux: '~/documents/resume.pdf',
+      android: 'content://media/docs/resume.pdf',
+      ios: 'portfolio://files/resume.pdf',
     },
   },
 ]

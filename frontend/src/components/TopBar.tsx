@@ -336,6 +336,82 @@ export const TopBar: React.FC<TopBarProps> = ({
           </div>
         </header>
       )}
+
+      {/* Android Material 3 Top App Bar */}
+      {mode === 'ANDROID' && (
+        <header className="topbar">
+          <div className="topbar-left">
+            <button
+              type="button"
+              className="topbar-icon-btn btn-press"
+              onClick={onToggleMobileMenu}
+              title="Navigation Menu"
+            >
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+            <span className="topbar-brand">DevOS Android</span>
+          </div>
+
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+            <OsSwitcher mode={mode} onModeChange={onModeChange} />
+          </div>
+
+          <div className="topbar-right">
+            {themePicker}
+            <button
+              type="button"
+              className="topbar-icon-btn btn-press"
+              title="Terminal console"
+              onClick={onToggleTerminal}
+            >
+              <span className="material-symbols-outlined">terminal</span>
+            </button>
+            <div className="android-status-pill">
+              <span className="material-symbols-outlined" style={{ fontSize: 13 }}>signal_cellular_alt</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 13 }}>wifi</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 13 }}>battery_charging_full</span>
+            </div>
+          </div>
+        </header>
+      )}
+
+      {/* iOS Translucent Navigation Bar */}
+      {mode === 'IOS' && (
+        <header className="topbar">
+          <div className="topbar-left">
+            <button
+              type="button"
+              className="topbar-brand btn-press"
+              style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
+              onClick={() => onViewChange('home')}
+            >
+              <span style={{ fontSize: '18px' }}></span>
+              <span style={{ fontWeight: 600 }}>iOS</span>
+            </button>
+          </div>
+
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+            <OsSwitcher mode={mode} onModeChange={onModeChange} />
+          </div>
+
+          <div className="topbar-right">
+            {themePicker}
+            <button
+              type="button"
+              className="topbar-icon-btn btn-press"
+              title="Terminal console"
+              onClick={onToggleTerminal}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>terminal</span>
+            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontFamily: '-apple-system, sans-serif', color: 'var(--on-surface-variant)' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>signal_cellular_4_bar</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>wifi</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>battery_full</span>
+            </div>
+          </div>
+        </header>
+      )}
     </>
   );
 };

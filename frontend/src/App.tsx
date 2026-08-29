@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { OsMode, PageView, ThemeName } from './data/portfolioData';
+import { useDeviceDetection } from './hooks/useDeviceDetection';
 import { TopBar } from './components/TopBar';
 import { Sidebar } from './components/Sidebar';
 import { Terminal } from './components/Terminal';
@@ -15,12 +16,54 @@ import { ContactPage } from './pages/ContactPage';
 import { ResumePage } from './pages/ResumePage';
 
 export function App() {
-  // Default OS mode set to LINUX
-  const [mode, setMode] = useState<OsMode>('LINUX');
+  const { detectedMode, isMobile } = useDeviceDetection();
+
+  // OS mode auto-detected by device (Desktop default: LINUX | Mobile default: ANDROID / IOS)
+  const [mode, setMode] = useState<OsMode>(() => {
+    try {
+      const saved = localStorage.getItem('portfolio-os-mode') as OsMode;
+      if (saved && ['LINUX', 'WIN', 'MAC', 'ANDROID', 'IOS'].includes(saved)) {
+        const isSavedMobile = saved === 'ANDROID' || saved === 'IOS';
+        // Only restore saved mode if it matches the current device form-factor
+        if (isSavedMobile === isMobile) {
+          return saved;
+        }
+      }
+    } catch {
+      // fallback
+    }
+    return detectedMode;
+  });
+
+  // Automatically align mode whenever device form-factor changes (e.g. mobile vs desktop)
+  useEffect(() => {
+    const isCurrentModeMobile = mode === 'ANDROID' || mode === 'IOS';
+    if (isMobile !== isCurrentModeMobile) {
+      setMode(detectedMode);
+    }
+  }, [isMobile, detectedMode, mode]);
+
   const [activeView, setActiveView] = useState<PageView>('home');
-  const [terminalOpen, setTerminalOpen] = useState(true);
+  const [terminalOpen, setTerminalOpen] = useState(() => !isMobile);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMorphing, setIsMorphing] = useState(false);
+
+  // Set --taskbar-h variable on document root and reset mobile menu on mode change
+  useEffect(() => {
+    let taskbarH = '0px';
+    if (mode === 'WIN') {
+      taskbarH = isMobile ? '58px' : '64px';
+    } else if (mode === 'MAC') {
+      taskbarH = isMobile ? '68px' : '88px';
+    } else if (mode === 'ANDROID') {
+      taskbarH = '72px';
+    } else if (mode === 'IOS') {
+      taskbarH = '68px';
+    }
+    document.documentElement.style.setProperty('--taskbar-h', taskbarH);
+    setMobileMenuOpen(false);
+  }, [mode, isMobile]);
+
   const [theme, setTheme] = useState<ThemeName>(() => {
     try {
       return (localStorage.getItem('portfolio-theme') as ThemeName) || 'blue';
@@ -59,6 +102,11 @@ export function App() {
   // Mode change with smooth morphing transition
   const handleModeChange = (newMode: OsMode) => {
     if (newMode === mode) return;
+    try {
+      localStorage.setItem('portfolio-os-mode', newMode);
+    } catch {
+      // ignore
+    }
     setIsMorphing(true);
     setTimeout(() => {
       setMode(newMode);

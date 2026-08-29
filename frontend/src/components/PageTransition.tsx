@@ -56,6 +56,36 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ mode, viewKey, c
         transition: { duration: 0.2, ease: [0.32, 0, 0.67, 0] as const },
       },
     },
+    ANDROID: {
+      initial: { opacity: 0, y: 16, scale: 0.97 },
+      animate: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.26, ease: [0.2, 0, 0, 1] as const },
+      },
+      exit: {
+        opacity: 0,
+        y: -10,
+        scale: 0.98,
+        transition: { duration: 0.18, ease: [0.3, 0, 1, 1] as const },
+      },
+    },
+    IOS: {
+      initial: { opacity: 0, x: 20, scale: 0.98 },
+      animate: {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        transition: { type: 'spring' as const, stiffness: 320, damping: 30 },
+      },
+      exit: {
+        opacity: 0,
+        x: -16,
+        scale: 0.98,
+        transition: { duration: 0.18, ease: [0.25, 0.1, 0.25, 1] as const },
+      },
+    },
   };
 
   const currentVariant = variants[mode] || variants.LINUX;
@@ -67,7 +97,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ mode, viewKey, c
         initial={currentVariant.initial}
         animate={currentVariant.animate}
         exit={currentVariant.exit}
-        style={{ width: '100%', willChange: 'opacity, transform' }}
+        style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, willChange: 'opacity, transform' }}
       >
         {children}
       </motion.div>

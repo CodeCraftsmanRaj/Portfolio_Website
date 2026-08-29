@@ -11,7 +11,7 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
   const containerRef = useScrollReveal();
 
   return (
-    <div ref={containerRef} style={{ maxWidth: '1180px', margin: '0 auto' }}>
+    <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* Header Section */}
       <div data-reveal className="skills-page-header">
         <h1>System Dependencies</h1>

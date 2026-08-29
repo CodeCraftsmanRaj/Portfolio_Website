@@ -30,6 +30,10 @@ export const Terminal: React.FC<TerminalProps> = ({
   const [isResizing, setIsResizing] = useState(false)
   const [history, setHistory] = useState<CommandHistoryItem[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
+  // Ref to the terminal dock element so we can update height synchronously during drag
+  const terminalDockRef = useRef<HTMLDivElement>(null)
+  // Track the "live" height during drag without re-rendering
+  const liveHeightRef = useRef(220)
 
   useEffect(() => {
     if (!isResizing) return
@@ -37,9 +41,18 @@ export const Terminal: React.FC<TerminalProps> = ({
     const handlePointerMove = (event: PointerEvent) => {
       const maxHeight = Math.max(180, window.innerHeight - 72)
       const nextHeight = Math.min(maxHeight, Math.max(120, window.innerHeight - event.clientY))
-      setTerminalHeight(nextHeight)
+      liveHeightRef.current = nextHeight
+      // Update DOM directly — no React batching lag
+      if (terminalDockRef.current) {
+        terminalDockRef.current.style.height = `${nextHeight}px`
+      }
+      document.documentElement.style.setProperty('--terminal-h', `${nextHeight}px`)
     }
-    const stopResizing = () => setIsResizing(false)
+    const stopResizing = () => {
+      // Sync React state with final drag value on release
+      setTerminalHeight(liveHeightRef.current)
+      setIsResizing(false)
+    }
 
     document.addEventListener('pointermove', handlePointerMove)
     document.addEventListener('pointerup', stopResizing)
@@ -53,6 +66,21 @@ export const Terminal: React.FC<TerminalProps> = ({
       document.body.style.userSelect = ''
     }
   }, [isResizing])
+
+  // Expose terminal height as CSS custom property for responsive canvas fitting
+  useEffect(() => {
+    let effectiveHeight = 0
+    if (isOpen) {
+      if (isMinimized) {
+        effectiveHeight = 36
+      } else if (isMaximized) {
+        effectiveHeight = window.innerHeight - 48
+      } else {
+        effectiveHeight = terminalHeight
+      }
+    }
+    document.documentElement.style.setProperty('--terminal-h', `${effectiveHeight}px`)
+  }, [isOpen, isMinimized, isMaximized, terminalHeight])
 
   // Contextual initial lines based on active page & OS
   useEffect(() => {
@@ -79,6 +107,10 @@ export const Terminal: React.FC<TerminalProps> = ({
 `              \`"""`
       } else if (mode === 'WIN') {
         initialText = `Microsoft Windows [Version 10.0.19045.3570]\n(c) Microsoft Corporation. All rights reserved.\n\nC:\\Users\\Root> systeminfo\nHost Name: DEVOS-WORKSTATION\nOS Name: DevOS Windows Edition v1.0\nSystem Status: ONLINE\nReady for command dispatch.`
+      } else if (mode === 'ANDROID') {
+        initialText = `Android Debug Bridge Shell (adb)\nDevice: Pixel 8 Pro [Android 14 (API 34)]\nHost: devos-mobile.local\n\nshell@android:/ $ getprop ro.build.version.release\n14\nshell@android:/ $ uname -a\nLinux localhost 6.1.57-android14 #1 SMP PREEMPT aarch64\n\nType 'help' to view available commands.`
+      } else if (mode === 'IOS') {
+        initialText = `Darwin Kernel Version 23.4.0: root:xnu-10063.101.17~1/RELEASE_ARM64_T8120\niPhone 15 Pro Max (iPhone16,2) - iOS 18.0 (22A3354)\n\niPhone:~ mobile$ sysctl -n hw.model\niPhone16,2\niPhone:~ mobile$ uptime\n14:32 up 6 days, 22 hrs, 1 user, load averages: 1.12 1.05 0.98\n\nType 'help' for available commands.`
       } else {
         initialText = `Last login: Wed Oct 25 14:32:11 on ttys001\nType 'help' to inspect available system commands.\n\n[INFO] DevOS Archival Terminal initialized.\n[READY] Listening for input.`
       }
@@ -108,6 +140,8 @@ export const Terminal: React.FC<TerminalProps> = ({
   const getPromptString = () => {
     if (mode === 'WIN') return 'C:\\Users\\Root>'
     if (mode === 'LINUX') return 'user@devos:~$'
+    if (mode === 'ANDROID') return 'shell@android:/ $'
+    if (mode === 'IOS') return 'iPhone:~ mobile$ '
     return 'guest@portfolio:~$'
   }
 
@@ -206,6 +240,7 @@ export const Terminal: React.FC<TerminalProps> = ({
 
   return (
     <div
+      ref={terminalDockRef}
       className={`terminal-dock ${!isOpen ? 'closed' : ''} ${isMinimized ? 'collapsed' : ''} ${isMaximized ? 'fullscreen' : ''}`}
       style={isMinimized ? { height: '36px' } : isMaximized ? undefined : { height: `${terminalHeight}px` }}
     >
@@ -219,6 +254,14 @@ export const Terminal: React.FC<TerminalProps> = ({
       />
       {/* Terminal Header & Tabs */}
       <div className="terminal-header">
+        {(mode === 'ANDROID' || mode === 'IOS') && (
+          <div
+            className="terminal-bottom-sheet-handle"
+            onClick={() => setIsMinimized(!isMinimized)}
+            style={{ cursor: 'pointer' }}
+            title="Drag to resize / collapse"
+          />
+        )}
         <div className="terminal-tabs">
           <button
             type="button"

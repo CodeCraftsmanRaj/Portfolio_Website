@@ -35,7 +35,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <WindowCard mode={mode} activeView="home" title="~/portfolio/home.md">
         <div ref={containerRef} style={{ padding: '36px 40px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
-            <div style={{ gridColumn: 'span 8', paddingRight: '24px', borderRight: '1px solid var(--outline-variant)' }}>
+            <div style={{ gridColumn: 'span 8', paddingRight: '24px', borderRight: '1px solid var(--outline-variant)', display: 'flex', flexDirection: 'column' }}>
               <h1
                 data-reveal="left"
                 className="hero-main-heading is-revealed"
@@ -45,13 +45,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               </h1>
               <p
                 data-reveal
-                style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', lineHeight: 1.7, color: 'var(--on-surface-variant)', marginBottom: '32px' }}
+                style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', lineHeight: 1.7, color: 'var(--on-surface-variant)', marginBottom: '24px' }}
               >
                 {personalData.linuxSubHeadline}
               </p>
 
               {/* Bento Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
                 <div
                   data-reveal
                   className="os-double-border hover-lift"
@@ -105,7 +105,20 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             {/* Linux Right Column */}
-            <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              {/* Linux User Identity Card */}
+              <div data-reveal style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '14px', background: 'var(--surface-container-low)', border: '1px solid var(--outline-variant)', borderRadius: '8px' }}>
+                <img
+                  src="/Raj_Image_500.JPG"
+                  alt="Raj Mathuria"
+                  style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', objectPosition: '50% 18%', border: '2px solid var(--primary)' }}
+                />
+                <div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 700 }}>raj@devos-kernel</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--on-surface-variant)' }}>uid=1000(raj)</div>
+                </div>
+              </div>
+
               <div data-reveal>
                 <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--on-surface-variant)', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px', marginBottom: '12px' }}>
                   Status
@@ -151,19 +164,19 @@ export const HomePage: React.FC<HomePageProps> = ({
       <WindowCard mode={mode} activeView="home" title="C:\Users\Root\Home.exe">
         <div ref={containerRef} style={{ padding: '36px 40px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
-            <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div style={{ gridColumn: 'span 7', display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div data-reveal="left" style={{ borderBottom: '4px solid var(--primary)', paddingBottom: '16px' }}>
                 <h1 className="hero-main-heading" style={{ marginBottom: '8px' }}>
                   AI/ML ENGINEER <br />&amp; RESEARCHER
                 </h1>
-                <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '20px', color: 'var(--on-surface-variant)' }}>
+                <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '18px', color: 'var(--on-surface-variant)' }}>
                   {personalData.subHeadline}
                 </p>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div data-reveal className="hairline-border hover-lift" style={{ padding: '16px', background: 'var(--surface)' }}>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 600, marginBottom: '10px' }} className="crimson-text">
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '17px', fontWeight: 600, marginBottom: '8px' }} className="crimson-text">
                     Core Competencies
                   </h3>
                   <ul style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', listStylePosition: 'inside', lineHeight: 1.8 }}>
@@ -175,35 +188,54 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 <div data-reveal className="hairline-border hover-lift" style={{ padding: '16px', background: 'var(--surface)' }}>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 600, marginBottom: '10px' }} className="crimson-text">
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '17px', fontWeight: 600, marginBottom: '8px' }} className="crimson-text">
                     Recent Deployments
                   </h3>
-                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: '14px', color: 'var(--on-surface-variant)' }}>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: '13px', color: 'var(--on-surface-variant)', lineHeight: 1.6 }}>
                     Built 5+ production AI solutions at Systems Plus, reducing manual effort by 60-80%.
                   </p>
                 </div>
               </div>
 
-              <div data-reveal className="hero-schematic-frame hover-lift" style={{ maxWidth: '100%' }}>
-                <img
-                  src="/Raj_Image_500.JPG"
-                  alt="Raj Mathuria profile portrait"
-                  style={{ height: '220px' }}
-                />
-                <div className="hero-schematic-caption">
-                  <span>INTERFACE WORKSPACE // HARDWARE &amp; LOGIC</span>
-                  <span>REV. 2026</span>
-                </div>
+              <div data-reveal style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+                <button
+                  type="button"
+                  className="btn-primary btn-press"
+                  style={{ flex: 1 }}
+                  onClick={() => onViewChange('projects')}
+                >
+                  Execute Portfolio
+                </button>
+                <button
+                  type="button"
+                  className="btn-outline btn-press"
+                  style={{ flex: 1 }}
+                  onClick={onToggleTerminal}
+                >
+                  Open Command Prompt
+                </button>
               </div>
             </div>
 
-            {/* Windows Right Column: Stats & Logs */}
-            <div style={{ gridColumn: 'span 4', borderLeft: '1px solid var(--outline-variant)', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div data-reveal style={{ background: 'var(--surface-variant)', padding: '16px', border: '1px solid var(--outline-variant)' }}>
-                <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '6px', marginBottom: '10px' }}>
+            {/* Windows Right Column: Portrait Card & Stats */}
+            <div style={{ gridColumn: 'span 5', borderLeft: '1px solid var(--outline-variant)', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div data-reveal className="hero-schematic-frame hover-lift" style={{ width: '100%', maxWidth: '340px', margin: '0 auto' }}>
+                <img
+                  src="/Raj_Image_500.JPG"
+                  alt="Raj Mathuria profile portrait"
+                  style={{ height: '240px' }}
+                />
+                <div className="hero-schematic-caption">
+                  <span>DEVOS WORKSTATION // RAJ</span>
+                  <span>REV. 2026</span>
+                </div>
+              </div>
+
+              <div data-reveal style={{ background: 'var(--surface-variant)', padding: '14px', border: '1px solid var(--outline-variant)', borderRadius: '4px' }}>
+                <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '6px', marginBottom: '8px' }}>
                   System Status
                 </h4>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', lineHeight: 1.8 }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', lineHeight: 1.8 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span>Uptime:</span>
                     <b>1.5+ years</b>
@@ -219,37 +251,20 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              <div data-reveal>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 600, borderBottom: '2px solid var(--primary)', paddingBottom: '8px', marginBottom: '14px' }}>
-                  Latest Logs
+              <div data-reveal style={{ marginTop: '8px' }}>
+                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '16px', fontWeight: 600, borderBottom: '2px solid var(--primary)', paddingBottom: '6px', marginBottom: '10px' }}>
+                  Latest Activity
                 </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
-                  <div style={{ borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px' }}>
-                    <span className="crimson-text" style={{ display: 'block', fontSize: '11px' }}>2026-08-20</span>
-                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '14px' }}>Built production AI systems with Azure OpenAI and RAG.</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontFamily: 'var(--font-mono)', fontSize: '11px' }}>
+                  <div style={{ borderBottom: '1px solid var(--outline-variant)', paddingBottom: '6px' }}>
+                    <span className="crimson-text" style={{ display: 'block', fontSize: '10px' }}>2026-08-20</span>
+                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '13px' }}>Built production AI systems with Azure OpenAI and RAG.</span>
                   </div>
-                  <div style={{ borderBottom: '1px solid var(--outline-variant)', paddingBottom: '8px' }}>
-                    <span className="crimson-text" style={{ display: 'block', fontSize: '11px' }}>2026-08-14</span>
-                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '14px' }}>Led satellite-ground data fusion research at ISRO.</span>
+                  <div>
+                    <span className="crimson-text" style={{ display: 'block', fontSize: '10px' }}>2026-08-14</span>
+                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '13px' }}>Led satellite-ground data fusion research at ISRO.</span>
                   </div>
                 </div>
-              </div>
-
-              <div data-reveal style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <button
-                  type="button"
-                  className="btn-primary btn-press"
-                  onClick={() => onViewChange('projects')}
-                >
-                  Execute Portfolio
-                </button>
-                <button
-                  type="button"
-                  className="btn-outline btn-press"
-                  onClick={onToggleTerminal}
-                >
-                  Open Command Prompt
-                </button>
               </div>
             </div>
           </div>
@@ -258,7 +273,7 @@ export const HomePage: React.FC<HomePageProps> = ({
     );
   }
 
-  // DEFAULT / MAC MODE HERO
+  // DEFAULT / MAC / MOBILE MODE HERO
   return (
     <WindowCard mode={mode} activeView="home" title="~/profile/init.exe">
       <div ref={containerRef} className="hero-window-content">
