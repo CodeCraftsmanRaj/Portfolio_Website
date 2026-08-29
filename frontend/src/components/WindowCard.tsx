@@ -103,13 +103,13 @@ export const WindowCard: React.FC<WindowCardProps> = ({
           </div>
           <div className="linux-window-controls">
             <button type="button" className="linux-dot-btn btn-press" title={isMinimized ? "Restore" : "Minimize"} onClick={() => setIsMinimized(!isMinimized)}>
-              <span className="material-symbols-outlined" style={{ fontSize: 10, color: 'var(--surface)' }}>{isMinimized ? 'expand_less' : 'remove'}</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 11, color: '#ffffff' }}>{isMinimized ? 'expand_less' : 'remove'}</span>
             </button>
             <button type="button" className="linux-dot-btn btn-press" title={isMaximized ? "Restore" : "Maximize"} onClick={() => { setIsMaximized(!isMaximized); setIsMinimized(false); }}>
-              <span className="material-symbols-outlined" style={{ fontSize: 10, color: 'var(--surface)' }}>{isMaximized ? 'filter_none' : 'crop_square'}</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 11, color: '#ffffff' }}>{isMaximized ? 'filter_none' : 'crop_square'}</span>
             </button>
             <button type="button" className="linux-dot-btn close btn-press" title="Close" onClick={closeWindow}>
-              <span className="material-symbols-outlined" style={{ fontSize: 10, color: '#ffffff' }}>close</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 11, color: '#ffffff' }}>close</span>
             </button>
           </div>
         </div>

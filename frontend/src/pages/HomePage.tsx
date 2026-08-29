@@ -33,7 +33,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   if (mode === 'LINUX') {
     return (
       <WindowCard mode={mode} activeView="home" title="~/portfolio/home.md">
-        <div ref={containerRef} style={{ padding: '36px 40px' }}>
+        <div ref={containerRef} style={{ padding: '36px 40px 48px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
             <div style={{ gridColumn: 'span 8', paddingRight: '24px', borderRight: '1px solid var(--outline-variant)', display: 'flex', flexDirection: 'column' }}>
               <h1
@@ -141,7 +141,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </ul>
               </div>
 
-              <div data-reveal style={{ marginTop: 'auto' }}>
+              <div data-reveal style={{ marginTop: '24px' }}>
                 <button
                   type="button"
                   className="btn-primary btn-press"
@@ -162,7 +162,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   if (mode === 'WIN') {
     return (
       <WindowCard mode={mode} activeView="home" title="C:\Users\Root\Home.exe">
-        <div ref={containerRef} style={{ padding: '36px 40px' }}>
+        <div ref={containerRef} style={{ padding: '36px 40px 48px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
             <div style={{ gridColumn: 'span 7', display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div data-reveal="left" style={{ borderBottom: '4px solid var(--primary)', paddingBottom: '16px' }}>

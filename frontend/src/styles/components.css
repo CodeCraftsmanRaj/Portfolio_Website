@@ -178,6 +178,8 @@
 .window-container.is-maximized {
   position: fixed;
   inset: 48px 0 0 260px;
+  width: auto !important;
+  right: 0 !important;
   z-index: 105;
   border-radius: 0 !important;
   border: none !important;
@@ -185,20 +187,35 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 48px);
+  background-color: var(--surface-container-lowest);
+}
+
+/* Ensure maximized window body scrolls cleanly */
+.window-container.is-maximized > div:not(.window-header) {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 
 .mode-linux .window-container.is-maximized {
   inset: 36px 0 0 88px;
+  width: auto !important;
+  right: 0 !important;
   height: calc(100vh - 36px);
 }
 
 .mode-win .window-container.is-maximized {
   inset: 48px 0 64px 0;
+  width: auto !important;
+  right: 0 !important;
   height: calc(100vh - 48px - 64px);
 }
 
 .mode-mac .window-container.is-maximized {
   inset: 48px 0 76px 0;
+  width: auto !important;
+  right: 0 !important;
   height: calc(100vh - 48px - 76px);
 }
 
@@ -208,6 +225,8 @@
   .mode-win .window-container.is-maximized,
   .mode-mac .window-container.is-maximized {
     inset: 48px 0 60px 0;
+    width: auto !important;
+    right: 0 !important;
     height: calc(100vh - 48px - 60px);
   }
 }
@@ -295,26 +314,30 @@
 .linux-window-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .linux-dot-btn {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--outline-variant);
+  background: #4a4a4a;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.15s ease;
+  transition: all 0.15s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .linux-dot-btn.close {
-  background: var(--linux-orange);
+  background: #e95420;
 }
 
 .linux-dot-btn:hover {
-  opacity: 0.85;
+  filter: brightness(1.2);
+  transform: scale(1.08);
 }
 
 .window-closed-state {

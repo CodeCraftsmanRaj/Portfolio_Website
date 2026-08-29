@@ -44,7 +44,7 @@ export function App() {
   }, [isMobile, detectedMode, mode]);
 
   const [activeView, setActiveView] = useState<PageView>('home');
-  const [terminalOpen, setTerminalOpen] = useState(() => !isMobile);
+  const [terminalOpen, setTerminalOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMorphing, setIsMorphing] = useState(false);
 
