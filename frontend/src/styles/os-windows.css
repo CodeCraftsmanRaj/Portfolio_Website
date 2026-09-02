@@ -133,12 +133,17 @@
 
 /* Windows Terminal Dock */
 .mode-win .terminal-dock {
-  left: auto;
-  right: 18px;
-  width: min(720px, calc(100vw - 120px));
+  left: 0;
+  right: 0;
+  width: auto;
+  max-height: calc(100vh - 48px - 64px);
   bottom: 64px;
   background-color: var(--terminal-bg);
   border-top: 1px solid var(--outline-variant);
+}
+
+.mode-win .terminal-dock.fullscreen {
+  height: calc(100vh - 48px - 64px);
 }
 
 .mode-win .terminal-dock.closed {

@@ -130,9 +130,10 @@
 }
 
 .mode-mac .terminal-dock {
-  left: auto;
-  right: 18px;
-  width: min(760px, calc(100vw - 120px));
+  left: 0;
+  right: 0;
+  width: auto;
+  max-height: calc(100vh - 48px - 88px);
   bottom: 88px;
   background-color: var(--terminal-bg);
   border-top: 1px solid var(--outline-variant);
@@ -142,6 +143,10 @@
 .mode-mac .terminal-dock.closed {
   transform: translateY(calc(100% + 95px));
   pointer-events: none;
+}
+
+.mode-mac .terminal-dock.fullscreen {
+  height: calc(100vh - 48px - 88px);
 }
 
 @media (max-width: 860px) {

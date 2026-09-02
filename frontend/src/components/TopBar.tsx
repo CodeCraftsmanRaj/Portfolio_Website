@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Apple } from 'lucide-react';
 import { OsMode, PageView, navItems, ThemeName, themes } from '../data/portfolioData';
 import { OsSwitcher } from './OsSwitcher';
 
@@ -175,10 +176,10 @@ export const TopBar: React.FC<TopBarProps> = ({
             <button
               type="button"
               className="topbar-icon-btn btn-press"
-              title="System Power"
+              title="Restart System"
               onClick={handleSystemPower}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 16 }}>power_settings_new</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 16 }}>restart_alt</span>
             </button>
           </div>
         </header>
@@ -359,7 +360,10 @@ export const TopBar: React.FC<TopBarProps> = ({
       {mode === 'ANDROID' && (
         <header className="topbar">
           <div className="topbar-left">
-            <span className="topbar-brand">DevOS Android</span>
+            <span className="topbar-brand" aria-label="DevOS Android">
+              <span>DevOS</span>
+              <span className="material-symbols-outlined" aria-hidden="true" style={{ fontSize: 22 }}>android</span>
+            </span>
           </div>
 
           <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
@@ -395,8 +399,8 @@ export const TopBar: React.FC<TopBarProps> = ({
               style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
               onClick={() => onViewChange('home')}
             >
-              <span style={{ fontSize: '18px' }}></span>
-              <span style={{ fontWeight: 600 }}>iOS</span>
+              <span>DevOS</span>
+              <Apple size={18} strokeWidth={2.2} aria-hidden="true" />
             </button>
           </div>
 

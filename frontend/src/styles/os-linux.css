@@ -110,9 +110,10 @@
 }
 
 .mode-linux .terminal-dock {
-  left: auto;
-  right: 18px;
-  width: min(760px, calc(100vw - 120px));
+  left: 0;
+  right: 0;
+  width: auto;
+  max-height: calc(100vh - 36px);
   margin: 0;
   border: 1px solid var(--outline-variant);
   border-bottom: none;

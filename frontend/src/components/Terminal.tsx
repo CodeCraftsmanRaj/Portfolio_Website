@@ -40,7 +40,9 @@ export const Terminal: React.FC<TerminalProps> = ({
     if (!isResizing) return
 
     const handlePointerMove = (event: PointerEvent) => {
-      const maxHeight = Math.max(180, window.innerHeight - 72)
+      const headerHeight = mode === 'LINUX' ? 36 : 48
+      const bottomOffset = mode === 'MAC' ? 88 : mode === 'WIN' ? 64 : 0
+      const maxHeight = Math.max(180, window.innerHeight - headerHeight - bottomOffset)
       const nextHeight = Math.min(maxHeight, Math.max(120, window.innerHeight - event.clientY))
       liveHeightRef.current = nextHeight
       if (terminalDockRef.current) {
