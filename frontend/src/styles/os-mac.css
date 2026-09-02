@@ -130,8 +130,9 @@
 }
 
 .mode-mac .terminal-dock {
-  left: 0;
-  right: 0;
+  left: auto;
+  right: 18px;
+  width: min(760px, calc(100vw - 120px));
   bottom: 88px;
   background-color: var(--terminal-bg);
   border-top: 1px solid var(--outline-variant);
@@ -159,8 +160,9 @@
   }
 
   .mode-mac .terminal-dock {
-    left: 0;
-    right: 0;
+    left: 12px;
+    right: 12px;
+    width: auto;
     bottom: 68px;
   }
 

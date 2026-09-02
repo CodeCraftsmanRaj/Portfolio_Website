@@ -45,8 +45,43 @@ export function App() {
 
   const [activeView, setActiveView] = useState<PageView>('home');
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [openTabs, setOpenTabs] = useState<Array<PageView | 'terminal'>>(['home']);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMorphing, setIsMorphing] = useState(false);
+
+  const markTabOpen = (tab: PageView | 'terminal') => {
+    setOpenTabs((prev) => (prev.includes(tab) ? prev : [...prev, tab]));
+  };
+
+  const handleViewChange = (nextView: PageView) => {
+    setActiveView(nextView);
+    markTabOpen(nextView);
+  };
+
+  const handleToggleTerminal = () => {
+    setTerminalOpen((prev) => {
+      const nextState = !prev;
+      if (nextState) {
+        markTabOpen('terminal');
+      } else {
+        setOpenTabs((current) => current.filter((tab) => tab !== 'terminal'));
+      }
+      return nextState;
+    });
+  };
+
+  const handleCloseView = (view: PageView) => {
+    setOpenTabs((current) => {
+      const filtered = current.filter((tab) => tab !== view);
+
+      if (activeView === view) {
+        const nextFallback = filtered.find((tab): tab is PageView => tab !== 'terminal') ?? 'home';
+        setActiveView(nextFallback);
+      }
+
+      return filtered;
+    });
+  };
 
   // Set --taskbar-h variable on document root and reset mobile menu on mode change
   useEffect(() => {
@@ -116,17 +151,47 @@ export function App() {
     }, 150);
   };
 
-  // Keyboard shortcut listener (Ctrl+` or Cmd+` toggles terminal)
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const allowedTabs = openTabs.filter((tab): tab is PageView => tab !== 'terminal');
+
       if ((e.ctrlKey || e.metaKey) && e.key === '`') {
         e.preventDefault();
-        setTerminalOpen((prev) => !prev);
+        handleToggleTerminal();
+        return;
+      }
+
+      if ((e.altKey || e.metaKey) && e.key === 'Tab') {
+        e.preventDefault();
+        if (allowedTabs.length === 0) return;
+
+        const currentIndex = allowedTabs.indexOf(activeView);
+        const nextIndex = currentIndex >= 0
+          ? (currentIndex + (e.shiftKey ? -1 : 1) + allowedTabs.length) % allowedTabs.length
+          : 0;
+
+        const nextView = allowedTabs[nextIndex];
+        handleViewChange(nextView);
+        return;
+      }
+
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Tab') {
+        e.preventDefault();
+        if (allowedTabs.length === 0) return;
+
+        const currentIndex = allowedTabs.indexOf(activeView);
+        const nextIndex = currentIndex >= 0
+          ? (currentIndex + 1 + allowedTabs.length) % allowedTabs.length
+          : 0;
+
+        handleViewChange(allowedTabs[nextIndex]);
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [activeView, openTabs]);
 
   return (
     <>
@@ -139,10 +204,10 @@ export function App() {
         <TopBar
           mode={mode}
           activeView={activeView}
-          onViewChange={setActiveView}
+          onViewChange={handleViewChange}
           onModeChange={handleModeChange}
           terminalOpen={terminalOpen}
-          onToggleTerminal={() => setTerminalOpen(!terminalOpen)}
+          onToggleTerminal={handleToggleTerminal}
           mobileMenuOpen={mobileMenuOpen}
           onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
           theme={theme}
@@ -155,7 +220,8 @@ export function App() {
           <Sidebar
             mode={mode}
             activeView={activeView}
-            onViewChange={setActiveView}
+            openTabs={openTabs}
+            onViewChange={handleViewChange}
             mobileOpen={mobileMenuOpen}
             onCloseMobile={() => setMobileMenuOpen(false)}
           />
@@ -166,50 +232,57 @@ export function App() {
               {activeView === 'home' && (
                 <HomePage
                   mode={mode}
-                  onViewChange={setActiveView}
-                  onToggleTerminal={() => setTerminalOpen(!terminalOpen)}
+                  onViewChange={handleViewChange}
+                  onToggleTerminal={handleToggleTerminal}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'about' && (
                 <AboutPage
                   mode={mode}
-                  onViewChange={setActiveView}
+                  onViewChange={handleViewChange}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'skills' && (
                 <SkillsPage
                   mode={mode}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'projects' && (
                 <ProjectsPage
                   mode={mode}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'experience' && (
                 <ExperiencePage
                   mode={mode}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'leadership' && (
                 <LeadershipPage
                   mode={mode}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'contact' && (
                 <ContactPage
                   mode={mode}
+                  onWindowClose={handleCloseView}
                 />
               )}
 
               {activeView === 'resume' && (
-                <ResumePage mode={mode} />
+                <ResumePage mode={mode} onWindowClose={handleCloseView} />
               )}
             </PageTransition>
           </main>
@@ -218,9 +291,12 @@ export function App() {
           <Terminal
             mode={mode}
             activeView={activeView}
-            onViewChange={setActiveView}
+            onViewChange={handleViewChange}
             isOpen={terminalOpen}
-            onClose={() => setTerminalOpen(false)}
+            onClose={() => {
+              setTerminalOpen(false);
+              setOpenTabs((current) => current.filter((tab) => tab !== 'terminal'));
+            }}
           />
         </div>
       </div>

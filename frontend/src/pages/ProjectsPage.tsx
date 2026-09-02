@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { OsMode, projectsList } from '../data/portfolioData';
+import { OsMode, PageView, projectsList } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface ProjectsPageProps {
   mode: OsMode;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
+export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode, onWindowClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const containerRef = useScrollReveal({ staggerDelayMs: 80 });
 
@@ -23,7 +24,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <WindowCard mode={mode} activeView="projects" title="/root/workspace/repositories">
+      <WindowCard mode={mode} activeView="projects" title="/root/workspace/repositories" onClose={() => onWindowClose?.('projects')}>
         <div style={{ padding: '32px 36px 48px' }}>
           {/* Projects Internal Search & Filter Bar */}
           <div data-reveal style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '28px', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '16px' }}>

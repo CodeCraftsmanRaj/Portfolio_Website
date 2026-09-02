@@ -1,13 +1,14 @@
 import React from 'react';
-import { OsMode, experienceList } from '../data/portfolioData';
+import { OsMode, PageView, experienceList } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface ExperiencePageProps {
   mode: OsMode;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
+export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode, onWindowClose }) => {
   const containerRef = useScrollReveal({ staggerDelayMs: 100 });
 
   const handleExportPdf = () => {
@@ -16,7 +17,7 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1080px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <WindowCard mode={mode} activeView="experience" title="/var/log/experience">
+      <WindowCard mode={mode} activeView="experience" title="/var/log/experience" onClose={() => onWindowClose?.('experience')}>
         <div style={{ padding: '36px 36px 48px' }}>
           {/* Vertical Timeline */}
           <div className="timeline-wrapper">
@@ -56,7 +57,7 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ mode }) => {
               onClick={handleExportPdf}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 16 }}>download</span>
-              <span>Export PDF / Resume</span>
+              <span>Export PDF</span>
             </button>
           </div>
         </div>

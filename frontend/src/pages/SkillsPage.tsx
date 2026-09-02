@@ -1,63 +1,45 @@
 import React from 'react';
-import { OsMode, coreLanguages, frameworkGroups, buildTools } from '../data/portfolioData';
+import { OsMode, PageView, coreLanguages, frameworkGroups, buildTools } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface SkillsPageProps {
   mode: OsMode;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const SkillsPage: React.FC<SkillsPageProps> = ({ mode }) => {
+export const SkillsPage: React.FC<SkillsPageProps> = ({ mode, onWindowClose }) => {
   const containerRef = useScrollReveal();
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <WindowCard mode={mode} activeView="skills" title="~/skills/dependencies.lock">
+      <WindowCard mode={mode} activeView="skills" title="~/skills/dependencies.lock" onClose={() => onWindowClose?.('skills')}>
         <div style={{ padding: '36px 40px' }}>
           <div className="skills-layout-grid">
-            {/* Core Binaries Progress Bars */}
-            <div>
+            <div className="mobile-stack-overview">
               <h2 data-reveal className="skills-section-title">
                 <span className="material-symbols-outlined crimson-text">code</span>
-                <span>Core Binaries</span>
+                <span>Primary Stack</span>
               </h2>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <p className="mobile-stack-intro">
+                Tools I use to move from research ideas to production systems.
+              </p>
+              <div className="mobile-stack-list">
                 {coreLanguages.map((skill) => (
-                  <div key={skill.name} data-reveal className="skill-progress-item hover-lift">
-                    <div className="skill-progress-header">
-                      <span className="name">{skill.name}</span>
-                      <span className="version">{skill.version}</span>
+                  <article key={skill.name} data-reveal className="mobile-stack-card">
+                    <span className="mobile-stack-icon material-symbols-outlined">terminal</span>
+                    <div>
+                      <h3>{skill.name}</h3>
+                      <p>{skill.version}</p>
                     </div>
-                    <div className="skill-progress-bar">
-                      <div
-                        className="skill-progress-fill"
-                        style={{ width: `${skill.percentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
+                    <span className="material-symbols-outlined mobile-stack-arrow">arrow_outward</span>
+                  </article>
                 ))}
               </div>
-
-              {/* Extra OS Environment Info */}
-              <div
-                data-reveal
-                className="hairline-border hover-lift"
-                style={{
-                  marginTop: '28px',
-                  padding: '16px',
-                  background: 'var(--surface-container-low)',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '12px',
-                  lineHeight: 1.8,
-                }}
-              >
-                <div style={{ fontWeight: 700, marginBottom: '6px', color: 'var(--on-surface)' }}>
-                  RUNTIME ENVIRONMENT
-                </div>
-                <div>Runtime: Node.js v20.x / Python 3.12</div>
-                <div>Container Engine: Docker 25.0 (rootless)</div>
-                <div>Orchestration: Kubernetes / Helm</div>
+              <div data-reveal className="runtime-environment">
+                <span className="runtime-label">Runtime Environment</span>
+                <div>Node.js v20.x / Python 3.12</div>
+                <div>Docker 25.0 (rootless) / Kubernetes / Helm</div>
               </div>
             </div>
 

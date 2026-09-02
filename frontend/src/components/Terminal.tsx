@@ -30,6 +30,7 @@ export const Terminal: React.FC<TerminalProps> = ({
   const [isResizing, setIsResizing] = useState(false)
   const [history, setHistory] = useState<CommandHistoryItem[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
+  const tabOrder = ['terminal', 'output', 'debug'] as const
   // Ref to the terminal dock element so we can update height synchronously during drag
   const terminalDockRef = useRef<HTMLDivElement>(null)
   // Track the "live" height during drag without re-rendering
@@ -42,7 +43,6 @@ export const Terminal: React.FC<TerminalProps> = ({
       const maxHeight = Math.max(180, window.innerHeight - 72)
       const nextHeight = Math.min(maxHeight, Math.max(120, window.innerHeight - event.clientY))
       liveHeightRef.current = nextHeight
-      // Update DOM directly — no React batching lag
       if (terminalDockRef.current) {
         terminalDockRef.current.style.height = `${nextHeight}px`
       }
@@ -74,13 +74,53 @@ export const Terminal: React.FC<TerminalProps> = ({
       if (isMinimized) {
         effectiveHeight = 36
       } else if (isMaximized) {
-        effectiveHeight = window.innerHeight - 48
+        effectiveHeight = window.innerHeight
       } else {
         effectiveHeight = terminalHeight
       }
     }
     document.documentElement.style.setProperty('--terminal-h', `${effectiveHeight}px`)
   }, [isOpen, isMinimized, isMaximized, terminalHeight])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleGlobalKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      const isTypingInInput = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
+
+      if ((event.ctrlKey || event.metaKey || event.altKey) && event.key === 'Tab') {
+        event.preventDefault()
+        const currentIndex = tabOrder.indexOf(activeTab)
+        const direction = event.shiftKey ? -1 : 1
+        const nextIndex = (currentIndex + direction + tabOrder.length) % tabOrder.length
+        setActiveTab(tabOrder[nextIndex])
+        return
+      }
+
+      if (event.key === 'Tab' && isTypingInInput) {
+        event.preventDefault()
+        const value = inputVal.trim()
+        if (!value) return
+
+        const token = value.split(/\s+/).at(-1) ?? value
+        const suggestions = [
+          'about', 'bio', 'skills', 'code', 'projects', 'repos', 'experience', 'exp', 'leadership',
+          'ldext', 'man', 'contact', 'ping', 'mail', 'resume', 'cv', 'home', 'desktop', 'help',
+          'whoami', 'date', 'clear', 'cls', 'neofetch',
+        ]
+
+        const match = suggestions.find((cmd) => cmd.startsWith(token.toLowerCase()))
+        if (!match) return
+
+        const prefix = value.slice(0, value.length - token.length)
+        setInputVal(`${prefix}${match}`)
+      }
+    }
+
+    window.addEventListener('keydown', handleGlobalKeyDown)
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown)
+  }, [isOpen, activeTab, inputVal])
 
   // Contextual initial lines based on active page & OS
   useEffect(() => {
@@ -241,8 +281,9 @@ export const Terminal: React.FC<TerminalProps> = ({
   return (
     <div
       ref={terminalDockRef}
-      className={`terminal-dock ${!isOpen ? 'closed' : ''} ${isMinimized ? 'collapsed' : ''} ${isMaximized ? 'fullscreen' : ''}`}
+      className={`terminal-dock ${!isOpen ? 'closed' : ''} ${isMinimized ? 'collapsed' : ''} ${isMaximized ? 'fullscreen' : ''} ${isOpen ? 'is-open' : ''}`}
       style={isMinimized ? { height: '36px' } : isMaximized ? undefined : { height: `${terminalHeight}px` }}
+      aria-live="polite"
     >
       <div
         className="terminal-resize-handle"
@@ -354,6 +395,26 @@ export const Terminal: React.FC<TerminalProps> = ({
                   type="text"
                   value={inputVal}
                   onChange={(e) => setInputVal(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Tab') {
+                      e.preventDefault()
+                      const value = inputVal.trim()
+                      if (!value) return
+
+                      const token = value.split(/\s+/).at(-1) ?? value
+                      const suggestions = [
+                        'about', 'bio', 'skills', 'code', 'projects', 'repos', 'experience', 'exp', 'leadership',
+                        'ldext', 'man', 'contact', 'ping', 'mail', 'resume', 'cv', 'home', 'desktop', 'help',
+                        'whoami', 'date', 'clear', 'cls', 'neofetch',
+                      ]
+
+                      const match = suggestions.find((cmd) => cmd.startsWith(token.toLowerCase()))
+                      if (!match) return
+
+                      const prefix = value.slice(0, value.length - token.length)
+                      setInputVal(`${prefix}${match}`)
+                    }
+                  }}
                   placeholder="Type a command (e.g. 'help', 'projects', 'about', 'skills')..."
                   className="terminal-input-field"
                   autoFocus

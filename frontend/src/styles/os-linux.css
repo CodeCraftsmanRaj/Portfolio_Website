@@ -110,8 +110,10 @@
 }
 
 .mode-linux .terminal-dock {
-  left: 0;
-  margin: 0 40px 0 100px;
+  left: auto;
+  right: 18px;
+  width: min(760px, calc(100vw - 120px));
+  margin: 0;
   border: 1px solid var(--outline-variant);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
@@ -150,6 +152,9 @@
     padding-left: 16px;
   }
   .mode-linux .terminal-dock {
+    right: 10px;
+    left: 10px;
+    width: auto;
     margin: 0;
     border-radius: 0;
   }

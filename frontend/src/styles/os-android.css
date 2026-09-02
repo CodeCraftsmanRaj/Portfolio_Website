@@ -195,3 +195,21 @@
     border: 1px solid var(--outline-variant);
   }
 }
+
+@media (max-width: 860px) {
+  .mode-android .topbar {
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 6px;
+  }
+
+  .mode-android .os-switcher-pill button {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 9px;
+  }
+
+  .mode-android .main-canvas {
+    padding-bottom: calc(var(--taskbar-h, 72px) + 180px);
+  }
+}

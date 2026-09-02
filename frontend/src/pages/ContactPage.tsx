@@ -1,13 +1,14 @@
 import React, { useState, FormEvent } from 'react';
-import { OsMode, socialLinks } from '../data/portfolioData';
+import { OsMode, PageView, socialLinks } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface ContactPageProps {
   mode: OsMode;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
+export const ContactPage: React.FC<ContactPageProps> = ({ mode, onWindowClose }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -47,7 +48,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1100px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <WindowCard mode={mode} activeView="contact" title="~/network/ping.socket">
+      <WindowCard mode={mode} activeView="contact" title="~/network/ping.socket" onClose={() => onWindowClose?.('contact')}>
         <div style={{ padding: '36px 32px' }}>
           <div className="contact-layout-grid">
             {/* Left: Ping Coordinates */}

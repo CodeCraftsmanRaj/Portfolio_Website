@@ -177,17 +177,20 @@
 
 .window-container.is-maximized {
   position: fixed;
-  inset: 48px 0 0 260px;
+  inset: 60px 22px 22px 22px;
   width: auto !important;
-  right: 0 !important;
-  z-index: 105;
-  border-radius: 0 !important;
-  border: none !important;
-  box-shadow: none !important;
+  right: 22px !important;
+  left: 22px !important;
+  z-index: 120;
+  border-radius: 16px !important;
+  border: 1px solid var(--outline-variant) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18) !important;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 48px);
-  background-color: var(--surface-container-lowest);
+  height: calc(100vh - 82px);
+  background-color: color-mix(in srgb, var(--surface-container-lowest) 94%, transparent);
+  backdrop-filter: blur(6px) saturate(1.08);
+  -webkit-backdrop-filter: blur(6px) saturate(1.08);
 }
 
 /* Ensure maximized window body scrolls cleanly */
@@ -199,24 +202,27 @@
 }
 
 .mode-linux .window-container.is-maximized {
-  inset: 36px 0 0 88px;
+  inset: 48px 20px 20px 108px;
   width: auto !important;
-  right: 0 !important;
-  height: calc(100vh - 36px);
+  right: 20px !important;
+  left: 108px !important;
+  height: calc(100vh - 68px);
 }
 
 .mode-win .window-container.is-maximized {
-  inset: 48px 0 64px 0;
+  inset: 52px 18px 82px 18px;
   width: auto !important;
-  right: 0 !important;
-  height: calc(100vh - 48px - 64px);
+  right: 18px !important;
+  left: 18px !important;
+  height: calc(100vh - 134px);
 }
 
 .mode-mac .window-container.is-maximized {
-  inset: 48px 0 76px 0;
+  inset: 52px 18px 90px 18px;
   width: auto !important;
-  right: 0 !important;
-  height: calc(100vh - 48px - 76px);
+  right: 18px !important;
+  left: 18px !important;
+  height: calc(100vh - 142px);
 }
 
 @media (max-width: 860px) {
@@ -224,10 +230,11 @@
   .mode-linux .window-container.is-maximized,
   .mode-win .window-container.is-maximized,
   .mode-mac .window-container.is-maximized {
-    inset: 48px 0 60px 0;
+    inset: 52px 12px 72px 12px;
     width: auto !important;
-    right: 0 !important;
-    height: calc(100vh - 48px - 60px);
+    right: 12px !important;
+    left: 12px !important;
+    height: calc(100vh - 124px);
   }
 }
 

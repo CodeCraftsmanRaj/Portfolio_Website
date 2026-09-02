@@ -8,12 +8,14 @@ interface HomePageProps {
   mode: OsMode;
   onViewChange: (view: PageView) => void;
   onToggleTerminal: () => void;
+  onWindowClose?: (view: PageView) => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
   mode,
   onViewChange,
   onToggleTerminal,
+  onWindowClose,
 }) => {
   const containerRef = useScrollReveal();
 
@@ -32,7 +34,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   // LINUX MODE HERO
   if (mode === 'LINUX') {
     return (
-      <WindowCard mode={mode} activeView="home" title="~/portfolio/home.md">
+      <WindowCard mode={mode} activeView="home" title="~/portfolio/home.md" onClose={() => onWindowClose?.('home')}>
         <div ref={containerRef} style={{ padding: '36px 40px 48px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
             <div style={{ gridColumn: 'span 8', paddingRight: '24px', borderRight: '1px solid var(--outline-variant)', display: 'flex', flexDirection: 'column' }}>
@@ -161,7 +163,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   // WINDOWS MODE HERO
   if (mode === 'WIN') {
     return (
-      <WindowCard mode={mode} activeView="home" title="C:\Users\Root\Home.exe">
+      <WindowCard mode={mode} activeView="home" title="C:\Users\Root\Home.exe" onClose={() => onWindowClose?.('home')}>
         <div ref={containerRef} style={{ padding: '36px 40px 48px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px' }}>
             <div style={{ gridColumn: 'span 7', display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -275,7 +277,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   // DEFAULT / MAC / MOBILE MODE HERO
   return (
-    <WindowCard mode={mode} activeView="home" title="~/profile/init.exe">
+    <WindowCard mode={mode} activeView="home" title="~/profile/init.exe" onClose={() => onWindowClose?.('home')}>
       <div ref={containerRef} className="hero-window-content">
         {/* Left: Schematic Frame */}
         <div data-reveal="scale" className="hero-schematic-frame hover-lift">

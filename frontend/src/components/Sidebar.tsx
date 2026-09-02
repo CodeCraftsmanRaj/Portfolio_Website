@@ -3,9 +3,12 @@ import { navItems, personalData, OsMode, PageView } from '../data/portfolioData'
 import { useDockMagnification } from '../hooks/useDockMagnification';
 import { useRevealEffect } from '../hooks/useRevealEffect';
 
+type DockTab = PageView | 'terminal';
+
 interface SidebarProps {
   mode: OsMode;
   activeView: PageView;
+  openTabs: DockTab[];
   onViewChange: (view: PageView) => void;
   mobileOpen: boolean;
   onCloseMobile: () => void;
@@ -14,6 +17,7 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
   mode,
   activeView,
+  openTabs,
   onViewChange,
   mobileOpen,
   onCloseMobile,
@@ -86,15 +90,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         {navItems.map((item) => {
           const isActive = activeView === item.id;
+          const isOpen = openTabs.includes(item.id);
           const isBouncing = bouncingId === item.id;
           return (
             <button
               key={item.id}
               type="button"
               data-label={item.sidebarLabel}
-              className={`sidebar-nav-item ${isActive ? 'active' : ''} ${isBouncing ? 'dock-bouncing' : ''}`}
+              className={`sidebar-nav-item dock-${item.id} ${isActive ? 'active' : ''} ${isOpen ? 'is-open' : ''} ${isBouncing ? 'dock-bouncing' : ''}`}
               onClick={() => handleItemClick(item.id)}
-              title={item.sidebarLabel}
+              title={`${item.sidebarLabel}${isOpen ? ' • open' : ''}`}
             >
               <span
                 className={`material-symbols-outlined ${isActive ? 'filled' : ''}`}

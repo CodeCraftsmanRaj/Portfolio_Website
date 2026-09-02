@@ -23,7 +23,8 @@
 
 .mode-ios .workspace-wrapper {
   margin-top: 52px;
-  height: calc(100vh - 52px);
+  height: calc(100vh - 52px - var(--terminal-h, 0px) - var(--taskbar-h, 68px));
+  max-height: calc(100vh - 52px - var(--terminal-h, 0px) - var(--taskbar-h, 68px));
 }
 
 .mode-ios .topbar-brand {
@@ -136,6 +137,15 @@
   overflow: hidden;
 }
 
+@media (max-width: 860px) {
+  .mode-ios .window-container {
+    height: auto;
+    min-height: max-content;
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+}
+
 .mode-ios .window-header {
   padding: 10px 16px;
   background-color: color-mix(in srgb, var(--surface-container-high) 60%, transparent);
@@ -156,6 +166,37 @@
   border-bottom: none;
   box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
   z-index: 100;
+}
+
+@media (max-width: 860px) {
+  .mode-ios .topbar {
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 6px;
+  }
+
+  .mode-ios .os-switcher-pill button {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 9px;
+  }
+
+  .mode-ios .main-canvas {
+    padding: 16px 10px calc(var(--taskbar-h, 68px) + 180px);
+  }
+
+  .mode-ios .sidebar-litho {
+    display: flex;
+  }
+
+  .mode-ios .terminal-dock {
+    bottom: var(--taskbar-h, 68px);
+    max-height: calc(100vh - 52px - var(--taskbar-h, 68px));
+  }
+
+  .mode-ios .terminal-dock:not(.collapsed):not(.fullscreen) {
+    height: min(230px, calc(100vh - 52px - var(--taskbar-h, 68px) - 16px));
+  }
 }
 
 .mode-ios .terminal-dock.collapsed {

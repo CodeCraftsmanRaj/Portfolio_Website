@@ -551,6 +551,89 @@
   background-color: var(--secondary);
 }
 
+.mobile-stack-overview {
+  display: block;
+}
+
+.desktop-core-binaries {
+  display: none;
+}
+
+.mobile-stack-intro {
+  margin: -8px 0 20px;
+  color: var(--on-surface-variant);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.runtime-environment {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+  color: var(--on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.runtime-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--on-surface);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mobile-stack-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mobile-stack-card {
+  min-width: 0;
+  min-height: 92px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: start;
+  gap: 8px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+}
+
+.mobile-stack-icon {
+  color: var(--secondary);
+  font-size: 18px;
+}
+
+.mobile-stack-card h3 {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.mobile-stack-card p {
+  grid-column: 2 / -1;
+  margin: 0;
+  color: var(--on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.mobile-stack-arrow {
+  justify-self: end;
+  color: var(--secondary);
+  font-size: 15px;
+}
+
 .frameworks-bento-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1177,7 +1260,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   transition: color 0.15s ease;
+}
+
+.ping-link-item a span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .ping-link-item a:hover {
@@ -1280,7 +1369,18 @@
 
   .window-container {
     max-width: 100%;
-    overflow: hidden;
+    width: 100%;
+    height: auto;
+    min-height: max-content;
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .window-container > div:not(.window-header) {
+    flex: 0 0 auto !important;
+    min-height: max-content;
+    width: 100%;
+    min-width: 0;
   }
 
   .window-container > .window-header {
@@ -1311,6 +1411,22 @@
     grid-column: auto !important;
     padding-right: 0 !important;
     border-right: none !important;
+  }
+
+  .mobile-stack-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .mode-android .sidebar-nav-item.dock-experience,
+  .mode-android .sidebar-nav-item.dock-leadership,
+  .mode-android .sidebar-nav-item.dock-skills,
+  .mode-ios .sidebar-nav-item.dock-experience,
+  .mode-ios .sidebar-nav-item.dock-leadership,
+  .mode-ios .sidebar-nav-item.dock-skills {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .window-container [style*="border-left"] {
@@ -1412,6 +1528,26 @@
   .timeline-card {
     width: 100%;
   }
+
+  .timeline-card-header {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .timeline-card-header .period {
+    white-space: normal;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-layout-grid,
+  .skills-layout-grid,
+  .man-layout-grid,
+  .about-grid-layout,
+  .profile-detail-grid,
+  .leadership-lower-grid {
+    min-width: 0;
+  }
   
   .frameworks-bento-grid {
     grid-template-columns: 1fr;
@@ -1419,5 +1555,18 @@
   
   .contact-fields-row {
     grid-template-columns: 1fr;
+  }
+
+  .contact-layout-grid,
+  .ping-coordinates-panel,
+  .contact-message-window,
+  .contact-form {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .contact-form {
+    padding: 24px 16px;
   }
 }

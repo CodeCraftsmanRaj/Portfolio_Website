@@ -133,8 +133,9 @@
 
 /* Windows Terminal Dock */
 .mode-win .terminal-dock {
-  left: 0;
-  right: 0;
+  left: auto;
+  right: 18px;
+  width: min(720px, calc(100vw - 120px));
   bottom: 64px;
   background-color: var(--terminal-bg);
   border-top: 1px solid var(--outline-variant);
@@ -153,6 +154,9 @@
   }
 
   .mode-win .terminal-dock {
+    left: 12px;
+    right: 12px;
+    width: auto;
     bottom: 58px;
   }
 

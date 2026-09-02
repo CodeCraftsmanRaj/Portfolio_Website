@@ -6,14 +6,15 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 interface AboutPageProps {
   mode: OsMode;
   onViewChange: (view: PageView) => void;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange }) => {
+export const AboutPage: React.FC<AboutPageProps> = ({ mode, onViewChange, onWindowClose }) => {
   const containerRef = useScrollReveal();
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <WindowCard mode={mode} activeView="about" title="/sys/users/admin/bio.txt">
+      <WindowCard mode={mode} activeView="about" title="/sys/users/admin/bio.txt" onClose={() => onWindowClose?.('about')}>
         <div className="about-grid-layout">
           {/* Left Column: Editorial Bio */}
           <div className="about-editorial-col">

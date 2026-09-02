@@ -50,6 +50,14 @@ export const TopBar: React.FC<TopBarProps> = ({
     setActivitiesOpen(false);
   };
 
+  const handleSystemPower = () => {
+    try {
+      window.location.reload();
+    } catch {
+      onViewChange('home');
+    }
+  };
+
   const themePicker = (
     <div className="theme-picker" aria-label="Color theme">
       <span className="material-symbols-outlined" title="Color theme" style={{ fontSize: 16 }}>palette</span>
@@ -75,32 +83,42 @@ export const TopBar: React.FC<TopBarProps> = ({
           className="activities-overlay"
           onClick={() => setActivitiesOpen(false)}
         >
-          <div
-            className="activities-grid"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="activities-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="activities-heading">
+              <div>
+                <span className="activities-kicker">WORKSPACE OVERVIEW</span>
+                <h2>Activities</h2>
+              </div>
+              <button type="button" className="activities-close" onClick={() => setActivitiesOpen(false)} title="Close Activities">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div className="activities-grid">
             {navItems.map((item) => (
               <div
                 key={item.id}
                 className="activities-window-preview"
                 onClick={() => handleSelectActivity(item.id)}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 20, color: 'var(--primary-litho)' }}>
+                <div className="activities-preview-header">
+                  <span className="material-symbols-outlined activities-preview-icon">
                     {item.icon}
                   </span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 600 }}>
+                  <span className="activities-preview-title">
                     {item.label}
                   </span>
+                  <span className="material-symbols-outlined activities-open-icon">arrow_outward</span>
                 </div>
-                <div style={{ fontSize: '11px', color: 'var(--on-surface-variant)', lineHeight: 1.5, fontFamily: 'var(--font-mono)' }}>
+                <div className="activities-preview-path">
                   {item.path.linux}
                 </div>
               </div>
             ))}
-          </div>
-          <div style={{ marginTop: '24px', color: '#cdc5bc', fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
-            Click an application or click outside to dismiss Activities
+            </div>
+            <div className="activities-footer">
+              <span className="material-symbols-outlined">keyboard</span>
+              Select a workspace to continue
+            </div>
           </div>
         </div>
       )}
@@ -158,7 +176,7 @@ export const TopBar: React.FC<TopBarProps> = ({
               type="button"
               className="topbar-icon-btn btn-press"
               title="System Power"
-              onClick={() => onViewChange('home')}
+              onClick={handleSystemPower}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 16 }}>power_settings_new</span>
             </button>
@@ -341,14 +359,6 @@ export const TopBar: React.FC<TopBarProps> = ({
       {mode === 'ANDROID' && (
         <header className="topbar">
           <div className="topbar-left">
-            <button
-              type="button"
-              className="topbar-icon-btn btn-press"
-              onClick={onToggleMobileMenu}
-              title="Navigation Menu"
-            >
-              <span className="material-symbols-outlined">menu</span>
-            </button>
             <span className="topbar-brand">DevOS Android</span>
           </div>
 

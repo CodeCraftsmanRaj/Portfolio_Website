@@ -1,14 +1,15 @@
 import React from 'react';
-import { OsMode, personalData, socialLinks } from '../data/portfolioData';
+import { OsMode, PageView, personalData, socialLinks } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 
 interface ResumePageProps {
   mode: OsMode;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const ResumePage: React.FC<ResumePageProps> = ({ mode }) => (
+export const ResumePage: React.FC<ResumePageProps> = ({ mode, onWindowClose }) => (
   <div className="resume-page">
-    <WindowCard mode={mode} activeView="resume" title="~/documents/Raj-Kalpesh-Mathuria-Resume.pdf">
+    <WindowCard mode={mode} activeView="resume" title="~/documents/Raj-Kalpesh-Mathuria-Resume.pdf" onClose={() => onWindowClose?.('resume')}>
       <div style={{ padding: '24px 32px 48px' }}>
         {/* Resume Top Action Toolbar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '16px' }}>

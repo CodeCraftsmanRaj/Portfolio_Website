@@ -1,18 +1,19 @@
 import React from 'react';
-import { OsMode, leadershipRoles, extracurricularCards, achievements, beyondTheCode } from '../data/portfolioData';
+import { OsMode, PageView, leadershipRoles, extracurricularCards, achievements, beyondTheCode } from '../data/portfolioData';
 import { WindowCard } from '../components/WindowCard';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface LeadershipPageProps {
   mode: OsMode;
+  onWindowClose?: (view: PageView) => void;
 }
 
-export const LeadershipPage: React.FC<LeadershipPageProps> = ({ mode }) => {
+export const LeadershipPage: React.FC<LeadershipPageProps> = ({ mode, onWindowClose }) => {
   const containerRef = useScrollReveal({ staggerDelayMs: 90 });
 
   return (
     <div ref={containerRef} style={{ maxWidth: '1120px', width: '100%', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <WindowCard mode={mode} activeView="leadership" title="man ldext(1)">
+      <WindowCard mode={mode} activeView="leadership" title="man ldext(1)" onClose={() => onWindowClose?.('leadership')}>
         <div style={{ padding: '36px 40px 48px' }}>
           <div className="man-layout-grid">
             {/* Leadership Column */}
