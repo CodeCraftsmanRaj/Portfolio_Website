@@ -3,10 +3,14 @@ interface Env {
   CONTACT_TO_EMAIL?: string;
   CONTACT_FROM_EMAIL?: string;
   RESEND_API_KEY?: string;
+  CONTACT_LIMITER: DurableObjectNamespace;
 }
 
 const MAX_BODY_BYTES = 12_000;
 const EMAIL_TIMEOUT_MS = 8_000;
+const IP_WINDOW_MS = 60 * 60 * 1000;
+const EMAIL_WINDOW_MS = 24 * 60 * 60 * 1000;
+const GLOBAL_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 function corsHeaders(origin: string | null, allowedOrigin: string): Record<string, string> {
   const headers: Record<string, string> = {
@@ -25,6 +29,33 @@ function corsHeaders(origin: string | null, allowedOrigin: string): Record<strin
 
 function json(data: Record<string, string>, status: number, headers: Record<string, string>): Response {
   return new Response(JSON.stringify(data), { status, headers });
+}
+
+function clientIp(request: Request): string {
+  return request.headers.get('CF-Connecting-IP')
+    || request.headers.get('X-Forwarded-For')?.split(',')[0].trim()
+    || 'unknown';
+}
+
+async function checkRateLimit(env: Env, request: Request, email: string): Promise<Response | null> {
+  const limiter = env.CONTACT_LIMITER.get(env.CONTACT_LIMITER.idFromName('contact-global'));
+  const response = await limiter.fetch('https://limiter/check', {
+    method: 'POST',
+    body: JSON.stringify({ ip: clientIp(request), email }),
+  });
+
+  if (response.ok) return null;
+
+  const retryAfter = response.headers.get('retry-after') || '3600';
+  return new Response(JSON.stringify({
+    detail: 'Too many contact attempts. Please try again later.',
+  }), {
+    status: 429,
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+      'retry-after': retryAfter,
+    },
+  });
 }
 
 async function sendContactEmail(
@@ -111,6 +142,15 @@ export default {
       return json({ detail: 'Please provide a valid name, email, and message.' }, 422, headers);
     }
 
+    const rateLimitResponse = await checkRateLimit(env, request, email.toLowerCase());
+    if (rateLimitResponse) {
+      const body = await rateLimitResponse.text();
+      return new Response(body, {
+        status: rateLimitResponse.status,
+        headers: { ...headers, 'retry-after': rateLimitResponse.headers.get('retry-after') || '3600' },
+      });
+    }
+
     const delivered = await sendContactEmail(env, name, email, message);
     console.log(JSON.stringify({
       type: 'contact_received',
@@ -128,3 +168,50 @@ export default {
     }, 201, headers);
   },
 };
+
+interface LimitRecord {
+  count: number;
+  resetAt: number;
+}
+
+export class ContactRateLimiter {
+  constructor(private readonly state: DurableObjectState) {}
+
+  async fetch(request: Request): Promise<Response> {
+    if (request.method !== 'POST') return new Response('Method not allowed', { status: 405 });
+
+    const payload = await request.json() as { ip?: string; email?: string };
+    const now = Date.now();
+    const ip = payload.ip || 'unknown';
+    const email = payload.email || 'unknown';
+    const limits = [
+      await this.peek(`ip:${ip}`, 3, IP_WINDOW_MS, now),
+      await this.peek(`email:${email}`, 2, EMAIL_WINDOW_MS, now),
+      await this.peek('global', 10, GLOBAL_WINDOW_MS, now),
+    ];
+
+    if (limits.some((limit) => !limit.allowed)) {
+      const resetAt = Math.max(...limits.map((limit) => limit.resetAt));
+      return new Response('Rate limited', {
+        status: 429,
+        headers: { 'retry-after': String(Math.max(1, Math.ceil((resetAt - now) / 1000))) },
+      });
+    }
+
+    await Promise.all(limits.map((limit) => this.state.storage.put(limit.key, {
+      count: limit.count + 1,
+      resetAt: limit.resetAt,
+    })));
+
+    return new Response('allowed');
+  }
+
+  private async peek(key: string, limit: number, windowMs: number, now: number) {
+    const current = await this.state.storage.get<LimitRecord>(key);
+    const record = current && current.resetAt > now
+      ? current
+      : { count: 0, resetAt: now + windowMs };
+
+    return { key, count: record.count, allowed: record.count < limit, resetAt: record.resetAt };
+  }
+}

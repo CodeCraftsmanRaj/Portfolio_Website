@@ -127,13 +127,13 @@ RESEND_API_KEY=<secret stored in Cloudflare, never in GitHub>
 
 The Worker sends the visitor's address as `Reply-To`, so replies go back to the sender. It times out provider calls after eight seconds and still acknowledges the form if the provider is unavailable. The current Worker also rejects oversized bodies and validates all fields server-side.
 
-For production rate limiting, configure a Cloudflare WAF custom rule rather than relying on an in-memory counter that disappears between Worker isolates:
+The Worker now enforces its own durable limits through a Cloudflare Durable Object, so you do not need a WAF rate-limit rule for the contact email protection:
 
-1. Open **Security > WAF > Rate limiting rules > Create rule** for the zone `rajmathuria.me`.
-2. Match the hostname `api.rajmathuria.me` and path `/api/contact`.
-3. Count all requests and use **5 requests per 10 minutes per IP** as the starting threshold.
-4. Choose **Block** for one hour, then deploy the rule.
-5. Add a second, broader rule for `/api/*` only if monitoring shows abuse; keep `/api/health` less restrictive if you use it for uptime checks.
+- 3 contact attempts per IP per hour.
+- 2 contact attempts per email address per day.
+- 10 total contact emails per day across the whole portfolio.
+
+These limits are deliberately below a small Gmail daily allowance. The Durable Object keeps the counters shared across Worker isolates and returns `429` plus `Retry-After` when a limit is reached. WAF rate limiting can remain disabled for this endpoint; it is only an optional second perimeter if you later need it.
 
 This API does not currently persist messages. Worker logs are not an inbox. For guaranteed delivery and audit history, add D1 or Queues in a later step; email delivery alone should not be the only copy.
 
