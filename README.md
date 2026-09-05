@@ -33,7 +33,7 @@ Deploy the `frontend` directory as a Cloudflare Pages project with the following
 - Build output directory: `dist`
 - Root directory: `frontend`
 
-The frontend calls `/api/contact` by default, so the cleanest same-domain setup is to expose the backend at `api.example.com` and set `VITE_API_BASE_URL` to `https://api.example.com` in the Pages project environment variables. Rebuild after adding the variable.
+The frontend calls `/api/contact` through the local Vite proxy during development. In production it uses `https://api.rajmathuria.me` by default, so a Pages environment variable is not required. If your Pages project supports build-time environment variables, you may override it with `VITE_API_BASE_URL=https://api.rajmathuria.me`.
 
 The existing FastAPI app cannot be uploaded directly as a static Pages site. For Cloudflare-only hosting, run the FastAPI app in a Cloudflare Container (where Containers are enabled for the account), expose it on an API hostname, and set `ALLOWED_ORIGINS` on the backend to the exact frontend origin, for example `https://example.com`. Do not use `*` with credentials enabled.
 
@@ -90,13 +90,13 @@ The existing Pages project and this Worker should not both claim the same custom
 	npx wrangler deploy --config wrangler.api.toml
 	```
 
-6. In the Pages project, open **Settings > Environment variables > Production** and add:
+6. If your Pages project exposes **Settings > Environment variables > Production**, you may add this optional override:
 
 	```text
 	VITE_API_BASE_URL=https://api.rajmathuria.me
 	```
 
-	Then trigger a new Pages deployment from branch `raj`. Vite injects this value at build time, so changing the variable without rebuilding will not change the frontend.
+	The frontend already defaults to this URL in production. If you add or change the variable, trigger a new Pages deployment from branch `raj` because Vite injects it at build time.
 
 7. Test the API before testing the form:
 

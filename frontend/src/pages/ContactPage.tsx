@@ -23,7 +23,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode, onWindowClose })
 
     setStatus('sending');
     try {
-      const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+      const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+      const apiBaseUrl = (
+        configuredApiBaseUrl || (import.meta.env.DEV ? '' : 'https://api.rajmathuria.me')
+      ).replace(/\/$/, '');
       const response = await fetch(`${apiBaseUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
