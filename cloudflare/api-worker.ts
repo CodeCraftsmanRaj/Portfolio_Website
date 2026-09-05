@@ -11,6 +11,8 @@ const EMAIL_TIMEOUT_MS = 8_000;
 const IP_WINDOW_MS = 60 * 60 * 1000;
 const EMAIL_WINDOW_MS = 24 * 60 * 60 * 1000;
 const GLOBAL_WINDOW_MS = 24 * 60 * 60 * 1000;
+const CONTACT_NOTIFICATION_EMAIL = 'hello@rajmathuria.me';
+const CONTACT_SENDER_EMAIL = 'Portfolio <noreply@rajmathuria.me>';
 
 function corsHeaders(origin: string | null, allowedOrigin: string): Record<string, string> {
   const headers: Record<string, string> = {
@@ -64,7 +66,7 @@ async function sendContactEmail(
   email: string,
   message: string,
 ): Promise<boolean> {
-  if (!env.RESEND_API_KEY || !env.CONTACT_TO_EMAIL || !env.CONTACT_FROM_EMAIL) return false;
+  if (!env.RESEND_API_KEY) return false;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), EMAIL_TIMEOUT_MS);
@@ -78,8 +80,8 @@ async function sendContactEmail(
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        from: env.CONTACT_FROM_EMAIL,
-        to: [env.CONTACT_TO_EMAIL],
+        from: env.CONTACT_FROM_EMAIL || CONTACT_SENDER_EMAIL,
+        to: [env.CONTACT_TO_EMAIL || CONTACT_NOTIFICATION_EMAIL],
         reply_to: email,
         subject: `Portfolio contact from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,

@@ -117,15 +117,15 @@ If Cloudflare manages your DNS, update the domain nameservers at Namecheap to th
 
 Gmail is not an outbound email API for this Worker. Email routing at a domain is primarily for receiving mail, and putting Gmail credentials in a Worker would be unsafe. The API now returns `503 Service Unavailable` instead of pretending that a contact was delivered when the provider is not configured. This prevents visitors from thinking you received a message that was actually lost.
 
-For automatic delivery, use an email API such as Resend with a verified sending domain. In **Workers & Pages > portfolio-website-api > Settings > Variables and Secrets**, add these production values:
+For automatic delivery, use an email API such as Resend with a verified sending domain. The contact notification recipient is built into the Worker as `hello@rajmathuria.me`, matching your existing Cloudflare Email Routing rule. Do not change that routing rule. In **Workers & Pages > portfolio-website-api > Settings > Variables and Secrets**, add these production values:
 
 ```text
-CONTACT_TO_EMAIL=your-gmail-address@gmail.com
+CONTACT_TO_EMAIL=hello@rajmathuria.me
 CONTACT_FROM_EMAIL=Portfolio <noreply@rajmathuria.me>
 RESEND_API_KEY=<secret stored in Cloudflare, never in GitHub>
 ```
 
-The Worker sends the visitor's address as `Reply-To`, so replies go back to the sender. It times out provider calls after eight seconds and still acknowledges the form if the provider is unavailable. The current Worker also rejects oversized bodies and validates all fields server-side.
+Resend sends the notification to `hello@rajmathuria.me`; Cloudflare Email Routing then forwards it to `svgrajmathuria3@gmail.com`. The Worker sends the visitor's address as `Reply-To`, so replies go back to the sender. It times out provider calls after eight seconds and returns an error if the provider is unavailable. The current Worker also rejects oversized bodies and validates all fields server-side.
 
 The Worker now enforces its own durable limits through a Cloudflare Durable Object, so you do not need a WAF rate-limit rule for the contact email protection:
 
@@ -174,3 +174,17 @@ Do not commit `.env` files, API keys, Gmail passwords, or Resend keys. Use Cloud
 ### License
 
 This repository is available under the custom [Raj Mathuria Portfolio Non-Commercial License](LICENSE). Personal, educational, and research use is allowed with credit. Commercial use, redistribution, modified/repackaged publication, or monetization requires prior written permission from the copyright holders. Contributions remain attributed to their respective contributors.
+
+### Project Links
+
+- Website: https://portfolio.rajmathuria.me
+- Repository: https://github.com/CodeCraftsmanRaj/Portfolio_Website
+- API health check: https://api.rajmathuria.me/api/health
+
+### Tech Stack
+
+- Frontend: React, TypeScript, Vite, Framer Motion
+- API: Cloudflare Workers, TypeScript, Resend-compatible email delivery
+- Persistence and protection: Durable Objects for contact rate limits
+- Local API alternative: FastAPI, Pydantic, Uvicorn
+- Hosting: Cloudflare Pages for the website and Cloudflare Workers for the API
