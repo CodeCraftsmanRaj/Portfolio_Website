@@ -1,4 +1,4 @@
-# Raj Mathuria Developer OS
+# Raj Mathuria Developer OS (DevOS)
 
 Stitch Adaptive Multi-OS Workspace-inspired developer portfolio built with React, TSX, Vite, and a FastAPI contact endpoint. The Stitch screen exports used by the frontend live in `frontend/public`.
 
