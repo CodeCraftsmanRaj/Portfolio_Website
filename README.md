@@ -113,6 +113,64 @@ The existing Pages project and this Worker should not both claim the same custom
 
 If Cloudflare manages your DNS, update the domain nameservers at Namecheap to the two nameservers Cloudflare gives you. After that, create the custom domains in Cloudflare; Cloudflare will create the required DNS records. Do not add a Namecheap URL redirect for the API. If you keep Namecheap DNS instead, create the exact CNAME record Cloudflare requests for `api` and keep proxy/status settings as shown in Cloudflare.
 
-### Important limitation
+### Contact email and abuse protection
 
-The current `/api/contact` route validates and acknowledges messages but does not persist or email them. Worker logs are not a reliable inbox. Before treating the form as production contact storage, connect the route to a Cloudflare D1 table, Queues, or an email provider and keep any provider token in a Worker secret.
+Gmail is not an outbound email API for this Worker. Email routing at a domain is primarily for receiving mail, and putting Gmail credentials in a Worker would be unsafe. The API therefore works without email delivery and returns a successful acknowledgement even when no provider is configured.
+
+For automatic delivery, use an email API such as Resend with a verified sending domain. In **Workers & Pages > portfolio-website-api > Settings > Variables and Secrets**, add these production values:
+
+```text
+CONTACT_TO_EMAIL=your-gmail-address@gmail.com
+CONTACT_FROM_EMAIL=Portfolio <noreply@rajmathuria.me>
+RESEND_API_KEY=<secret stored in Cloudflare, never in GitHub>
+```
+
+The Worker sends the visitor's address as `Reply-To`, so replies go back to the sender. It times out provider calls after eight seconds and still acknowledges the form if the provider is unavailable. The current Worker also rejects oversized bodies and validates all fields server-side.
+
+For production rate limiting, configure a Cloudflare WAF custom rule rather than relying on an in-memory counter that disappears between Worker isolates:
+
+1. Open **Security > WAF > Rate limiting rules > Create rule** for the zone `rajmathuria.me`.
+2. Match the hostname `api.rajmathuria.me` and path `/api/contact`.
+3. Count all requests and use **5 requests per 10 minutes per IP** as the starting threshold.
+4. Choose **Block** for one hour, then deploy the rule.
+5. Add a second, broader rule for `/api/*` only if monitoring shows abuse; keep `/api/health` less restrictive if you use it for uptime checks.
+
+This API does not currently persist messages. Worker logs are not an inbox. For guaranteed delivery and audit history, add D1 or Queues in a later step; email delivery alone should not be the only copy.
+
+### How new builds are triggered
+
+Your Pages project is connected to GitHub, so a push to its configured production branch `raj` triggers a new Pages build automatically. The Pages project should have:
+
+```text
+Production branch: raj
+Root directory: frontend
+Build command: npm run build
+Build output directory: dist
+Environment variable: VITE_API_BASE_URL=https://api.rajmathuria.me
+```
+
+The API Worker is also connected to GitHub if you created it through **Import from Git**. Configure its deployment command as:
+
+```bash
+npx wrangler deploy --config wrangler.api.toml
+```
+
+with root directory:
+
+```text
+cloudflare
+```
+
+After changing API code, push to `raj` and Cloudflare will run that Worker deployment. If the dashboard does not show an automatic deployment option, deploy manually from a local checkout:
+
+```bash
+cd cloudflare
+npx wrangler login
+npx wrangler deploy --config wrangler.api.toml
+```
+
+Do not commit `.env` files, API keys, Gmail passwords, or Resend keys. Use Cloudflare secrets for production credentials.
+
+### License
+
+This repository is available under the custom [Raj Mathuria Portfolio Non-Commercial License](LICENSE). Personal, educational, and research use is allowed with credit. Commercial use, redistribution, modified/repackaged publication, or monetization requires prior written permission from the copyright holders. Contributions remain attributed to their respective contributors.

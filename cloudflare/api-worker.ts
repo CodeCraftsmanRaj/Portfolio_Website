@@ -1,6 +1,12 @@
 interface Env {
   FRONTEND_ORIGIN?: string;
+  CONTACT_TO_EMAIL?: string;
+  CONTACT_FROM_EMAIL?: string;
+  RESEND_API_KEY?: string;
 }
+
+const MAX_BODY_BYTES = 12_000;
+const EMAIL_TIMEOUT_MS = 8_000;
 
 function corsHeaders(origin: string | null, allowedOrigin: string): Record<string, string> {
   const headers: Record<string, string> = {
@@ -19,6 +25,42 @@ function corsHeaders(origin: string | null, allowedOrigin: string): Record<strin
 
 function json(data: Record<string, string>, status: number, headers: Record<string, string>): Response {
   return new Response(JSON.stringify(data), { status, headers });
+}
+
+async function sendContactEmail(
+  env: Env,
+  name: string,
+  email: string,
+  message: string,
+): Promise<boolean> {
+  if (!env.RESEND_API_KEY || !env.CONTACT_TO_EMAIL || !env.CONTACT_FROM_EMAIL) return false;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), EMAIL_TIMEOUT_MS);
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: env.CONTACT_FROM_EMAIL,
+        to: [env.CONTACT_TO_EMAIL],
+        reply_to: email,
+        subject: `Portfolio contact from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      }),
+    });
+
+    return response.ok;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 export default {
@@ -44,9 +86,18 @@ export default {
       return json({ detail: 'Method not allowed' }, 405, headers);
     }
 
+    const contentLength = Number(request.headers.get('content-length') || 0);
+    if (contentLength > MAX_BODY_BYTES) {
+      return json({ detail: 'Request body is too large.' }, 413, headers);
+    }
+
     let payload: { name?: unknown; email?: unknown; message?: unknown };
     try {
-      payload = await request.json();
+      const rawBody = await request.text();
+      if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+        return json({ detail: 'Request body is too large.' }, 413, headers);
+      }
+      payload = JSON.parse(rawBody) as { name?: unknown; email?: unknown; message?: unknown };
     } catch {
       return json({ detail: 'Request body must be valid JSON' }, 400, headers);
     }
@@ -60,7 +111,20 @@ export default {
       return json({ detail: 'Please provide a valid name, email, and message.' }, 422, headers);
     }
 
-    console.log(JSON.stringify({ type: 'contact_received', name, email, receivedAt: new Date().toISOString() }));
-    return json({ status: 'received', message: 'Thanks, I will be in touch soon.' }, 201, headers);
+    const delivered = await sendContactEmail(env, name, email, message);
+    console.log(JSON.stringify({
+      type: 'contact_received',
+      name,
+      email,
+      delivered,
+      receivedAt: new Date().toISOString(),
+    }));
+
+    return json({
+      status: 'received',
+      message: delivered
+        ? 'Thanks, your message has been delivered.'
+        : 'Thanks, your message was received and queued for review.',
+    }, 201, headers);
   },
 };
