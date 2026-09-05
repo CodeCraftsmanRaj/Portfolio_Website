@@ -160,11 +160,15 @@ export default {
       receivedAt: new Date().toISOString(),
     }));
 
+    if (!delivered) {
+      return json({
+        detail: 'Email delivery is not configured or is temporarily unavailable. The message was not delivered.',
+      }, 503, headers);
+    }
+
     return json({
       status: 'received',
-      message: delivered
-        ? 'Thanks, your message has been delivered.'
-        : 'Thanks, your message was received and queued for review.',
+      message: 'Thanks, your message has been delivered.',
     }, 201, headers);
   },
 };

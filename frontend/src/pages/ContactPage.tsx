@@ -29,20 +29,21 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode, onWindowClose })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message }),
       });
+      const result = await response.json().catch(() => ({})) as { message?: string; detail?: string };
 
       if (response.ok) {
         setStatus('sent');
-        setFeedbackMsg('[200 OK] Message packet delivered to sysadmin buffer.');
+        setFeedbackMsg(`[${response.status} OK] ${result.message || 'Message delivered.'}`);
         setName('');
         setEmail('');
         setMessage('');
       } else {
-        setStatus('sent');
-        setFeedbackMsg('[STUB] Message recorded in local transmission queue.');
+        setStatus('error');
+        setFeedbackMsg(`[${response.status}] ${result.detail || result.message || 'Message was not delivered.'}`);
       }
     } catch {
-      setStatus('sent');
-      setFeedbackMsg('[TRANSMITTED] Message acknowledged in local session queue.');
+      setStatus('error');
+      setFeedbackMsg('[NETWORK ERROR] The API could not be reached. Your message was not sent.');
     }
   };
 

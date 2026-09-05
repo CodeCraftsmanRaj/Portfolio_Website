@@ -115,7 +115,7 @@ If Cloudflare manages your DNS, update the domain nameservers at Namecheap to th
 
 ### Contact email and abuse protection
 
-Gmail is not an outbound email API for this Worker. Email routing at a domain is primarily for receiving mail, and putting Gmail credentials in a Worker would be unsafe. The API therefore works without email delivery and returns a successful acknowledgement even when no provider is configured.
+Gmail is not an outbound email API for this Worker. Email routing at a domain is primarily for receiving mail, and putting Gmail credentials in a Worker would be unsafe. The API now returns `503 Service Unavailable` instead of pretending that a contact was delivered when the provider is not configured. This prevents visitors from thinking you received a message that was actually lost.
 
 For automatic delivery, use an email API such as Resend with a verified sending domain. In **Workers & Pages > portfolio-website-api > Settings > Variables and Secrets**, add these production values:
 
