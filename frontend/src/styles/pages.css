@@ -494,6 +494,19 @@
   max-width: 680px;
 }
 
+.landing-braille-art {
+  display: block;
+  width: min(100%, 760px);
+  height: 92px;
+  margin: 0 auto 28px;
+  object-fit: cover;
+  object-position: center 24%;
+  border: 1px solid var(--outline-variant);
+  background: var(--terminal-bg);
+  opacity: 0.92;
+  filter: grayscale(1) contrast(1.08);
+}
+
 .skills-layout-grid {
   display: grid;
   grid-template-columns: 360px 1fr;
@@ -1463,6 +1476,11 @@
     padding: 24px 16px;
     gap: 24px;
     min-height: 0;
+  }
+
+  .landing-braille-art {
+    height: 64px;
+    margin-bottom: 20px;
   }
 
   .hero-schematic-frame {

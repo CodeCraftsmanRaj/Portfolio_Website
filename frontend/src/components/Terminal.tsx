@@ -29,12 +29,30 @@ export const Terminal: React.FC<TerminalProps> = ({
   const [terminalHeight, setTerminalHeight] = useState(220)
   const [isResizing, setIsResizing] = useState(false)
   const [history, setHistory] = useState<CommandHistoryItem[]>([])
+  const [asciiPortrait, setAsciiPortrait] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
   const tabOrder = ['terminal', 'output', 'debug'] as const
   // Ref to the terminal dock element so we can update height synchronously during drag
   const terminalDockRef = useRef<HTMLDivElement>(null)
   // Track the "live" height during drag without re-rendering
   const liveHeightRef = useRef(220)
+
+  useEffect(() => {
+    let cancelled = false
+
+    fetch('/Raj_Image_500.txt')
+      .then((response) => response.ok ? response.text() : '')
+      .then((text) => {
+        if (!cancelled) setAsciiPortrait(text)
+      })
+      .catch(() => {
+        if (!cancelled) setAsciiPortrait('')
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     if (!isResizing) return
@@ -280,6 +298,29 @@ export const Terminal: React.FC<TerminalProps> = ({
     setInputVal('')
   }
 
+  const renderHistory = () => history.map((item, idx) => (
+    <div key={idx} className="terminal-line">
+      {item.type === 'command' && (
+        <div className="terminal-prompt-row">
+          <span className="terminal-prompt-label">{item.prompt}</span>
+          <span>{item.text}</span>
+        </div>
+      )}
+      {item.type === 'raw' && (
+        <pre style={{ margin: 0, fontFamily: 'inherit', whiteSpace: 'pre-wrap' }}>
+          {item.text}
+        </pre>
+      )}
+      {item.type === 'output' && (
+        <div className="output-dim" style={{ whiteSpace: 'pre-wrap' }}>
+          {item.text}
+        </div>
+      )}
+      {item.type === 'success' && <div className="output-green">{item.text}</div>}
+      {item.type === 'error' && <div className="output-crimson">{item.text}</div>}
+    </div>
+  ))
+
   return (
     <div
       ref={terminalDockRef}
@@ -364,32 +405,18 @@ export const Terminal: React.FC<TerminalProps> = ({
         <div className="terminal-body">
           {activeTab === 'terminal' && (
             <>
-              {history.map((item, idx) => (
-                <div key={idx} className="terminal-line">
-                  {item.type === 'command' && (
-                    <div className="terminal-prompt-row">
-                      <span className="terminal-prompt-label">{item.prompt}</span>
-                      <span>{item.text}</span>
-                    </div>
-                  )}
-                  {item.type === 'raw' && (
-                    <pre style={{ margin: 0, fontFamily: 'inherit', whiteSpace: 'pre-wrap' }}>
-                      {item.text}
-                    </pre>
-                  )}
-                  {item.type === 'output' && (
-                    <div className="output-dim" style={{ whiteSpace: 'pre-wrap' }}>
-                      {item.text}
-                    </div>
-                  )}
-                  {item.type === 'success' && (
-                    <div className="output-green">{item.text}</div>
-                  )}
-                  {item.type === 'error' && (
-                    <div className="output-crimson">{item.text}</div>
-                  )}
+              {activeView === 'home' && (
+                <div className="terminal-neofetch-layout">
+                  <div className="terminal-neofetch-art">
+                    <pre>{asciiPortrait || 'profile.art // loading Raj_Image_500.txt'}</pre>
+                    <span>profile.art // Raj_Image_500.txt</span>
+                  </div>
+                  <div className="terminal-neofetch-details">
+                    {renderHistory()}
+                  </div>
                 </div>
-              ))}
+              )}
+              {activeView !== 'home' && renderHistory()}
 
               <form onSubmit={handleCommand} className="terminal-prompt-row">
                 <span className="terminal-prompt-label">{getPromptString()}</span>

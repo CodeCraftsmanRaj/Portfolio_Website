@@ -10,6 +10,7 @@ interface BootScreenProps {
 export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [linuxLines, setLinuxLines] = useState<string[]>([]);
+  const [asciiPortrait, setAsciiPortrait] = useState('');
 
   const fullLinuxLog = [
     '[  0.000000] Linux version 6.8.0-devos (raj@craftsman) (gcc 13.2.0)',
@@ -20,6 +21,23 @@ export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
     '[  0.284100] [  OK  ] Initialized Litho-Letterpress Visual System',
     '[  0.372000] [  OK  ] System Ready. Starting Developer Shell...',
   ];
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch('/Raj_Image_500.txt')
+      .then((response) => response.ok ? response.text() : '')
+      .then((text) => {
+        if (!cancelled) setAsciiPortrait(text);
+      })
+      .catch(() => {
+        if (!cancelled) setAsciiPortrait('');
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     // Check if user pressed Escape to skip
@@ -85,6 +103,10 @@ export const BootScreen: React.FC<BootScreenProps> = ({ mode, onComplete }) => {
         userSelect: 'none',
       }}
     >
+      <div className="boot-ascii-panel" aria-label="Raj Mathuria ASCII portrait">
+        <pre>{asciiPortrait || 'Loading Raj_Image_500.txt...'}</pre>
+        <span>profile.art // Raj_Image_500.txt</span>
+      </div>
       {/* Linux Kernel Boot Sequence */}
       {mode === 'LINUX' && (
         <div style={{ width: '90%', maxWidth: '780px', textAlign: 'left' }}>

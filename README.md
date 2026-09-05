@@ -50,4 +50,69 @@ This repository includes a same-origin Worker API in `cloudflare/worker.ts`, so 
 5. In Cloudflare Dashboard, open **Workers & Pages**, select `raj-mathuria-portfolio`, then open **Settings > Domains & Routes > Add Custom Domain** and choose `portfolio.rajmathuria.me`.
 6. Test `https://portfolio.rajmathuria.me/api/health`. It should return `{\"status\":\"ok\"}`.
 
-The existing Pages project and this Worker should not both claim the same custom domain. Either migrate the frontend to this Worker, or keep Pages for the frontend and deploy only the API Worker on `api.rajmathuria.me`. For the latter, set `VITE_API_BASE_URL=https://api.rajmathuria.me` under **Workers & Pages > your Pages project > Settings > Environment variables > Production**, then trigger a new deployment. Static asset-only Workers cannot use that frontend build variable because variables belong to a Worker script, not uploaded files.
+The existing Pages project and this Worker should not both claim the same custom domain. Since your frontend is already deployed from branch `raj` with root directory `frontend`, use this least-disruptive setup:
+
+### Recommended: Pages frontend + API Worker subdomain
+
+1. In the local repository, build the frontend so the Worker asset binding is available:
+
+	```bash
+	cd frontend
+	npm ci
+	npm run build
+	cd ../cloudflare
+	```
+
+2. Authenticate Wrangler once:
+
+	```bash
+	npx wrangler login
+	```
+
+3. Deploy the API-only Worker from `cloudflare/`:
+
+	```bash
+	npx wrangler deploy --config wrangler.api.toml
+	```
+
+	This creates the Worker named `raj-mathuria-portfolio-api`. It contains only the API routes, so Cloudflare will allow Worker variables and observability settings.
+
+4. In **Workers & Pages > raj-mathuria-portfolio > Settings > Domains & Routes**, add a custom domain such as `api.yourdomain.com`. Do not assign the same hostname already used by your Pages project.
+
+5. Add the exact Pages site origin as the Worker variable. In **Settings > Variables and Secrets > Variables**, add:
+
+	- Name: `FRONTEND_ORIGIN`
+	- Value: `https://yourdomain.com` or your actual Pages/custom-domain URL
+
+	Redeploy after saving the variable:
+
+	```bash
+	npx wrangler deploy --config wrangler.api.toml
+	```
+
+6. In the Pages project, open **Settings > Environment variables > Production** and add:
+
+	```text
+	VITE_API_BASE_URL=https://api.yourdomain.com
+	```
+
+	Then trigger a new Pages deployment from branch `raj`. Vite injects this value at build time, so changing the variable without rebuilding will not change the frontend.
+
+7. Test the API before testing the form:
+
+	```bash
+	curl https://api.yourdomain.com/api/health
+	curl -i -X OPTIONS https://api.yourdomain.com/api/contact \
+	  -H 'Origin: https://yourdomain.com' \
+	  -H 'Access-Control-Request-Method: POST'
+	```
+
+	The health response should be `{"status":"ok"}` and the preflight should return `204` with `Access-Control-Allow-Origin` set to your Pages origin.
+
+### Namecheap DNS
+
+If Cloudflare manages your DNS, update the domain nameservers at Namecheap to the two nameservers Cloudflare gives you. After that, create the custom domains in Cloudflare; Cloudflare will create the required DNS records. Do not add a Namecheap URL redirect for the API. If you keep Namecheap DNS instead, create the exact CNAME record Cloudflare requests for `api` and keep proxy/status settings as shown in Cloudflare.
+
+### Important limitation
+
+The current `/api/contact` route validates and acknowledges messages but does not persist or email them. Worker logs are not a reliable inbox. Before treating the form as production contact storage, connect the route to a Cloudflare D1 table, Queues, or an email provider and keep any provider token in a Worker secret.

@@ -1,0 +1,6 @@
+name = "raj-mathuria-portfolio-api"
+main = "api-worker.ts"
+compatibility_date = "2026-08-27"
+
+# Deploy this file for api.rajmathuria.me.
+# The frontend remains on Cloudflare Pages at portfolio.rajmathuria.me.
