@@ -219,9 +219,9 @@ export class ContactRateLimiter {
     const ip = payload.ip || 'unknown';
     const email = payload.email || 'unknown';
     const limits = [
-      await this.peek(`ip:${ip}`, 3, IP_WINDOW_MS, now),
-      await this.peek(`email:${email}`, 2, EMAIL_WINDOW_MS, now),
-      await this.peek('global', 10, GLOBAL_WINDOW_MS, now),
+      await this.peek(`ip:${ip}`, 100, IP_WINDOW_MS, now),
+      await this.peek(`email:${email}`, 50, EMAIL_WINDOW_MS, now),
+      await this.peek('global', 50, GLOBAL_WINDOW_MS, now),
     ];
 
     if (limits.some((limit) => !limit.allowed)) {

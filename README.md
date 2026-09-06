@@ -1,4 +1,4 @@
-# Raju Mathuria Developer OS (DevOS)
+# Raj Mathuria Developer OS (DevOS)
 
 Stitch Adaptive Multi-OS Workspace-inspired developer portfolio built with React, TSX, Vite, and a FastAPI contact endpoint. The Stitch screen exports used by the frontend live in `frontend/public`.
 
@@ -129,9 +129,9 @@ Resend sends the notification to `hello@rajmathuria.me`; Cloudflare Email Routin
 
 The Worker now enforces its own durable limits through a Cloudflare Durable Object, so you do not need a WAF rate-limit rule for the contact email protection:
 
-- 3 contact attempts per IP per hour.
-- 2 contact attempts per email address per day.
-- 10 total contact emails per day across the whole portfolio.
+- 10 contact attempts per IP per hour.
+- 5 contact attempts per email address per day.
+- 50 total contact emails per day across the whole portfolio.
 
 These limits are deliberately below a small Gmail daily allowance. The Durable Object keeps the counters shared across Worker isolates and returns `429` plus `Retry-After` when a limit is reached. WAF rate limiting can remain disabled for this endpoint; it is only an optional second perimeter if you later need it.
 
