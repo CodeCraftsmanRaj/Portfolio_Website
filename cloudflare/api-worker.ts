@@ -66,7 +66,10 @@ async function sendContactEmail(
   email: string,
   message: string,
 ): Promise<boolean> {
-  if (!env.RESEND_API_KEY) return false;
+  if (!env.RESEND_API_KEY) {
+    console.error(JSON.stringify({ type: 'contact_delivery_failed', reason: 'RESEND_API_KEY is missing' }));
+    return false;
+  }
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), EMAIL_TIMEOUT_MS);
@@ -88,8 +91,22 @@ async function sendContactEmail(
       }),
     });
 
-    return response.ok;
-  } catch {
+    if (response.ok) return true;
+
+    const providerError = (await response.text()).slice(0, 500);
+    console.error(JSON.stringify({
+      type: 'contact_delivery_failed',
+      provider: 'resend',
+      status: response.status,
+      error: providerError,
+    }));
+    return false;
+  } catch (error) {
+    console.error(JSON.stringify({
+      type: 'contact_delivery_failed',
+      provider: 'resend',
+      error: error instanceof Error ? error.message : 'request failed',
+    }));
     return false;
   } finally {
     clearTimeout(timeout);
