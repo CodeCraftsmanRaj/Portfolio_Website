@@ -33,6 +33,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode, onWindowClose })
         body: JSON.stringify({ name, email, message }),
       });
       const result = await response.json().catch(() => ({})) as { message?: string; detail?: string };
+      const apiMessage = result.detail || result.message || 'Message was not delivered.';
+
+      console[response.ok ? 'log' : 'error']('[contact] API response', {
+        status: response.status,
+        ok: response.ok,
+        message: apiMessage,
+      });
 
       if (response.ok) {
         setStatus('sent');
@@ -42,9 +49,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ mode, onWindowClose })
         setMessage('');
       } else {
         setStatus('error');
-        setFeedbackMsg(`[${response.status}] ${result.detail || result.message || 'Message was not delivered.'}`);
+        setFeedbackMsg(`[${response.status}] ${apiMessage}`);
       }
-    } catch {
+    } catch (error) {
+      console.error('[contact] API request failed', error);
       setStatus('error');
       setFeedbackMsg('[NETWORK ERROR] The API could not be reached. Your message was not sent.');
     }

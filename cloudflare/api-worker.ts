@@ -73,6 +73,15 @@ async function sendContactEmail(
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), EMAIL_TIMEOUT_MS);
+  const from = env.CONTACT_FROM_EMAIL || CONTACT_SENDER_EMAIL;
+  const to = env.CONTACT_TO_EMAIL || CONTACT_NOTIFICATION_EMAIL;
+
+  console.log(JSON.stringify({
+    type: 'resend_request_started',
+    from,
+    to,
+    replyTo: email,
+  }));
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -83,24 +92,26 @@ async function sendContactEmail(
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        from: env.CONTACT_FROM_EMAIL || CONTACT_SENDER_EMAIL,
-        to: [env.CONTACT_TO_EMAIL || CONTACT_NOTIFICATION_EMAIL],
+        from,
+        to: [to],
         reply_to: email,
         subject: `Portfolio contact from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
       }),
     });
 
-    if (response.ok) return true;
-
-    const providerError = (await response.text()).slice(0, 500);
-    console.error(JSON.stringify({
-      type: 'contact_delivery_failed',
+    const providerResponse = (await response.text()).slice(0, 500);
+    console.log(JSON.stringify({
+      type: 'resend_response',
       provider: 'resend',
       status: response.status,
-      error: providerError,
+      ok: response.ok,
+      body: providerResponse,
     }));
-    return false;
+    if (!response.ok) {
+      console.error(`RESEND_RAW_ERROR ${providerResponse}`);
+    }
+    return response.ok;
   } catch (error) {
     console.error(JSON.stringify({
       type: 'contact_delivery_failed',
