@@ -1,3 +1,5 @@
+/// <reference path="./cloudflare-env.d.ts" />
+
 interface Env {
   FRONTEND_ORIGIN?: string;
   CONTACT_TO_EMAIL?: string;

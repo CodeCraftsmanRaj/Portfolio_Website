@@ -350,11 +350,23 @@
 
 @media (max-width: 700px) {
   .boot-ascii-panel {
-    top: 10vh;
-    right: 8vw;
-    width: 84vw;
+    width: min(84vw, 520px);
     max-height: 22vh;
     opacity: 0.18;
+  }
+
+  .boot-screen {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 18px;
+    padding: 44px 14px 72px;
+    overflow-y: auto;
+  }
+
+  .boot-screen > div:not(.boot-ascii-panel) {
+    width: min(94vw, 560px) !important;
+    max-width: 94vw !important;
+    flex: 0 0 auto;
   }
 
   .boot-ascii-panel pre {
@@ -394,10 +406,9 @@
 }
 
 .boot-ascii-panel {
-  position: absolute;
-  top: 7vh;
-  right: 4vw;
-  width: min(34vw, 520px);
+  position: static;
+  flex: 0 1 38%;
+  width: min(38vw, 520px);
   max-height: 36vh;
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
@@ -406,6 +417,18 @@
   opacity: 0.28;
   filter: grayscale(1) contrast(1.15);
   pointer-events: none;
+}
+
+.boot-screen {
+  flex-direction: row !important;
+  gap: clamp(24px, 5vw, 72px);
+  padding: 32px;
+}
+
+.boot-screen > div:not(.boot-ascii-panel) {
+  width: auto !important;
+  max-width: min(780px, 52vw) !important;
+  flex: 0 1 52%;
 }
 
 .boot-ascii-panel pre {
@@ -425,6 +448,37 @@
   color: #7c766e;
   font-family: var(--font-mono, monospace);
   font-size: 10px;
+}
+
+@media (max-width: 700px) {
+  .boot-screen {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 18px;
+    padding: 44px 14px 72px;
+    overflow-y: auto;
+  }
+
+  .boot-screen > div:not(.boot-ascii-panel) {
+    width: min(94vw, 560px) !important;
+    max-width: 94vw !important;
+    flex: 0 0 auto;
+  }
+
+  .boot-ascii-panel {
+    width: min(84vw, 520px);
+    max-height: 22vh;
+    opacity: 0.18;
+  }
+
+  .boot-ascii-panel pre {
+    max-height: 18vh;
+    font-size: 1.2px;
+  }
+
+  .boot-ascii-panel span {
+    font-size: 8px;
+  }
 }
 
 /* --------------------------------------------------------------------------

@@ -1,0 +1,40 @@
+{
+  "themes": [
+    { "id": "blue", "label": "Calm Blue", "swatch": "#3A86FF" },
+    { "id": "netflix", "label": "Cinema", "swatch": "#E50914" },
+    { "id": "paper", "label": "Warm Paper", "swatch": "#A6392B" }
+  ],
+  "navItems": [
+    { "id": "home", "label": "Home", "sidebarLabel": "Desktop", "icon": "desktop_windows", "path": { "mac": "~/profile/init.exe", "win": "C:\\Users\\Root\\Home.exe", "linux": "~/portfolio/home.md", "android": "app://devos.raj/home", "ios": "portfolio://view/home" } },
+    { "id": "about", "label": "Profile", "sidebarLabel": "Journal", "icon": "article", "path": { "mac": "~/raj-mathuria/about.md", "win": "C:\\Users\\Root\\sys\\bio.txt", "linux": "/sys/users/admin/bio.txt", "android": "app://devos.raj/about_bio", "ios": "portfolio://view/profile" } },
+    { "id": "skills", "label": "Code", "sidebarLabel": "Hardware", "icon": "memory", "path": { "mac": "~/raj-mathuria/skills.config", "win": "C:\\ProgramFiles\\Dependencies\\System.dll", "linux": "~/skills/dependencies.lock", "android": "app://devos.raj/skills_config", "ios": "portfolio://view/skills" } },
+    { "id": "projects", "label": "Portfolio", "sidebarLabel": "Projects", "icon": "folder_open", "path": { "mac": "~/workspace/repositories", "win": "D:\\Workspace\\Repositories", "linux": "/root/workspace/repositories", "android": "app://devos.raj/projects_repo", "ios": "portfolio://view/projects" } },
+    { "id": "experience", "label": "Experience", "sidebarLabel": "History", "icon": "history_edu", "path": { "mac": "~/logs/career.log", "win": "C:\\System32\\var\\log\\experience.log", "linux": "/var/log/experience", "android": "app://devos.raj/experience_timeline", "ios": "portfolio://view/experience" } },
+    { "id": "leadership", "label": "Leadership", "sidebarLabel": "Manual", "icon": "menu_book", "path": { "mac": "~/man/man1/ldext.1", "win": "C:\\Docs\\Manuals\\ldext.man", "linux": "man ldext", "android": "app://devos.raj/leadership_manual", "ios": "portfolio://view/leadership" } },
+    { "id": "contact", "label": "Contact", "sidebarLabel": "Network", "icon": "lan", "path": { "mac": "~/network/ping.socket", "win": "C:\\Net\\Socket\\Connect.exe", "linux": "/dev/net/ping", "android": "app://devos.raj/contact_intent", "ios": "portfolio://view/contact" } },
+    { "id": "resume", "label": "Resume", "sidebarLabel": "Resume", "icon": "description", "path": { "mac": "~/raj-mathuria/resume.pdf", "win": "C:\\Users\\Root\\Documents\\Resume.pdf", "linux": "~/documents/resume.pdf", "android": "content://media/docs/resume.pdf", "ios": "portfolio://files/resume.pdf" } }
+  ],
+  "personalData": {
+    "name": "Raj Kalpesh Mathuria",
+    "shortName": "Raj_Mathuria",
+    "rootUser": "Raj",
+    "version": "B.Tech / B.S. Data Science",
+    "releaseTag": "AI-ML-RESEARCHER",
+    "role": "AI/ML Engineer & Researcher",
+    "headline": "AI/ML ENGINEER & RESEARCHER",
+    "subHeadline": "Building research-driven AI systems across deep learning, computer vision, GenAI, and scientific machine learning.",
+    "linuxHeadline": "Researcher. Builder. Problem-solver.",
+    "linuxSubHeadline": "AI/ML Engineer and undergraduate researcher with 1.5+ years of experience building and deploying deep learning, computer vision, Generative AI, and scalable ML systems. I research difficult problems, build the systems myself, and push them toward real-world deployment.",
+    "location": "Mumbai, Maharashtra, India",
+    "timezone": "IST / UTC+5:30",
+    "uptime": "1.5+ Years Professional & Research Experience",
+    "availability": "ONLINE",
+    "currentFocus": "Research-driven AI/ML systems and real-world deployment",
+    "bioDropCap": "A",
+    "bioLead": "I am Raj Mathuria, an AI/ML Engineer and Researcher building intelligent systems that bridge research and real-world applications. My work spans deep learning, computer vision, Generative AI, scientific machine learning, and scalable ML systems.",
+    "bioParagraph2": "I have conducted research at ISRO's Space Applications Centre on satellite-ground data fusion and deep-learning-based air-quality forecasting, alongside research published across Elsevier, Springer, and IEEE venues, including a NASA-ISRO collaboration.",
+    "bioParagraph3": "Alongside research, I have worked at Barclays and Systems Plus on production backend and AI systems, and led a nationally winning Smart India Hackathon project among 87,000 teams.",
+    "primaryStack": ["Python", "PyTorch", "TensorFlow", "Computer Vision", "RAG", "Spring Boot", "Azure"],
+    "coreDisciplines": ["Deep Learning & Computer Vision", "Spatio-temporal Modeling", "RAG & Generative AI", "Distributed Training & Optimization", "Production ML Systems", "Research-to-deployment engineering"]
+  }
+}

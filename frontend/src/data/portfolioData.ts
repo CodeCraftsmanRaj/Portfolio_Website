@@ -1,11 +1,9 @@
+import portfolioContent from './portfolioContent.json'
+
 export type OsMode = 'LINUX' | 'WIN' | 'MAC' | 'ANDROID' | 'IOS'
 export type ThemeName = 'blue' | 'netflix' | 'paper'
 
-export const themes: Array<{ id: ThemeName; label: string; swatch: string }> = [
-  { id: 'blue', label: 'Calm Blue', swatch: '#3A86FF' },
-  { id: 'netflix', label: 'Cinema', swatch: '#E50914' },
-  { id: 'paper', label: 'Warm Paper', swatch: '#A6392B' },
-]
+export const themes = portfolioContent.themes as Array<{ id: ThemeName; label: string; swatch: string }>
 
 export type PageView = 
   | 'home'
@@ -31,7 +29,7 @@ export interface NavItem {
   }
 }
 
-export const navItems: NavItem[] = [
+const legacyNavItems: NavItem[] = [
   {
     id: 'home',
     label: 'Home',
@@ -138,7 +136,9 @@ export const navItems: NavItem[] = [
   },
 ]
 
-export const personalData = {
+export const navItems = portfolioContent.navItems as NavItem[]
+
+const legacyPersonalData = {
   name: 'Raj Kalpesh Mathuria',
   shortName: 'Raj_Mathuria',
   rootUser: 'Raj',
@@ -168,6 +168,8 @@ export const personalData = {
     'Research-to-deployment engineering',
   ],
 }
+
+export const personalData = portfolioContent.personalData as typeof legacyPersonalData
 
 export interface SkillProgress {
   name: string
